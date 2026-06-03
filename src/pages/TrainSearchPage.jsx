@@ -3,12 +3,13 @@ import AppShell from "../components/AppShell.jsx";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 import { formatWon, TRAIN } from "../data/experiment.js";
 
-const rows = [
+export const trainRows = [
   { train: "KTX\n001", depart: "05:13\n서울", arrive: "07:50\n부산", general: "target", premium: formatWon(83700), enabled: true },
   { train: "KTX\n003", depart: "05:27\n서울", arrive: "08:16\n부산", general: "입석+좌석\n예약대기", premium: "매진", enabled: false },
   { train: "SRT\n301", depart: "05:30\n수서", arrive: "08:06\n부산", general: "예약링크", premium: "예약링크", enabled: false, muted: true },
-  { train: "KTX-이음\n701", depart: "05:40\n청량리", arrive: "09:24\n부전", general: formatWon(55400), premium: formatWon(66500), enabled: false, muted: true },
+  { train: "KTX-이음\n701", depart: "05:40\n청량리", arrive: "09:24\n부전", general: formatWon(55400), premium: formatWon(66500), enabled: false, muted: true, priceLike: true },
   { train: "ITX-새마을\n1001", depart: "05:54\n서울", arrive: "11:14\n부산", general: "매진", premium: "-", enabled: false },
+  { train: "KTX\n005", depart: "05:58\n서울", arrive: "08:43\n부산", general: "매진", premium: "매진", enabled: false },
 ];
 
 export default function TrainSearchPage() {
@@ -52,7 +53,7 @@ export default function TrainSearchPage() {
       </div>
 
       <section className="train-list">
-        {rows.map((row, index) => (
+        {trainRows.map((row, index) => (
           <article className={row.muted ? "train-row train-row-muted" : "train-row"} key={`${row.train}-${index}`}>
             <span>{row.train.split("\n").map((line) => <b key={line}>{line}</b>)}</span>
             <span>{row.depart.split("\n").map((line) => <b key={line}>{line}</b>)}</span>
@@ -66,22 +67,33 @@ export default function TrainSearchPage() {
                 onClick={handleGeneralFare}
               >
                 {formatWon(TRAIN.price)}
-                <small>M 5%적립</small>
+                <small><span className="reward-badge">M</span>5%적립</small>
               </button>
             ) : (
               <button
-                className="fare-button fare-disabled"
+                className={row.priceLike ? "fare-button fare-secondary" : "fare-button fare-disabled"}
                 type="button"
                 data-track-label={`train:${index}:general-fare`}
                 data-clickable="true"
                 data-disabled="true"
                 aria-disabled="true"
               >
-                {row.general}
+                {row.priceLike ? (
+                  <>
+                    {row.general}
+                    <small><span className="reward-badge">M</span>5%적립</small>
+                  </>
+                ) : (
+                  row.general.split("\n").map((line) => <span className="fare-line" key={line}>{line}</span>)
+                )}
               </button>
             )}
             <button
-              className="fare-button fare-disabled"
+              className={[
+                "fare-button",
+                index === 0 || row.priceLike ? "fare-secondary" : "fare-disabled",
+                index === 0 || row.priceLike ? "has-hourglass" : "",
+              ].filter(Boolean).join(" ")}
               type="button"
               data-track-label={`train:${index}:premium-fare`}
               data-clickable="true"
@@ -89,7 +101,7 @@ export default function TrainSearchPage() {
               aria-disabled={index === 0 ? "false" : "true"}
             >
               {row.premium}
-              {index === 0 ? <small>M 5%적립</small> : null}
+              {index === 0 || row.priceLike ? <small><span className="reward-badge">M</span>5%적립</small> : null}
             </button>
           </article>
         ))}

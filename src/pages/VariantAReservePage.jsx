@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import AppShell from "../components/AppShell.jsx";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 import { formatWon, TRAIN } from "../data/experiment.js";
+import { trainRows } from "./TrainSearchPage.jsx";
 
 export default function VariantAReservePage({ pageKey }) {
   const navigate = useNavigate();
@@ -30,6 +31,14 @@ export default function VariantAReservePage({ pageKey }) {
         </div>
       </section>
 
+      <div className="train-table-header">
+        <span>열차</span>
+        <span>출발</span>
+        <span>도착</span>
+        <span>일반실<br />(운임)</span>
+        <span>특/우등<br />(운임+요금)</span>
+      </div>
+
       <article className="train-row selected-train">
         <span><b>KTX</b><b>001</b></span>
         <span><b>05:13</b><b>서울</b></span>
@@ -43,6 +52,47 @@ export default function VariantAReservePage({ pageKey }) {
           <small>M 5%적립</small>
         </button>
       </article>
+
+      <section className="train-list a-reserve-list" aria-label="선택된 열차 이후 목록">
+        {trainRows.slice(1, 4).map((row, index) => (
+          <article className={row.muted ? "train-row train-row-muted" : "train-row"} key={`${row.train}-a-${index}`}>
+            <span>{row.train.split("\n").map((line) => <b key={line}>{line}</b>)}</span>
+            <span>{row.depart.split("\n").map((line) => <b key={line}>{line}</b>)}</span>
+            <span>{row.arrive.split("\n").map((line) => <b key={line}>{line}</b>)}</span>
+            <button
+              className={row.priceLike ? "fare-button fare-secondary" : "fare-button fare-disabled"}
+              type="button"
+              data-track-label={`a-reserve:visible-row:${index}:general`}
+              data-clickable="true"
+              data-disabled="true"
+              aria-disabled="true"
+            >
+              {row.priceLike ? (
+                <>
+                  {row.general}
+                  <small><span className="reward-badge">M</span>5%적립</small>
+                </>
+              ) : (
+                row.general.split("\n").map((line) => <span className="fare-line" key={line}>{line}</span>)
+              )}
+            </button>
+            <button
+              className={[
+                "fare-button",
+                row.priceLike ? "fare-secondary has-hourglass" : "fare-disabled",
+              ].filter(Boolean).join(" ")}
+              type="button"
+              data-track-label={`a-reserve:visible-row:${index}:premium`}
+              data-clickable="true"
+              data-disabled="true"
+              aria-disabled="true"
+            >
+              {row.premium}
+              {row.priceLike ? <small><span className="reward-badge">M</span>5%적립</small> : null}
+            </button>
+          </article>
+        ))}
+      </section>
 
       <section className="reserve-sheet">
         <button className="sheet-handle" type="button" data-track-label="a-reserve:sheet-handle" data-clickable="true">⌄</button>

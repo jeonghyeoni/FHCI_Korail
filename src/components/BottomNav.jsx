@@ -1,8 +1,8 @@
 const items = [
-  { label: "홈", icon: "⌂" },
-  { label: "혜택·정기권", icon: "%" },
-  { label: "여행상품·패스", icon: "▣" },
-  { label: "나의 티켓", icon: "▱" },
+  { label: "홈", key: "home" },
+  { label: "혜택·정기권", key: "benefit" },
+  { label: "여행상품·패스", key: "bag" },
+  { label: "나의 티켓", key: "ticket" },
 ];
 
 export default function BottomNav() {
@@ -16,7 +16,7 @@ export default function BottomNav() {
           data-track-label={`bottom-nav:${item.label}`}
           data-clickable="true"
         >
-          <span className="bottom-nav-icon" aria-hidden="true">{item.icon}</span>
+          <span className={`bottom-nav-icon bottom-nav-icon-${item.key}`} aria-hidden="true" />
           <span>{item.label}</span>
         </button>
       ))}

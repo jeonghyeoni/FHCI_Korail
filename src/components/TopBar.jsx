@@ -1,14 +1,6 @@
 export default function TopBar({ title, showRefresh = false }) {
   return (
     <header className="top-bar">
-      <div className="status-bar" aria-hidden="true">
-        <span className="status-time">4:10</span>
-        <span className="status-icons">
-          <i className="signal-icon" />
-          <i className="wifi-icon" />
-          <i className="battery-icon">50</i>
-        </span>
-      </div>
       <div className="app-bar">
         <button className="icon-button back-button" type="button" data-track-label="top:back" data-clickable="true" aria-label="뒤로가기">
           <span aria-hidden="true" />

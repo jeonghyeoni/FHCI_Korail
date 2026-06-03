@@ -1,0 +1,61 @@
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { ExperimentProvider, useExperiment } from "./context/ExperimentContext.jsx";
+import { useGlobalAnalytics } from "./hooks/useGlobalAnalytics.js";
+import { usePageTracking } from "./hooks/usePageTracking.js";
+import CompletePage from "./pages/CompletePage.jsx";
+import ErrorPage from "./pages/ErrorPage.jsx";
+import IntroPage from "./pages/IntroPage.jsx";
+import TicketConfirmPage from "./pages/TicketConfirmPage.jsx";
+import TrainSearchPage from "./pages/TrainSearchPage.jsx";
+import VariantAReservePage from "./pages/VariantAReservePage.jsx";
+import VariantASeatPage from "./pages/VariantASeatPage.jsx";
+import VariantBOverviewPage from "./pages/VariantBOverviewPage.jsx";
+import VariantBSeatPage from "./pages/VariantBSeatPage.jsx";
+
+function AnalyticsRuntime() {
+  usePageTracking();
+  useGlobalAnalytics();
+  return null;
+}
+
+function ProtectedRoute({ children }) {
+  const { state } = useExperiment();
+  if (!state.isValid) {
+    return <Navigate to="/invalid" replace />;
+  }
+  return children;
+}
+
+function AppRoutes() {
+  return (
+    <>
+      <AnalyticsRuntime />
+      <Routes>
+        <Route path="/invalid" element={<ErrorPage />} />
+        <Route path="/" element={<ProtectedRoute><IntroPage /></ProtectedRoute>} />
+        <Route path="/train" element={<ProtectedRoute><TrainSearchPage /></ProtectedRoute>} />
+        <Route path="/variant-a/3" element={<ProtectedRoute><VariantAReservePage pageKey="A-3" /></ProtectedRoute>} />
+        <Route path="/variant-a/3-1" element={<ProtectedRoute><VariantASeatPage mode="seat" /></ProtectedRoute>} />
+        <Route path="/variant-a/3-2" element={<ProtectedRoute><VariantASeatPage mode="dropdown" /></ProtectedRoute>} />
+        <Route path="/variant-a/3-3" element={<ProtectedRoute><VariantASeatPage mode="selected" /></ProtectedRoute>} />
+        <Route path="/variant-a/3-4" element={<ProtectedRoute><VariantAReservePage pageKey="A-3-4" /></ProtectedRoute>} />
+        <Route path="/variant-b/3" element={<ProtectedRoute><VariantBOverviewPage /></ProtectedRoute>} />
+        <Route path="/variant-b/3-1" element={<ProtectedRoute><VariantBSeatPage /></ProtectedRoute>} />
+        <Route path="/variant-b/3-2" element={<ProtectedRoute><VariantBSeatPage /></ProtectedRoute>} />
+        <Route path="/confirm" element={<ProtectedRoute><TicketConfirmPage /></ProtectedRoute>} />
+        <Route path="/complete" element={<ProtectedRoute><CompletePage /></ProtectedRoute>} />
+        <Route path="*" element={<ErrorPage notFound />} />
+      </Routes>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <ExperimentProvider>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    </ExperimentProvider>
+  );
+}

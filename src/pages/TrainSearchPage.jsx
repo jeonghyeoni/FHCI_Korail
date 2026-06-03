@@ -1,0 +1,99 @@
+import { useNavigate } from "react-router-dom";
+import AppShell from "../components/AppShell.jsx";
+import { useExperiment } from "../context/ExperimentContext.jsx";
+import { formatWon, TRAIN } from "../data/experiment.js";
+
+const rows = [
+  { train: "KTX\n001", depart: "05:13\n서울", arrive: "07:50\n부산", general: "target", premium: formatWon(83700), enabled: true },
+  { train: "KTX\n003", depart: "05:27\n서울", arrive: "08:16\n부산", general: "입석+좌석\n예약대기", premium: "매진", enabled: false },
+  { train: "SRT\n301", depart: "05:30\n수서", arrive: "08:06\n부산", general: "예약링크", premium: "예약링크", enabled: false, muted: true },
+  { train: "KTX-이음\n701", depart: "05:40\n청량리", arrive: "09:24\n부전", general: formatWon(55400), premium: formatWon(66500), enabled: false, muted: true },
+  { train: "ITX-새마을\n1001", depart: "05:54\n서울", arrive: "11:14\n부산", general: "매진", premium: "-", enabled: false },
+];
+
+export default function TrainSearchPage() {
+  const navigate = useNavigate();
+  const { state } = useExperiment();
+
+  function handleGeneralFare() {
+    navigate(state.variant === "A" ? "/variant-a/3" : "/variant-b/3");
+  }
+
+  return (
+    <AppShell title="열차 조회" showRefresh withBottomNav>
+      <div className="route-band">{TRAIN.origin} <span>→</span> {TRAIN.destination}</div>
+      <section className="search-controls">
+        <div className="date-row">
+          <button type="button" data-track-label="train:prev-day" data-clickable="true">이전날</button>
+          <strong>{TRAIN.date}</strong>
+          <button type="button" data-track-label="train:next-day" data-clickable="true">다음날</button>
+        </div>
+        <div className="filter-row">
+          {["전체", "일반석", "직통"].map((filter) => (
+            <button
+              type="button"
+              key={filter}
+              className="select-like"
+              data-track-label={`train:filter:${filter}`}
+              data-clickable="true"
+            >
+              {filter} <span>▾</span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <div className="train-table-header">
+        <span>열차</span>
+        <span>출발</span>
+        <span>도착</span>
+        <span>일반실<br />(운임)</span>
+        <span>특/우등<br />(운임+요금)</span>
+      </div>
+
+      <section className="train-list">
+        {rows.map((row, index) => (
+          <article className={row.muted ? "train-row train-row-muted" : "train-row"} key={`${row.train}-${index}`}>
+            <span>{row.train.split("\n").map((line) => <b key={line}>{line}</b>)}</span>
+            <span>{row.depart.split("\n").map((line) => <b key={line}>{line}</b>)}</span>
+            <span>{row.arrive.split("\n").map((line) => <b key={line}>{line}</b>)}</span>
+            {index === 0 ? (
+              <button
+                className="fare-button"
+                type="button"
+                data-track-label="train:KTX001:general-fare"
+                data-clickable="true"
+                onClick={handleGeneralFare}
+              >
+                {formatWon(TRAIN.price)}
+                <small>M 5%적립</small>
+              </button>
+            ) : (
+              <button
+                className="fare-button fare-disabled"
+                type="button"
+                data-track-label={`train:${index}:general-fare`}
+                data-clickable="true"
+                data-disabled="true"
+                aria-disabled="true"
+              >
+                {row.general}
+              </button>
+            )}
+            <button
+              className="fare-button fare-disabled"
+              type="button"
+              data-track-label={`train:${index}:premium-fare`}
+              data-clickable="true"
+              data-disabled={index === 0 ? "false" : "true"}
+              aria-disabled={index === 0 ? "false" : "true"}
+            >
+              {row.premium}
+              {index === 0 ? <small>M 5%적립</small> : null}
+            </button>
+          </article>
+        ))}
+      </section>
+    </AppShell>
+  );
+}

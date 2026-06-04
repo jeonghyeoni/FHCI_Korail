@@ -1,9 +1,54 @@
-import { loadSummary } from "../analytics/storage.js";
+import { useEffect, useRef, useState } from "react";
+import { loadEvents, loadSummary } from "../analytics/storage.js";
+import { buildSubmissionPayload, submitExperimentData } from "../analytics/submission.js";
 import { useExperiment } from "../context/ExperimentContext.jsx";
+
+function getSubmissionStatusText(status) {
+  switch (status) {
+    case "submitting":
+      return "실험 데이터 저장 중...";
+    case "success":
+      return "실험 데이터 저장 완료";
+    case "failed":
+      return "데이터 저장 실패: 관리자에게 알려주세요";
+    case "missing_endpoint":
+      return "데이터 저장 URL 미설정";
+    default:
+      return "";
+  }
+}
 
 export default function CompletePage() {
   const { state } = useExperiment();
-  const summary = loadSummary();
+  const [summary] = useState(() => loadSummary());
+  const [submissionStatus, setSubmissionStatus] = useState("idle");
+  const submitAttemptedRef = useRef(false);
+
+  useEffect(() => {
+    if (!summary || submitAttemptedRef.current) return undefined;
+
+    let ignore = false;
+    submitAttemptedRef.current = true;
+    setSubmissionStatus("submitting");
+
+    const payload = buildSubmissionPayload({
+      summary,
+      state,
+      eventLogs: loadEvents(),
+    });
+
+    submitExperimentData(payload).then((result) => {
+      if (!ignore) {
+        setSubmissionStatus(result.status);
+      }
+    });
+
+    return () => {
+      ignore = true;
+    };
+  }, [state, summary]);
+
+  const submissionStatusText = getSubmissionStatusText(submissionStatus);
 
   return (
     <main className="phone-frame">
@@ -22,6 +67,11 @@ export default function CompletePage() {
         >
           설문 작성하기
         </button>
+        {submissionStatusText ? (
+          <p className={`submission-status submission-status-${submissionStatus}`} aria-live="polite">
+            {submissionStatusText}
+          </p>
+        ) : null}
         {summary ? (
           <section className="summary-panel">
             <span>성공 여부: {summary.success ? "성공" : "실패"}</span>

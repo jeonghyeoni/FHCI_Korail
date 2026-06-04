@@ -8,6 +8,7 @@ export default function Seat({ seat, selected, onClick }) {
       className={[
         "seat",
         seat.isAvailable ? "seat-available" : "seat-unavailable",
+        seat.direction === "forward" ? "seat-forward" : "seat-reverse",
         selected ? "seat-selected" : "",
         seat.isWindow ? "seat-window" : "",
         isAisle ? "seat-aisle" : "",

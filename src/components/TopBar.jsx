@@ -1,9 +1,14 @@
 import { useNavigate } from "react-router-dom";
 
-export default function TopBar({ title, showRefresh = false }) {
+export default function TopBar({ title, showRefresh = false, backTo = "" }) {
   const navigate = useNavigate();
 
   function handleBack() {
+    if (backTo) {
+      navigate(backTo);
+      return;
+    }
+
     if (window.history.length > 1) {
       navigate(-1);
       return;

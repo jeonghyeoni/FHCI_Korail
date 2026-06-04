@@ -33,12 +33,12 @@ export const TASKS = {
 export const CARRIAGES = [
   { no: 1, remaining: 22, total: 56, note: "" },
   { no: 2, remaining: 29, total: 50, note: "" },
-  { no: 3, remaining: 29, total: 50, note: "휠체어석" },
+  { no: 3, remaining: 29, total: 50, note: "" },
   { no: 4, remaining: 29, total: 50, note: "" },
   { no: 5, remaining: 6, total: 56, note: "" },
   { no: 6, remaining: 16, total: 56, note: "" },
   { no: 7, remaining: 14, total: 56, note: "" },
-  { no: 8, remaining: 13, total: 56, note: "유아동반석" },
+  { no: 8, remaining: 13, total: 56, note: "" },
   { no: 9, remaining: 2, total: 56, note: "" },
 ];
 
@@ -76,7 +76,9 @@ export function getCarriage(no) {
 
 export function getSeatsForCarriage(carriageNo) {
   const no = Number(carriageNo);
-  const rows = no === 5 || no === 9 ? [15, 14, 13, 12, 11, 10, 9, 8] : [14, 13, 12, 11, 10, 9, 8];
+  const rows = no === 5 || no === 9
+    ? [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+    : [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
   const unavailable = new Set(unavailableByCarriage[no] || []);
 
   return rows.flatMap((row) =>
@@ -90,7 +92,7 @@ export function getSeatsForCarriage(carriageNo) {
         label,
         isWindow: column === "A" || column === "D",
         isAvailable: !unavailable.has(label),
-        direction: row >= 10 ? "reverse" : "forward",
+        direction: row >= 9 ? "reverse" : "forward",
       };
     }),
   );

@@ -24,7 +24,7 @@ export default function VariantAReservePage({ pageKey }) {
   }
 
   return (
-    <AppShell title="열차 조회" showRefresh withBottomNav>
+    <AppShell title="열차 조회" showRefresh withBottomNav backTo="/">
       <div className="route-band">{TRAIN.origin} <span>→</span> {TRAIN.destination}</div>
       <section className="search-controls compact">
         <div className="date-row">
@@ -64,7 +64,7 @@ export default function VariantAReservePage({ pageKey }) {
       </article>
 
       <section className="train-list a-reserve-list" aria-label="선택된 열차 이후 목록">
-        {trainRows.slice(1, 4).map((row, index) => (
+        {trainRows.slice(1).map((row, index) => (
           <article className={row.muted ? "train-row train-row-muted" : "train-row"} key={`${row.train}-a-${index}`}>
             <span>{row.train.split("\n").map((line) => <b key={line}>{line}</b>)}</span>
             <span>{row.depart.split("\n").map((line) => <b key={line}>{line}</b>)}</span>
@@ -120,7 +120,6 @@ export default function VariantAReservePage({ pageKey }) {
             좌석선택
           </button>
         </div>
-        {hasSeat && pageKey !== "A-3-4" ? <p className="selected-seat-note">선택 좌석: {state.selectedSeat.carriageNo}호차 {state.selectedSeat.label}</p> : null}
       </section>
 
       <button

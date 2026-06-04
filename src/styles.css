@@ -1,3 +1,6 @@
+/* =========================================================
+   Global Design Tokens / 전체 공통 색상, 폰트, safe-area 변수
+   ========================================================= */
 :root {
   --korail-navy: #0b4567;
   --korail-navy-deep: #073653;
@@ -35,6 +38,9 @@
   font-weight: 400 !important;
 }
 
+/* =========================================================
+   Base Reset / 전체 기본 레이아웃 초기화
+   ========================================================= */
 html,
 body,
 #root {
@@ -53,6 +59,9 @@ button {
   -webkit-tap-highlight-color: rgba(0, 105, 180, 0.16);
 }
 
+/* =========================================================
+   Mobile App Shell / 공통 모바일 프레임과 스크롤 영역
+   ========================================================= */
 .phone-frame {
   position: relative;
   width: min(100vw, 480px);
@@ -82,6 +91,9 @@ button {
   padding-bottom: calc(108px + var(--safe-bottom));
 }
 
+/* =========================================================
+   Top Bar / 모든 페이지 상단바, 뒤로가기, 새로고침, 메뉴 아이콘
+   ========================================================= */
 .top-bar {
   position: sticky;
   top: 0;
@@ -298,6 +310,9 @@ button {
   top: 10px;
 }
 
+/* =========================================================
+   Train Search Shared Header / 열차 조회·A-3 공통 노선/날짜/필터 영역
+   ========================================================= */
 .route-band {
   display: flex;
   align-items: center;
@@ -379,6 +394,9 @@ button {
   font-size: 0.92em;
 }
 
+/* =========================================================
+   Train List / 2번 열차 조회 화면과 A-3 열차 목록 행
+   ========================================================= */
 .train-table-header,
 .train-row {
   display: grid;
@@ -516,6 +534,9 @@ button {
   box-shadow: inset 0 0 0 2px #2388c9;
 }
 
+/* =========================================================
+   Bottom Navigation / 홈·혜택·여행상품·나의티켓 하단 탭바
+   ========================================================= */
 .bottom-nav {
   position: absolute;
   right: 0;
@@ -552,17 +573,24 @@ button {
   display: block;
 }
 
+/* =========================================================
+   Variant A Reserve Sheet / A-3, A-3-4 열차 목록 위 바텀시트
+   - 일반실 소요시간
+   - 열차시각 | 운임요금 | 좌석선택
+   - 시트 손잡이와 닫기 버튼
+   ========================================================= */
 .reserve-sheet {
   position: absolute;
   right: 0;
   bottom: calc(clamp(70px, 18vw, 86px) - 4px + clamp(90px, 24vw, 106px) + var(--safe-bottom));
   left: 0;
-  z-index: 18;
+  z-index: 23;
   margin-top: 0;
   padding: 10px clamp(16px, 5vw, 22px) 12px;
   color: #fff;
-  background: var(--sheet);
-  backdrop-filter: blur(4px);
+  background: rgba(48, 67, 79, 0.92);
+  box-shadow: 0 -12px 24px rgba(17, 31, 40, 0.18);
+  backdrop-filter: blur(3px);
 }
 
 .reserve-sheet p {
@@ -650,6 +678,9 @@ button {
   font-size: clamp(15px, 4.2vw, 18px);
 }
 
+/* =========================================================
+   Fixed Action Button / 예매, 선택 완료 등 하단 고정 CTA 버튼
+   ========================================================= */
 .fixed-action {
   position: absolute;
   right: 0;
@@ -675,12 +706,23 @@ button {
   font-size: clamp(20px, 5.4vw, 26px);
 }
 
+/* =========================================================
+   Variant A Seat Page / A-3-1, A-3-2, A-3-3 좌석 선택 화면 전체 배경
+   ========================================================= */
 .seat-selector-panel {
   position: relative;
-  padding: clamp(11px, 2.8vw, 14px) clamp(11px, 3vw, 15px) calc(150px + var(--safe-bottom));
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  padding: clamp(11px, 2.8vw, 14px) clamp(11px, 3vw, 15px) 0;
   background: #f8f8f8;
 }
 
+/* =========================================================
+   Variant A Car Dropdown / A 좌석 선택 화면 호차 드롭다운과 팝업 목록
+   ========================================================= */
 .car-dropdown-button {
   display: flex;
   align-items: center;
@@ -704,13 +746,16 @@ button {
 }
 
 .car-dropdown-list {
-  position: relative;
-  z-index: 8;
-  margin-bottom: 10px;
+  position: absolute;
+  z-index: 28;
+  top: calc(clamp(11px, 2.8vw, 14px) + clamp(42px, 11vw, 52px));
+  right: clamp(11px, 3vw, 15px);
+  left: clamp(11px, 3vw, 15px);
+  margin-bottom: 0;
   border: 1px solid #d6d8da;
   border-top: 0;
   background: #fff;
-  box-shadow: none;
+  box-shadow: 0 10px 22px rgba(20, 35, 45, 0.1);
 }
 
 .car-option {
@@ -736,6 +781,9 @@ button {
   font-size: 0.92em;
 }
 
+/* =========================================================
+   Variant A Seat Header / KTX 정보, 이전/다음 호차 버튼, VR 배너, 범례
+   ========================================================= */
 .seat-train-info {
   display: grid;
   grid-template-columns: minmax(72px, 92px) minmax(0, 1fr) minmax(72px, 92px);
@@ -803,6 +851,7 @@ button {
   display: grid;
   grid-template-columns: repeat(4, max-content);
   justify-content: space-between;
+  align-items: center;
   gap: 7px;
   margin-bottom: 8px;
   padding: clamp(15px, 4.3vw, 21px) 5px 11px;
@@ -812,13 +861,17 @@ button {
   white-space: nowrap;
 }
 
+.legend-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .dot {
   display: inline-block;
   width: 17px;
   height: 17px;
-  margin-right: 6px;
   border-radius: 50%;
-  vertical-align: -4px;
 }
 
 .dot-unavailable {
@@ -830,11 +883,62 @@ button {
   background: #fff;
 }
 
+.legend-seat-direction {
+  display: inline-block;
+  width: clamp(18px, 5vw, 25px);
+  height: clamp(17px, 4.8vw, 24px);
+  color: #8b9297;
+  --legend-seat-outer-fill: #fff;
+  --legend-seat-outer-stroke: #8b9297;
+}
+
+.legend-seat-direction svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.legend-seat-direction svg #inner {
+  fill: transparent !important;
+  stroke: transparent !important;
+}
+
+.legend-seat-direction svg #outer {
+  fill: var(--legend-seat-outer-fill) !important;
+  stroke: var(--legend-seat-outer-stroke) !important;
+}
+
+.legend-seat-direction-forward {
+  transform: rotate(180deg);
+  --legend-seat-outer-fill: #fff;
+}
+
+.legend-seat-direction-reverse {
+  --legend-seat-outer-fill: #e1ebf2;
+}
+
+/* =========================================================
+   Seat Map / A·B 공통 좌석 지도, 창측/내측 라벨, 창문 레일
+   ========================================================= */
 .seat-map {
   position: relative;
   max-width: 374px;
   margin: 0 auto;
   padding: 0 clamp(12px, 3.5vw, 16px);
+}
+
+.seat-map-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-bottom: calc(150px + var(--safe-bottom));
+  scrollbar-width: none;
+}
+
+.seat-map-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 .train-window-rails {
@@ -881,6 +985,12 @@ button {
   margin-bottom: clamp(3px, 1vw, 5px);
 }
 
+/* =========================================================
+   Seat Component / seat.svg 기반 좌석 아이콘 상태 색상
+   - available
+   - unavailable
+   - selected
+   ========================================================= */
 .seat {
   position: relative;
   display: grid;
@@ -891,7 +1001,7 @@ button {
   color: #1e2225;
   --seat-inner: #ffffff;
   --seat-outer: #e1ebf2;
-  --seat-stroke: rgb(121, 121, 122);
+  --seat-stroke: #79797a;
   background: transparent;
   font-size: clamp(12px, 3.6vw, 20px);
   font-weight: 800;
@@ -920,6 +1030,18 @@ button {
   stroke: var(--seat-stroke) !important;
 }
 
+.seat-forward {
+  --seat-outer: #ffffff;
+}
+
+.seat-forward .seat-icon {
+  transform: rotate(180deg);
+}
+
+.seat-reverse {
+  --seat-outer: #e1ebf2;
+}
+
 .seat-label {
   position: relative;
   z-index: 1;
@@ -946,6 +1068,9 @@ button {
   font-size: clamp(12px, 4.3vw, 23px);
 }
 
+/* =========================================================
+   Seat Selection Bottom Sheet / A-3-1, A-3-3 선택 좌석 하단 띠
+   ========================================================= */
 .seat-bottom-sheet,
 .seat-payment-bar {
   position: absolute;
@@ -1001,92 +1126,164 @@ button {
   font-size: clamp(22px, 5.7vw, 28px);
 }
 
+/* =========================================================
+   Variant B Overview / B-3 열차 정보 카드와 미니 호차 지도
+   ========================================================= */
 .b-train-card {
-  margin: 16px clamp(12px, 3.2vw, 16px) 10px;
-  padding: 18px clamp(16px, 4vw, 20px) 16px;
-  border: 1px solid #f1f2f3;
-  border-radius: 8px;
+  margin: clamp(14px, 3.7vw, 18px) clamp(14px, 3.8vw, 18px) clamp(12px, 3vw, 16px);
+  padding: clamp(15px, 3.8vw, 19px) clamp(15px, 4vw, 20px) clamp(13px, 3.4vw, 17px);
+  border: 1px solid #f4f5f6;
+  border-radius: 9px;
   background: #fff;
-  box-shadow: 0 1px 3px rgba(15, 35, 48, 0.04);
+  box-shadow: 0 1px 3px rgba(15, 35, 48, 0.03);
 }
 
 .b-train-card h2 {
-  margin: 0 0 12px;
+  margin: 0 0 clamp(4px, 2vw, 13px);
   text-align: center;
-  font-size: clamp(25px, 6.8vw, 34px);
-  font-weight: 700;
+  font-size: clamp(20px, 5.5vw, 31px);
+  font-weight: 400;
+  line-height: 1.08;
 }
 
 .b-route-grid {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: clamp(18px, 6vw, 34px);
-  padding-bottom: 15px;
+  gap: clamp(18px, 5.6vw, 30px);
+  padding-bottom: clamp(13px, 3vw, 17px);
   border-bottom: 1px solid #e6e8ea;
   text-align: center;
-  font-size: clamp(17px, 4.8vw, 22px);
-  font-weight: 700;
+  font-size: clamp(16px, 4vw, 20px);
+  line-height: 1.15;
+  font-weight: 400;
 }
 
 .b-route-grid strong {
   color: #333;
-  font-size: 25px;
+  font-size: clamp(22px, 5.8vw, 27px);
   font-weight: 400;
 }
 
 .b-route-grid small {
   display: block;
-  margin-top: 7px;
+  margin-top: clamp(6px, 1.5vw, 8px);
   font-size: 0.86em;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .b-legend {
   display: grid;
-  grid-template-columns: repeat(4, max-content);
+  grid-template-columns: repeat(6, max-content);
   justify-content: space-between;
-  gap: 6px;
-  margin-top: 15px;
+  align-items: center;
+  gap: clamp(6px, 1.8vw, 10px);
+  margin-top: clamp(13px, 3.2vw, 16px);
   color: #4f555a;
-  font-size: clamp(11px, 3.1vw, 14px);
-  font-weight: 700;
+  font-size: clamp(11px, 3vw, 14px);
+  font-weight: 400;
+}
+
+.b-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(4px, 1.2vw, 6px);
+  white-space: nowrap;
+}
+
+.b-direction-icon {
+  width: 0;
+  height: 0;
+  border-top: clamp(5px, 1.4vw, 7px) solid transparent;
+  border-bottom: clamp(5px, 1.4vw, 7px) solid transparent;
+  border-left: clamp(7px, 2vw, 9px) solid #a7aeb4;
+}
+
+.b-legend-seat {
+  width: clamp(10px, 3.4vw, 22px);
+  height: clamp(10px, 3.4vw, 22px);
+  border-radius: 3px;
+  border: 1px solid #9fb7c7;
+  background: #c3ddef;
+}
+
+.b-legend-seat.is-used {
+  border-color: #cfd3d4;
+  background: #e2e4e4;
+}
+
+.b-child-icon {
+  position: relative;
+  display: inline-block;
+  width: clamp(22px, 5.8vw, 28px);
+  height: clamp(19px, 5vw, 24px);
+}
+
+.b-child-icon b {
+  position: absolute;
+  bottom: 0;
+  width: 38%;
+  height: 62%;
+  border-radius: 45% 45% 3px 3px;
+  background: #9b57b8;
+}
+
+.b-child-icon b::before {
+  position: absolute;
+  top: -42%;
+  left: 50%;
+  width: 58%;
+  aspect-ratio: 1;
+  content: "";
+  border-radius: 50%;
+  background: #9b57b8;
+  transform: translateX(-50%);
+}
+
+.b-child-icon b:first-child {
+  left: 7%;
+}
+
+.b-child-icon b:last-child {
+  right: 7%;
 }
 
 .mini-car-list {
   display: grid;
-  gap: clamp(10px, 3vw, 14px);
-  padding: 8px clamp(12px, 3.2vw, 16px) calc(132px + var(--safe-bottom));
+  gap: clamp(10px, 2.7vw, 14px);
+  padding: clamp(6px, 1.6vw, 8px) clamp(14px, 3.8vw, 18px) calc(154px + var(--safe-bottom));
 }
 
 .mini-car {
   display: grid;
-  grid-template-columns: clamp(74px, 20vw, 94px) 1fr 20px;
+  grid-template-columns: clamp(78px, 21vw, 104px) 1fr clamp(16px, 4.2vw, 20px);
   align-items: center;
-  gap: clamp(8px, 2.5vw, 12px);
-  min-height: clamp(108px, 29vw, 136px);
-  border: 1px solid #edf0f2;
+  gap: clamp(0px, 0.5vw, 14px);
+  min-height: clamp(116px, 30vw, 148px);
+  border: 1px solid #f2f3f4;
   border-radius: 9px;
-  padding: clamp(12px, 3vw, 16px);
+  padding: clamp(12px, 3.1vw, 15px) clamp(12px, 3.2vw, 16px);
   background: #fff;
   text-align: left;
-  box-shadow: 0 1px 2px rgba(20, 40, 55, 0.04);
+  box-shadow: 0 1px 2px rgba(20, 40, 55, 0.025);
 }
 
 .mini-car-meta {
   display: grid;
-  gap: 8px;
+  gap: clamp(8px, 2.2vw, 12px);
 }
 
 .mini-car-meta strong {
-  font-size: clamp(22px, 6vw, 29px);
-  font-weight: 900;
+  font-size: clamp(14px, 4vw, 29px);
+  font-weight: 400;
+  line-height: 1.05;
 }
 
 .mini-car-meta span {
   color: #555c61;
-  font-size: clamp(14px, 4vw, 18px);
-  font-weight: 700;
+  font-size: clamp(12px, 3.2vw, 18px);
+  font-weight: 400;
+  line-height: 1.28;
 }
 
 .mini-car-meta em {
@@ -1095,73 +1292,133 @@ button {
   font-weight: 900;
 }
 
-.mini-seat-grid {
+.mini-seat-layout {
   display: grid;
-  grid-template-columns: repeat(14, minmax(5px, 1fr));
-  gap: clamp(2px, 0.8vw, 4px);
+  gap: clamp(2px, 0.7vw, 4px);
+  min-width: 0;
+}
+
+.mini-seat-row {
+  display: grid;
+  grid-template-columns: repeat(var(--mini-cols, 14), minmax(4px, 1fr));
+  gap: clamp(2px, 0.6vw, 3px);
+}
+
+.mini-direction-row {
+  display: grid;
+  grid-template-columns: repeat(var(--mini-direction-cols, 7), 1fr);
+  align-items: center;
+  padding: clamp(2px, 0.7vw, 4px) 4%;
+}
+
+.mini-direction-row i {
+  justify-self: start;
+  width: 0;
+  height: 0;
+  border-top: clamp(4px, 1.2vw, 6px) solid transparent;
+  border-bottom: clamp(4px, 1.2vw, 6px) solid transparent;
+  border-left: clamp(6px, 1.8vw, 9px) solid #c3c6c8;
 }
 
 .mini-seat {
+  position: relative;
   display: inline-block;
   width: 100%;
-  aspect-ratio: 0.85 / 1;
-  border: 1px solid #9fb7c7;
-  border-radius: 3px;
+  aspect-ratio: 57.13 / 65.24;
+  --mini-seat-fill: #c3ddef;
+  --mini-seat-stroke: #9fb7c7;
 }
 
 .mini-seat.is-free {
-  background: #e8f4ff;
+  --mini-seat-fill: #c3ddef;
+  --mini-seat-stroke: #9fb7c7;
 }
 
 .mini-seat.is-used {
-  border-color: #c7c7c7;
-  background: #dedede;
+  --mini-seat-fill: #e2e4e4;
+  --mini-seat-stroke: #cfd3d4;
+}
+
+.mini-seat svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.mini-seat.is-reverse-direction svg {
+  transform: rotate(180deg);
+}
+
+.mini-seat svg #shape {
+  fill: var(--mini-seat-fill) !important;
+  stroke: var(--mini-seat-stroke) !important;
 }
 
 .mini-arrow {
-  color: #626b71;
-  font-size: clamp(35px, 10vw, 46px);
+  color: #8f8f8f;
+  text-align: right;
+  font-size: clamp(36px, 9vw, 48px);
   font-weight: 300;
 }
 
+/* =========================================================
+   Variant B Seat Bottom Bar / B-3-1, B-3-2 하단 결제 바
+   ========================================================= */
 .seat-payment-bar {
   display: grid;
   grid-template-columns: 1fr minmax(138px, 44%);
   align-items: center;
-  gap: clamp(12px, 3vw, 18px);
+  gap: clamp(12px, 3vw, 24px);
   text-align: left;
 }
 
 .seat-payment-bar div {
   display: grid;
-  gap: 8px;
+  gap: 14px;
 }
 
 .seat-payment-bar span {
-  color: rgba(255, 255, 255, 0.88);
-  font-size: clamp(18px, 5vw, 24px);
-  font-weight: 800;
+  color: #fff;
+  font-size: clamp(16px, 4.5vw, 26px);
+  font-weight: 900;
+  line-height: 1;
 }
 
 .seat-payment-bar strong {
   color: #fff;
-  font-size: clamp(29px, 8vw, 41px);
+  font-size: clamp(16px, 8vw, 34px);
   font-weight: 900;
   line-height: 1;
 }
 
 .seat-payment-bar button {
-  min-height: clamp(62px, 16vw, 78px);
+  min-height: clamp(62px, 18vw, 90px);
+  margin-top: 12px;
+  margin-bottom: 12px;
   border: 0;
   border-radius: 5px;
   color: var(--korail-navy);
   background: #e0f3ff;
-  font-size: clamp(19px, 5.5vw, 27px);
+  font-size: clamp(16px, 5vw, 27px);
   font-weight: 900;
+}
+
+/* =========================================================
+   Variant B Seat Page / B 좌석 선택 화면 호차 탭, 범례
+   ========================================================= */
+.b-seat-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background: #f8f8f8;
 }
 
 .car-tab-strip {
   display: flex;
+  flex: 0 0 auto;
   gap: clamp(9px, 2.5vw, 12px);
   overflow-x: auto;
   padding: clamp(21px, 6vw, 28px) clamp(14px, 3.8vw, 18px);
@@ -1173,11 +1430,12 @@ button {
 }
 
 .car-tab {
-  flex: 0 0 clamp(104px, 29vw, 134px);
-  min-height: clamp(82px, 22vw, 106px);
+  flex: 0 0 clamp(104px, 26vw, 134px);
+  min-height: clamp(60px, 18vw, 80px);
   border: 1px solid #d9dddf;
   border-radius: 10px;
-  padding: 12px;
+  padding-left: 12px;
+  padding-right: 12px;
   color: #1e2225;
   background: #fff;
   text-align: left;
@@ -1189,22 +1447,75 @@ button {
   color: var(--korail-blue);
 }
 
-.car-tab strong {
-  font-size: clamp(19px, 5vw, 24px);
+.car-tab-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
 }
 
-.car-tab span,
+.car-tab strong {
+  font-size: clamp(15px, 3.5vw, 24px);
+}
+
+.car-tab > span,
 .car-tab small {
   display: block;
-  margin-top: 8px;
-  font-size: clamp(15px, 4.2vw, 19px);
+  margin-top: 2px;
+  font-size: clamp(15px, 3.5vw, 19px);
   font-weight: 800;
 }
 
+.car-tab-baby-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: clamp(18px, 4.7vw, 24px);
+  height: clamp(18px, 4.7vw, 24px);
+  color: var(--korail-blue);
+}
+
+.car-tab-baby-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.car-tab-baby-icon svg {
+  --icon-color: var(--korail-blue);
+}
+
+.car-tab-count {
+  color: #4f5458;
+}
+
+.car-tab-count span {
+  display: inline;
+}
+
+.car-tab-remaining {
+  color: #111;
+}
+
+.car-tab.is-active .car-tab-remaining {
+  color: var(--korail-blue);
+}
+
+.car-tab-divider,
+.car-tab-total,
+.car-tab.is-active .car-tab-divider,
+.car-tab.is-active .car-tab-total {
+  color: #555b60;
+}
+
 .b-seat-legend {
+  flex: 0 0 auto;
   padding: 4px clamp(16px, 4vw, 22px) 16px;
 }
 
+/* =========================================================
+   Ticket Confirmation / 4번 승차권 정보 확인 화면
+   ========================================================= */
 .ticket-summary {
   padding: clamp(26px, 7vw, 36px) clamp(23px, 6vw, 30px);
   background: #fff;
@@ -1214,7 +1525,7 @@ button {
   display: flex;
   justify-content: space-between;
   color: var(--korail-blue);
-  font-size: clamp(20px, 5.8vw, 28px);
+  font-size: clamp(14px, 3.9vw, 28px);
   font-weight: 900;
 }
 
@@ -1225,7 +1536,7 @@ button {
 
 .ticket-summary h2 {
   margin: 13px 0 10px;
-  font-size: clamp(19px, 5.1vw, 25px);
+  font-size: clamp(15px, 4vw, 25px);
   font-weight: 900;
   line-height: 1.28;
 }
@@ -1233,7 +1544,7 @@ button {
 .ticket-summary p {
   margin: 0;
   color: #686c70;
-  font-size: clamp(19px, 5vw, 25px);
+  font-size: clamp(15px, 4vw, 25px);
   font-weight: 900;
 }
 
@@ -1245,9 +1556,9 @@ button {
 .deadline {
   display: grid;
   gap: 4px;
-  margin: clamp(26px, 7vw, 34px) 0;
+  margin: clamp(15px, 4vw, 25px) 0;
   color: var(--korail-red);
-  font-size: clamp(20px, 5.6vw, 27px);
+  font-size: clamp(15px, 4vw, 25px);
   font-weight: 900;
 }
 
@@ -1258,30 +1569,31 @@ button {
 }
 
 .ticket-actions button {
-  min-height: clamp(50px, 13vw, 62px);
+  min-height: clamp(38px, 10vw, 62px);
+  margin-bottom: -10px;
   border: 1.5px solid #d2d4d6;
   border-radius: 999px;
   color: #121517;
   background: #fff;
-  font-size: clamp(17px, 4.8vw, 23px);
+  font-size: clamp(15px, 4vw, 25px);
   font-weight: 900;
 }
 
 .notice-line {
   margin: 0;
-  padding: clamp(22px, 6vw, 30px) clamp(24px, 6vw, 32px);
+  padding: clamp(22px, 4vw, 30px) clamp(24px, 4vw, 32px);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   color: #777d82;
   background: #fafafa;
-  font-size: clamp(18px, 5vw, 23px);
+  font-size: clamp(15px, 4vw, 25px);
   font-weight: 800;
 }
 
 .terms-section {
   padding: clamp(24px, 6vw, 32px) clamp(24px, 6vw, 32px) calc(104px + var(--safe-bottom));
   color: #6c7074;
-  font-size: clamp(18px, 4.9vw, 23px);
+  font-size: clamp(15px, 4vw, 25px);
   font-weight: 800;
   line-height: 1.55;
 }
@@ -1289,7 +1601,7 @@ button {
 .terms-section h2 {
   margin: 0 0 18px;
   color: #111;
-  font-size: clamp(25px, 7vw, 34px);
+  font-size: clamp(16px, 4.4vw, 34px);
   font-weight: 900;
 }
 
@@ -1305,10 +1617,13 @@ button {
   background: transparent;
   text-align: left;
   text-decoration: underline;
-  font-size: clamp(18px, 5vw, 24px);
+  font-size: clamp(15px, 4vw, 25px);
   font-weight: 900;
 }
 
+/* =========================================================
+   Intro / Complete / Error / 실험 안내, 완료, 오류, 요약 화면
+   ========================================================= */
 .intro-frame {
   background: linear-gradient(#f3fbff, #fff);
 }
@@ -1413,6 +1728,9 @@ button {
   text-align: left;
 }
 
+/* =========================================================
+   Responsive Tweaks / 작은 모바일 화면 보정
+   ========================================================= */
 @media (max-width: 360px) {
   .app-bar {
     padding-inline: 8px;
@@ -1462,6 +1780,9 @@ button {
   }
 }
 
+/* =========================================================
+   Desktop Preview / 480px 이상에서 모바일 프레임 미리보기 보정
+   ========================================================= */
 @media (min-width: 481px) {
   .phone-frame {
     min-height: 100vh;

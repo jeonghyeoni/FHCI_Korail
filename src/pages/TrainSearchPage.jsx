@@ -21,7 +21,7 @@ export default function TrainSearchPage() {
   }
 
   return (
-    <AppShell title="열차 조회" showRefresh withBottomNav>
+    <AppShell title="열차 조회" showRefresh withBottomNav backTo="/">
       <div className="route-band">{TRAIN.origin} <span>→</span> {TRAIN.destination}</div>
       <section className="search-controls">
         <div className="date-row">

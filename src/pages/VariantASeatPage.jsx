@@ -4,6 +4,7 @@ import AppShell from "../components/AppShell.jsx";
 import SeatMap from "../components/SeatMap.jsx";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 import { CARRIAGES, getCarriage, TRAIN } from "../data/experiment.js";
+import seatIconSvg from "../assets/icons/seat.svg?raw";
 
 const A_CARRIAGE_OPTIONS = CARRIAGES.filter((item) => [1, 5, 6, 7, 8, 9].includes(item.no));
 
@@ -52,8 +53,18 @@ export default function VariantASeatPage({ mode }) {
     navigate("/variant-a/3-4");
   }
 
+  function renderDirectionIcon(direction) {
+    return (
+      <i
+        className={`legend-seat-direction legend-seat-direction-${direction}`}
+        aria-hidden="true"
+        dangerouslySetInnerHTML={{ __html: seatIconSvg }}
+      />
+    );
+  }
+
   return (
-    <AppShell title={`${state.currentCarriage}호차 좌석 선택`}>
+    <AppShell title={`${state.currentCarriage}호차 좌석 선택`} backTo="/variant-a/3">
       <section className="seat-selector-panel">
         <button
           className={showDropdown && state.currentCarriage === dropdownTopCarriage.no ? "car-dropdown-button is-active" : "car-dropdown-button"}
@@ -82,55 +93,53 @@ export default function VariantASeatPage({ mode }) {
           </div>
         ) : null}
 
-        {!showDropdown ? (
-          <>
-            <section className="seat-train-info">
-              <div className="car-side-action car-side-action-left">
-                {previousCarriage ? (
-                  <button
-                    className="outline-pill"
-                    type="button"
-                    data-track-label={`a-seat:quick-car-${previousCarriage.no}`}
-                    data-clickable="true"
-                    onClick={(event) => handleCarriageChange(event, previousCarriage.no)}
-                  >
-                    {previousCarriage.no}호차
-                  </button>
-                ) : null}
-              </div>
-              <div>
-                <h2>{TRAIN.displayName} ({TRAIN.className})</h2>
-                <p>잔여 {carriage.remaining}석 / 전체 {carriage.total}석</p>
-              </div>
-              <div className="car-side-action car-side-action-right">
-                {nextCarriage ? (
-                  <button
-                    className="outline-pill"
-                    type="button"
-                    data-track-label={`a-seat:quick-car-${nextCarriage.no}`}
-                    data-clickable="true"
-                    onClick={(event) => handleCarriageChange(event, nextCarriage.no)}
-                  >
-                    {nextCarriage.no}호차
-                  </button>
-                ) : null}
-              </div>
-            </section>
+        <section className="seat-train-info">
+          <div className="car-side-action car-side-action-left">
+            {previousCarriage ? (
+              <button
+                className="outline-pill"
+                type="button"
+                data-track-label={`a-seat:quick-car-${previousCarriage.no}`}
+                data-clickable="true"
+                onClick={(event) => handleCarriageChange(event, previousCarriage.no)}
+              >
+                {previousCarriage.no}호차
+              </button>
+            ) : null}
+          </div>
+          <div>
+            <h2>{TRAIN.displayName} ({TRAIN.className})</h2>
+            <p>잔여 {carriage.remaining}석 / 전체 {carriage.total}석</p>
+          </div>
+          <div className="car-side-action car-side-action-right">
+            {nextCarriage ? (
+              <button
+                className="outline-pill"
+                type="button"
+                data-track-label={`a-seat:quick-car-${nextCarriage.no}`}
+                data-clickable="true"
+                onClick={(event) => handleCarriageChange(event, nextCarriage.no)}
+              >
+                {nextCarriage.no}호차
+              </button>
+            ) : null}
+          </div>
+        </section>
 
-            <button className="vr-banner" type="button" data-track-label="a-seat:vr-preview" data-clickable="true">
-              열차 내 미리보기(VR)
-            </button>
+        <button className="vr-banner" type="button" data-track-label="a-seat:vr-preview" data-clickable="true">
+          열차 내 미리보기(VR)
+        </button>
 
-            <div className="legend-row">
-              <span><i className="dot dot-unavailable" />선택 불가</span>
-              <span><i className="dot dot-available" />선택 가능</span>
-              <span>∪ 순방향</span>
-              <span>∩ 역방향</span>
-            </div>
-          </>
-        ) : null}
+        <div className="legend-row">
+          <span><i className="dot dot-unavailable" />선택 불가</span>
+          <span><i className="dot dot-available" />선택 가능</span>
+          <span>{renderDirectionIcon("forward")}순방향</span>
+          <span>{renderDirectionIcon("reverse")}역방향</span>
+        </div>
 
-        <SeatMap carriageNo={state.currentCarriage} onSelected={handleSeatSelected} />
+        <div className="seat-map-scroll">
+          <SeatMap carriageNo={state.currentCarriage} onSelected={handleSeatSelected} />
+        </div>
       </section>
 
       <section className={state.selectedSeat ? "seat-bottom-sheet seat-bottom-sheet-selected" : "seat-bottom-sheet"}>

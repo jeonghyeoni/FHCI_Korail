@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <style>
+    :root{
+      --icon-color:#5f6368;
+      --stroke-width:42;
+    }
+    .line{
+      fill:none;
+      stroke:var(--icon-color);
+      stroke-width:var(--stroke-width);
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+    .dot{
+      fill:var(--icon-color);
+    }
+  </style>
+
+  <!-- face outline with ears -->
+  <path class="line" d="
+    M196 473
+    C222 322 340 219 512 219
+    C684 219 802 322 828 473
+    C872 466 914 501 914 552
+    C914 606 870 642 825 631
+    C784 771 664 849 512 849
+    C360 849 240 771 199 631
+    C154 642 110 606 110 552
+    C110 501 152 466 196 473
+    Z" />
+
+  <!-- hair strands moved slightly left -->
+  <path class="line" d="M406 169 C461 208 488 280 491 329" />
+  <path class="line" d="M532 169 C586 210 612 280 610 329" />
+
+  <!-- eyes -->
+  <circle class="dot" cx="392" cy="545" r="31"/>
+  <circle class="dot" cx="632" cy="545" r="31"/>
+
+  <!-- smile -->
+  <path class="line" d="M430 666 C459 724 565 724 594 666" />
+</svg>

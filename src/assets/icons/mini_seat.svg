@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="mini_seat" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 57.13 65.24">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        stroke: #231815;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <polygon id="shape" class="cls-1" points="30.8 40.32 30.8 24.92 56.13 24.92 56.13 1 1 1 1 64.24 56.13 64.24 56.13 40.32 30.8 40.32"/>
+</svg>

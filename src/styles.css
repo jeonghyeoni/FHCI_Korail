@@ -1700,6 +1700,11 @@ button {
   font-weight: 900;
 }
 
+.primary-button:disabled {
+  color: #6d7780;
+  background: #d8e3ea;
+}
+
 .example-url {
   padding: 12px;
   border-radius: 6px;

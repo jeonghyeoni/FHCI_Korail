@@ -49,6 +49,7 @@ export default function CompletePage() {
   }, [state, summary]);
 
   const submissionStatusText = getSubmissionStatusText(submissionStatus);
+  const isSubmissionComplete = submissionStatus === "success";
 
   return (
     <main className="phone-frame" data-clarity-unmask="true">
@@ -56,17 +57,17 @@ export default function CompletePage() {
         <p className="eyebrow">테스트 완료</p>
         <h1>참가자 번호</h1>
         <div className="pid-display">{state.participantId}</div>
-        <p>아래 참가자 번호를 복사하여 설문에 입력해주세요.</p>
+        <p>위의 참가자 번호를 복사하여 설문에 입력해주세요.</p>
         <button
           className="primary-button"
           type="button"
           data-track-label="complete:survey"
           data-clickable="true"
-         
-          data-disabled="true"
-          aria-disabled="true"
+          data-disabled={isSubmissionComplete ? "false" : "true"}
+          aria-disabled={isSubmissionComplete ? "false" : "true"}
+          disabled={!isSubmissionComplete}
         >
-          설문 작성하기
+          {isSubmissionComplete ? "설문 작성하기" : "잠시만 기다려주세요"}
         </button>
         {submissionStatusText ? (
           <p className={`submission-status submission-status-${submissionStatus}`} aria-live="polite">

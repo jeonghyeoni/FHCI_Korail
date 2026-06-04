@@ -1,8 +1,28 @@
+import { useNavigate } from "react-router-dom";
+
 export default function TopBar({ title, showRefresh = false }) {
+  const navigate = useNavigate();
+
+  function handleBack() {
+    if (window.history.length > 1) {
+      navigate(-1);
+      return;
+    }
+
+    navigate("/");
+  }
+
   return (
     <header className="top-bar">
       <div className="app-bar">
-        <button className="icon-button back-button" type="button" data-track-label="top:back" data-clickable="true" aria-label="뒤로가기">
+        <button
+          className="icon-button back-button"
+          type="button"
+          data-track-label="top:back"
+          data-clickable="true"
+          aria-label="뒤로가기"
+          onClick={handleBack}
+        >
           <span aria-hidden="true" />
         </button>
         <h1>{title}</h1>

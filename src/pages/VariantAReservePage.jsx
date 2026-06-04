@@ -6,11 +6,21 @@ import { trainRows } from "./TrainSearchPage.jsx";
 
 export default function VariantAReservePage({ pageKey }) {
   const navigate = useNavigate();
-  const { state } = useExperiment();
+  const { state, actions } = useExperiment();
   const hasSeat = Boolean(state.selectedSeat);
 
-  function handleReserve() {
-    navigate(hasSeat || pageKey === "A-3-4" ? "/confirm" : "/variant-a/3-1");
+  function handleReserve(event) {
+    if (!hasSeat && pageKey !== "A-3-4") {
+      actions.autoSelectRandomSeat({ x: event.clientX, y: event.clientY });
+    }
+    navigate("/confirm");
+  }
+
+  function handleSeatSelection(event) {
+    if (pageKey === "A-3-4") {
+      actions.clearSelectedSeat({ x: event.clientX, y: event.clientY });
+    }
+    navigate("/variant-a/3-1");
   }
 
   return (
@@ -101,15 +111,22 @@ export default function VariantAReservePage({ pageKey }) {
         <div className="sheet-tabs">
           <span>열차시각</span>
           <span>운임요금</span>
-          <span>좌석선택</span>
+          <button
+            type="button"
+            data-track-label={pageKey === "A-3-4" ? "a-reserve:reselect-seat" : "a-reserve:open-seat-selection-tab"}
+            data-clickable="true"
+            onClick={handleSeatSelection}
+          >
+            좌석선택
+          </button>
         </div>
-        {hasSeat ? <p className="selected-seat-note">선택 좌석: {state.selectedSeat.carriageNo}호차 {state.selectedSeat.label}</p> : null}
+        {hasSeat && pageKey !== "A-3-4" ? <p className="selected-seat-note">선택 좌석: {state.selectedSeat.carriageNo}호차 {state.selectedSeat.label}</p> : null}
       </section>
 
       <button
         className="fixed-action"
         type="button"
-        data-track-label={hasSeat ? "a-reserve:confirm-ticket" : "a-reserve:open-seat-selection"}
+        data-track-label={hasSeat ? "a-reserve:confirm-ticket" : "a-reserve:auto-select-and-confirm"}
         data-clickable="true"
         onClick={handleReserve}
       >

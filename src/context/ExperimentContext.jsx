@@ -202,6 +202,48 @@ export function ExperimentProvider({ children }) {
     return selectSeat(seat, pointer);
   }, [logEvent, selectSeat]);
 
+  const autoSelectRandomSeat = useCallback((pointer = {}) => {
+    const current = stateRef.current;
+    const availableSeats = CARRIAGES
+      .flatMap((carriage) => getSeatsForCarriage(carriage.no))
+      .filter((seat) => seat.isAvailable);
+    const seat = availableSeats[Math.floor(Math.random() * availableSeats.length)];
+
+    if (!seat) return { selected: false, reason: "no_available_seat" };
+
+    if (seat.carriageNo !== current.currentCarriage) {
+      dispatch({ type: "SET_CARRIAGE", carriageNo: seat.carriageNo });
+      logEvent({
+        eventType: "car_change",
+        eventLabel: `carriage:${seat.carriageNo}`,
+        carriageNo: seat.carriageNo,
+        xCoordinate: pointer.x,
+        yCoordinate: pointer.y,
+        metadata: { source: "random_auto_select" },
+      });
+    }
+
+    return selectSeat(seat, pointer);
+  }, [logEvent, selectSeat]);
+
+  const clearSelectedSeat = useCallback((pointer = {}) => {
+    const current = stateRef.current;
+    if (!current.selectedSeat) return { unselected: false };
+
+    dispatch({ type: "UNSELECT_SEAT" });
+    logEvent({
+      eventType: "seat_unselect",
+      eventLabel: `seat:${current.selectedSeat.id}`,
+      seatId: current.selectedSeat.id,
+      carriageNo: current.selectedSeat.carriageNo,
+      xCoordinate: pointer.x,
+      yCoordinate: pointer.y,
+      metadata: { source: "clear_selected_seat" },
+    });
+
+    return { unselected: true };
+  }, [logEvent]);
+
   const completeTask = useCallback((pointer = {}) => {
     const current = stateRef.current;
     const timestamp = new Date().toISOString();
@@ -239,14 +281,16 @@ export function ExperimentProvider({ children }) {
   const value = useMemo(() => ({
     state,
     actions: {
+      autoSelectRandomSeat,
       autoSelectSeat,
+      clearSelectedSeat,
       completeTask,
       logEvent,
       selectCarriage,
       selectSeat,
       startTask,
     },
-  }), [autoSelectSeat, completeTask, logEvent, selectCarriage, selectSeat, startTask, state]);
+  }), [autoSelectRandomSeat, autoSelectSeat, clearSelectedSeat, completeTask, logEvent, selectCarriage, selectSeat, startTask, state]);
 
   return <ExperimentContext.Provider value={value}>{children}</ExperimentContext.Provider>;
 }

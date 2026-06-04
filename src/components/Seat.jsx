@@ -1,3 +1,5 @@
+import seatIconSvg from "../assets/icons/seat.svg?raw";
+
 export default function Seat({ seat, selected, onClick }) {
   const isAisle = seat.column === "B" || seat.column === "C";
 
@@ -17,9 +19,8 @@ export default function Seat({ seat, selected, onClick }) {
       aria-disabled={seat.isAvailable ? "false" : "true"}
       onClick={onClick}
     >
-      <span className="seat-back" aria-hidden="true" />
+      <span className="seat-icon" aria-hidden="true" dangerouslySetInnerHTML={{ __html: seatIconSvg }} />
       <span className="seat-label">{seat.label}</span>
-      <span className="seat-cushion" aria-hidden="true" />
     </button>
   );
 }

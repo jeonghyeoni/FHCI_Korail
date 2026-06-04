@@ -533,9 +533,10 @@ button {
 .bottom-nav-item {
   display: grid;
   place-items: center;
-  align-content: center;
-  gap: 2px;
+  align-content: start;
+  gap: 1px;
   min-width: 0;
+  padding-top: clamp(7px, 2vw, 10px);
   border: 0;
   color: #7a7d80;
   background: transparent;
@@ -544,100 +545,17 @@ button {
 }
 
 .bottom-nav-icon {
-  position: relative;
-  display: grid;
-  place-items: center;
   width: clamp(30px, 8vw, 40px);
   height: clamp(30px, 8vw, 40px);
-  color: #85888b;
-  line-height: 1;
-}
-
-.bottom-nav-icon-home::before {
-  content: "";
-  position: absolute;
-  width: 58%;
-  height: 54%;
-  bottom: 10%;
-  border: 2px solid currentColor;
-  border-top: 0;
-  border-radius: 2px;
-}
-
-.bottom-nav-icon-home::after {
-  content: "";
-  position: absolute;
-  top: 13%;
-  width: 56%;
-  height: 56%;
-  border-left: 2px solid currentColor;
-  border-top: 2px solid currentColor;
-  transform: rotate(45deg);
-}
-
-.bottom-nav-icon-benefit::before {
-  content: "%";
-  color: currentColor;
-  font-size: clamp(25px, 7vw, 34px);
-  font-weight: 500;
-}
-
-.bottom-nav-icon-benefit::after {
-  content: "";
-  position: absolute;
-  inset: 8%;
-  border: 2px solid currentColor;
-  border-radius: 50%;
-  opacity: 0.8;
-  clip-path: polygon(0 0, 100% 0, 100% 80%, 54% 80%, 50% 100%, 45% 80%, 0 80%);
-}
-
-.bottom-nav-icon-bag::before {
-  content: "";
-  position: absolute;
-  right: 18%;
-  bottom: 13%;
-  left: 18%;
-  height: 56%;
-  border: 2px solid currentColor;
-  border-radius: 4px;
-}
-
-.bottom-nav-icon-bag::after {
-  content: "";
-  position: absolute;
-  top: 12%;
-  width: 28%;
-  height: 25%;
-  border: 2px solid currentColor;
-  border-bottom: 0;
-  border-radius: 9px 9px 0 0;
-}
-
-.bottom-nav-icon-ticket::before {
-  content: "";
-  position: absolute;
-  width: 68%;
-  height: 48%;
-  border: 2px solid currentColor;
-  border-radius: 5px;
-  transform: rotate(-5deg);
-}
-
-.bottom-nav-icon-ticket::after {
-  content: "";
-  position: absolute;
-  width: 21%;
-  height: 12%;
-  border-left: 2px solid currentColor;
-  border-bottom: 2px solid currentColor;
-  transform: rotate(-45deg);
+  object-fit: contain;
+  object-position: center;
+  display: block;
 }
 
 .reserve-sheet {
   position: absolute;
   right: 0;
-  bottom: calc(clamp(70px, 18vw, 86px) + clamp(90px, 24vw, 106px) + var(--safe-bottom));
+  bottom: calc(clamp(70px, 18vw, 86px) - 4px + clamp(90px, 24vw, 106px) + var(--safe-bottom));
   left: 0;
   z-index: 18;
   margin-top: 0;
@@ -649,7 +567,7 @@ button {
 
 .reserve-sheet p {
   margin: 0 0 7px;
-  font-size: clamp(17px, 4.8vw, 23px);
+  font-size: clamp(16px, 4vw, 20px);
   font-weight: 800;
 }
 
@@ -662,11 +580,24 @@ button {
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
   text-align: center;
-  font-size: clamp(15px, 4.4vw, 21px);
+  font-size: clamp(16px, 4vw, 21px);
   font-weight: 900;
 }
 
-.sheet-tabs span + span {
+.sheet-tabs span,
+.sheet-tabs button {
+  display: grid;
+  place-items: center;
+  min-height: clamp(38px, 10vw, 48px);
+  border: 0;
+  padding: 6px clamp(8px, 2.5vw, 12px);
+  color: inherit;
+  background: transparent;
+  font: inherit;
+}
+
+.sheet-tabs span + span,
+.sheet-tabs span + button {
   border-left: 1px solid rgba(122, 221, 224, 0.65);
 }
 
@@ -679,24 +610,39 @@ button {
 }
 
 .sheet-handle {
-  top: -24px;
-  left: 50%;
-  width: 56px;
+  position: relative;
+  top: auto;
+  left: auto;
+  display: grid;
+  place-items: center;
+  width: 64px;
   height: 28px;
-  transform: translateX(-50%);
-  border-radius: 10px 10px 0 0;
+  margin: -37px auto 10px;
+  padding: 0;
+  transform: none;
+  border-radius: 9px 9px 0 0;
   background: var(--sheet);
-  font-size: 28px;
+  font-size: 0;
   line-height: 1;
+}
+
+.sheet-handle::before {
+  content: "";
+  width: 15px;
+  height: 15px;
+  margin-top: 10px;
+  border-right: 2px solid rgba(255, 255, 255, 0.94);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.94);
+  transform: rotate(45deg) translateX(-5px) translateY(-5px);
 }
 
 .sheet-close {
   top: 12px;
   right: 13px;
-  width: 38px;
-  height: 38px;
-  font-size: 34px;
-  line-height: 1;
+  width: 25px;
+  height: 0px;
+  font-size: 22px;
+  line-height: 0.8;
 }
 
 .selected-seat-note {
@@ -724,10 +670,15 @@ button {
   bottom: calc(clamp(90px, 24vw, 106px) + var(--safe-bottom));
 }
 
+.reserve-sheet + .fixed-action {
+  min-height: calc(clamp(70px, 18vw, 86px) - 4px + var(--safe-bottom));
+  font-size: clamp(20px, 5.4vw, 26px);
+}
+
 .seat-selector-panel {
   position: relative;
-  padding: clamp(12px, 3vw, 15px) clamp(12px, 3vw, 16px) calc(150px + var(--safe-bottom));
-  background: #fff;
+  padding: clamp(11px, 2.8vw, 14px) clamp(11px, 3vw, 15px) calc(150px + var(--safe-bottom));
+  background: #f8f8f8;
 }
 
 .car-dropdown-button {
@@ -735,27 +686,31 @@ button {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  min-height: clamp(52px, 13.5vw, 64px);
+  min-height: clamp(40px, 9vw, 52px);
   border: 1px solid #d6d8da;
-  padding: 0 clamp(13px, 3.8vw, 18px);
+  padding: 0 clamp(10px, 2vw, 18px);
   color: #606367;
   background: #fff;
-  font-size: clamp(19px, 5.4vw, 25px);
-  font-weight: 800;
+  font-size: clamp(16px, 3.8vw, 20px);
+  font-weight: 900;
 }
 
 .car-dropdown-button span {
   color: #777;
 }
 
+.car-dropdown-button.is-active {
+  background: #dfeff8;
+}
+
 .car-dropdown-list {
   position: relative;
   z-index: 8;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
   border: 1px solid #d6d8da;
   border-top: 0;
   background: #fff;
-  box-shadow: 0 10px 24px rgba(20, 35, 45, 0.06);
+  box-shadow: none;
 }
 
 .car-option {
@@ -763,13 +718,13 @@ button {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  min-height: clamp(47px, 12vw, 58px);
+  min-height: clamp(40px, 9vw, 58px);
   border: 0;
-  padding: 0 clamp(13px, 3.8vw, 18px);
+  padding: 0 clamp(10px, 2vw, 18px);
   color: #686c70;
   background: #fff;
-  font-size: clamp(18px, 5vw, 23px);
-  font-weight: 800;
+  font-size: clamp(16px, 3.8vw, 20px);
+  font-weight: 900;
 }
 
 .car-option.is-active {
@@ -783,45 +738,63 @@ button {
 
 .seat-train-info {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(72px, 92px) minmax(0, 1fr) minmax(72px, 92px);
   align-items: end;
-  gap: 16px;
-  padding: clamp(28px, 8vw, 42px) 10px clamp(18px, 5vw, 24px);
+  gap: clamp(8px, 2.5vw, 12px);
+  padding: clamp(14px, 4vw, 22px) 10px clamp(12px, 3.5vw, 18px);
 }
 
 .seat-train-info h2,
 .seat-train-info p {
   margin: 0;
-  text-align: right;
+  margin-top: 8px;
+  text-align: center;
 }
 
 .seat-train-info h2 {
-  font-size: clamp(22px, 6vw, 29px);
+  font-size: clamp(16px, 4.4vw, 25px);
   font-weight: 800;
+  white-space: nowrap;
 }
 
 .seat-train-info p {
-  margin-top: 4px;
+  margin-top: -3px;
+  margin-bottom: 4px;
   color: #656a6f;
-  font-size: clamp(15px, 4.2vw, 19px);
+  font-size: clamp(13px, 3.5vw, 17px);
   font-weight: 800;
+  white-space: nowrap;
 }
 
 .outline-pill {
-  min-width: clamp(78px, 21vw, 104px);
-  font-size: clamp(18px, 5vw, 24px);
+  min-width: clamp(72px, 20vw, 92px);
+  font-size: clamp(13px, 3.5vw, 22px);
+}
+
+.car-side-action {
+  display: flex;
+  align-items: end;
+  min-height: clamp(40px, 10vw, 48px);
+}
+
+.car-side-action-left {
+  justify-content: start;
+}
+
+.car-side-action-right {
+  justify-content: end;
 }
 
 .vr-banner {
   width: 100%;
-  min-height: clamp(54px, 14vw, 68px);
+  min-height: clamp(52px, 16vw, 64px);
   border: 0;
   border-radius: 7px;
   color: #fff;
   background:
     linear-gradient(rgba(24, 33, 40, 0.5), rgba(24, 33, 40, 0.5)),
     repeating-linear-gradient(90deg, #657987 0 22px, #8799a5 22px 24px, #657987 24px 48px);
-  font-size: clamp(24px, 6.4vw, 31px);
+  font-size: clamp(24px, 6vw, 31px);
   font-weight: 900;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
 }
@@ -831,17 +804,18 @@ button {
   grid-template-columns: repeat(4, max-content);
   justify-content: space-between;
   gap: 7px;
-  padding: clamp(17px, 5vw, 25px) 5px 14px;
+  margin-bottom: 8px;
+  padding: clamp(15px, 4.3vw, 21px) 5px 11px;
   color: #656a6f;
-  font-size: clamp(13px, 3.6vw, 17px);
+  font-size: clamp(12px, 3.5vw, 17px);
   font-weight: 800;
   white-space: nowrap;
 }
 
 .dot {
   display: inline-block;
-  width: 19px;
-  height: 19px;
+  width: 17px;
+  height: 17px;
   margin-right: 6px;
   border-radius: 50%;
   vertical-align: -4px;
@@ -858,9 +832,9 @@ button {
 
 .seat-map {
   position: relative;
-  max-width: 408px;
+  max-width: 374px;
   margin: 0 auto;
-  padding: 0 clamp(12px, 4vw, 18px);
+  padding: 0 clamp(12px, 3.5vw, 16px);
 }
 
 .train-window-rails {
@@ -872,7 +846,7 @@ button {
 }
 
 .train-window-rails span {
-  width: clamp(8px, 2.2vw, 12px);
+  width: clamp(6px, 1.6vw, 10px);
   border-radius: 999px;
   background:
     linear-gradient(to bottom, #bfe2f8 0 21%, transparent 21% 28%, #bfe2f8 28% 49%, transparent 49% 56%, #bfe2f8 56% 76%, transparent 76% 83%, #bfe2f8 83% 100%);
@@ -881,16 +855,17 @@ button {
 .seat-side-labels,
 .seat-row {
   display: grid;
-  grid-template-columns: minmax(42px, 1fr) minmax(42px, 1fr) clamp(30px, 8vw, 45px) minmax(42px, 1fr) minmax(42px, 1fr);
-  gap: clamp(5px, 1.8vw, 9px);
+  grid-template-columns: minmax(42px, 55px) minmax(42px, 55px) clamp(30px, 21vw, 85px) minmax(42px, 55px) minmax(42px, 55px);
+  justify-content: center;
+  gap: clamp(5px, 1.2vw, 8px);
   align-items: center;
 }
 
 .seat-side-labels {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   color: #6b7075;
   text-align: center;
-  font-size: clamp(14px, 4vw, 18px);
+  font-size: clamp(12px, 3.5vw, 18px);
   font-weight: 800;
 }
 
@@ -903,80 +878,72 @@ button {
 }
 
 .seat-row {
-  margin-bottom: clamp(7px, 2vw, 10px);
+  margin-bottom: clamp(3px, 1vw, 5px);
 }
 
 .seat {
   position: relative;
   display: grid;
   place-items: center;
-  aspect-ratio: 1 / 1.08;
+  aspect-ratio: 1 / 1.03;
   min-width: 0;
   border: 0;
   color: #1e2225;
+  --seat-inner: #ffffff;
+  --seat-outer: #e1ebf2;
+  --seat-stroke: rgb(121, 121, 122);
   background: transparent;
-  font-size: clamp(16px, 4.8vw, 22px);
+  font-size: clamp(12px, 3.6vw, 20px);
   font-weight: 800;
 }
 
-.seat-back {
+.seat-icon {
   position: absolute;
   inset: 0;
-  border: 2px solid #8897a1;
-  border-bottom-width: 3px;
-  border-radius: 19px 19px 9px 9px;
-  background: #edf7fd;
+  display: block;
 }
 
-.seat-cushion {
-  position: absolute;
-  right: 12%;
-  bottom: 10%;
-  left: 12%;
-  height: 51%;
-  border: 2px solid #8897a1;
-  border-radius: 9px 9px 5px 5px;
-  background: #fff;
+.seat-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.seat-icon svg #inner {
+  fill: var(--seat-inner) !important;
+  stroke: var(--seat-stroke) !important;
+}
+
+.seat-icon svg #outer {
+  fill: var(--seat-outer) !important;
+  stroke: var(--seat-stroke) !important;
 }
 
 .seat-label {
   position: relative;
   z-index: 1;
-  transform: translateY(-5%);
-}
-
-.seat-window .seat-back {
-  background: #e8f5fc;
-}
-
-.seat-aisle .seat-back {
-  background: #f5fbff;
+  transform: translateY(-2%);
 }
 
 .seat-unavailable {
   color: #b9bec2;
-}
-
-.seat-unavailable .seat-back,
-.seat-unavailable .seat-cushion {
-  border-color: #d2d5d7;
-  background: #e8eaea;
+  --seat-inner: #e4e6e6;
+  --seat-outer: #e2e4e4;
+  --seat-stroke: #cfd3d4;
 }
 
 .seat-selected {
   color: #fff;
-}
-
-.seat-selected .seat-back,
-.seat-selected .seat-cushion {
-  border-color: #005b98;
-  background: #1c75bb;
+  --seat-inner: #1967b2;
+  --seat-outer: #1967b2;
+  --seat-stroke: #0a3c60;
 }
 
 .aisle-arrow {
   color: #33383c;
   text-align: center;
-  font-size: clamp(18px, 5vw, 23px);
+  font-size: clamp(12px, 4.3vw, 23px);
 }
 
 .seat-bottom-sheet,
@@ -986,8 +953,8 @@ button {
   bottom: 0;
   left: 0;
   z-index: 20;
-  min-height: calc(clamp(98px, 24vw, 124px) + var(--safe-bottom));
-  padding: 18px clamp(18px, 5vw, 24px) calc(18px + var(--safe-bottom));
+  min-height: calc(clamp(90px, 22vw, 108px) + var(--safe-bottom));
+  padding: 13px clamp(18px, 5vw, 24px) calc(13px + var(--safe-bottom));
   color: #fff;
   background: var(--sheet);
   backdrop-filter: blur(4px);
@@ -997,8 +964,14 @@ button {
   display: grid;
   align-content: center;
   justify-items: center;
-  gap: 4px;
+  gap: 5px;
   text-align: center;
+}
+
+.seat-bottom-sheet-selected {
+  bottom: calc(clamp(62px, 16vw, 74px) + var(--safe-bottom));
+  min-height: clamp(78px, 20vw, 94px);
+  padding: 8px clamp(18px, 5vw, 24px);
 }
 
 .seat-bottom-sheet p,
@@ -1010,13 +983,22 @@ button {
 
 .seat-bottom-sheet p {
   color: #d3ecfb;
-  font-size: clamp(17px, 4.8vw, 22px);
+  font-size: clamp(15px, 4vw, 20px);
 }
 
 .seat-bottom-sheet strong,
 .seat-bottom-sheet span {
-  font-size: clamp(21px, 5.8vw, 28px);
+  font-size: clamp(18px, 5vw, 26px);
   font-weight: 900;
+}
+
+.seat-bottom-sheet-selected span {
+  font-size: clamp(16px, 4.4vw, 22px);
+}
+
+.seat-bottom-sheet-selected + .fixed-action {
+  min-height: calc(clamp(62px, 16vw, 74px) + var(--safe-bottom));
+  font-size: clamp(22px, 5.7vw, 28px);
 }
 
 .b-train-card {

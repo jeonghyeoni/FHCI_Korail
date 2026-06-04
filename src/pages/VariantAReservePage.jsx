@@ -74,6 +74,7 @@ export default function VariantAReservePage({ pageKey }) {
               type="button"
               data-track-label={`a-reserve:visible-row:${index}:general`}
               data-clickable="true"
+             
               data-disabled="true"
               aria-disabled="true"
             >
@@ -94,6 +95,7 @@ export default function VariantAReservePage({ pageKey }) {
               type="button"
               data-track-label={`a-reserve:visible-row:${index}:premium`}
               data-clickable="true"
+             
               data-disabled="true"
               aria-disabled="true"
             >
@@ -115,6 +117,7 @@ export default function VariantAReservePage({ pageKey }) {
             type="button"
             data-track-label={pageKey === "A-3-4" ? "a-reserve:reselect-seat" : "a-reserve:open-seat-selection-tab"}
             data-clickable="true"
+           
             onClick={handleSeatSelection}
           >
             좌석선택
@@ -127,6 +130,7 @@ export default function VariantAReservePage({ pageKey }) {
         type="button"
         data-track-label={hasSeat ? "a-reserve:confirm-ticket" : "a-reserve:auto-select-and-confirm"}
         data-clickable="true"
+       
         onClick={handleReserve}
       >
         예매

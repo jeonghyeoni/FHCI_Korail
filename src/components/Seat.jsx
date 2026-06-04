@@ -16,6 +16,7 @@ export default function Seat({ seat, selected, onClick }) {
       type="button"
       data-track-label={`seat:${seat.id}`}
       data-clickable="true"
+     
       data-disabled={seat.isAvailable ? "false" : "true"}
       aria-disabled={seat.isAvailable ? "false" : "true"}
       onClick={onClick}

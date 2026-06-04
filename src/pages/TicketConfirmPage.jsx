@@ -51,6 +51,7 @@ export default function TicketConfirmPage() {
         type="button"
         data-track-label="confirm:payment"
         data-clickable="true"
+       
         onClick={handlePayment}
       >
         결제하기

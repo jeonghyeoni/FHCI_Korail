@@ -47,9 +47,10 @@ export default function VariantBSeatPage() {
               type="button"
               key={item.no}
               data-track-label={`b-seat:car-tab:${item.no}`}
-            data-clickable="true"
-            onClick={(event) => handleCarTab(event, item.no)}
-          >
+              data-clickable="true"
+             
+              onClick={(event) => handleCarTab(event, item.no)}
+            >
             <div className="car-tab-title">
               <strong>{item.no}호차</strong>
               {item.no === 8 ? (
@@ -99,6 +100,7 @@ export default function VariantBSeatPage() {
             type="button"
             data-track-label="b-seat:pay"
             data-clickable="true"
+           
             onClick={handlePay}
           >
             결제하기
@@ -108,6 +110,7 @@ export default function VariantBSeatPage() {
             type="button"
             data-track-label="b-seat:auto-select"
             data-clickable="true"
+           
             onClick={handleAutoSelect}
           >
             좌석 자동선택

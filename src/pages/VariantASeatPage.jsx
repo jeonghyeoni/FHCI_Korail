@@ -71,6 +71,7 @@ export default function VariantASeatPage({ mode }) {
           type="button"
           data-track-label="a-seat:car-dropdown"
           data-clickable="true"
+         
           onClick={handleDropdownHeaderClick}
         >
           {dropdownTopCarriage.no}호차 ({dropdownTopCarriage.remaining}석) <span>{showDropdown ? "▴" : "▾"}</span>
@@ -84,6 +85,7 @@ export default function VariantASeatPage({ mode }) {
                 className={item.no === state.currentCarriage ? "car-option is-active" : "car-option"}
                 data-track-label={`a-seat:car-option:${item.no}`}
                 data-clickable="true"
+               
                 onClick={(event) => handleCarriageChange(event, item.no)}
               >
                 <span>{item.no}호차 ({item.remaining}석)</span>
@@ -101,6 +103,7 @@ export default function VariantASeatPage({ mode }) {
                 type="button"
                 data-track-label={`a-seat:quick-car-${previousCarriage.no}`}
                 data-clickable="true"
+               
                 onClick={(event) => handleCarriageChange(event, previousCarriage.no)}
               >
                 {previousCarriage.no}호차
@@ -118,6 +121,7 @@ export default function VariantASeatPage({ mode }) {
                 type="button"
                 data-track-label={`a-seat:quick-car-${nextCarriage.no}`}
                 data-clickable="true"
+               
                 onClick={(event) => handleCarriageChange(event, nextCarriage.no)}
               >
                 {nextCarriage.no}호차
@@ -160,6 +164,7 @@ export default function VariantASeatPage({ mode }) {
           type="button"
           data-track-label="a-seat:selection-complete"
           data-clickable="true"
+         
           onClick={handleDone}
         >
           선택 완료

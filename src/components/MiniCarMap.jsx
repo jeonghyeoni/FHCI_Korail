@@ -40,6 +40,7 @@ export default function MiniCarMap({ carriageNo, displayRemaining, onOpen }) {
       type="button"
       data-track-label={`mini-car:${carriageNo}`}
       data-clickable="true"
+     
       onClick={onOpen}
     >
       <span className="mini-car-meta">

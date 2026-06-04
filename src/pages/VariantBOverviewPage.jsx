@@ -77,6 +77,7 @@ export default function VariantBOverviewPage() {
             type="button"
             data-track-label="b-overview:pay"
             data-clickable="true"
+           
             onClick={handlePay}
           >
             결제하기
@@ -86,6 +87,7 @@ export default function VariantBOverviewPage() {
             type="button"
             data-track-label="b-overview:auto-select"
             data-clickable="true"
+           
             onClick={handleAutoSelect}
           >
             좌석 자동선택

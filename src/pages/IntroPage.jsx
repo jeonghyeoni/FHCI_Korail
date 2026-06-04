@@ -13,7 +13,7 @@ export default function IntroPage() {
   }
 
   return (
-    <main className="phone-frame intro-frame">
+    <main className="phone-frame intro-frame" data-clarity-unmask="true">
       <section className="screen intro-screen">
         <p className="eyebrow">FHCI 사용성 평가</p>
         <h1>코레일 좌석 예매 A/B 테스트</h1>
@@ -40,6 +40,7 @@ export default function IntroPage() {
           type="button"
           data-track-label="intro:start"
           data-clickable="true"
+         
           onClick={handleStart}
         >
           시작하기

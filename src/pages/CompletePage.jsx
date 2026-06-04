@@ -51,7 +51,7 @@ export default function CompletePage() {
   const submissionStatusText = getSubmissionStatusText(submissionStatus);
 
   return (
-    <main className="phone-frame">
+    <main className="phone-frame" data-clarity-unmask="true">
       <section className="screen centered-screen complete-screen">
         <p className="eyebrow">테스트 완료</p>
         <h1>참가자 번호</h1>
@@ -62,6 +62,7 @@ export default function CompletePage() {
           type="button"
           data-track-label="complete:survey"
           data-clickable="true"
+         
           data-disabled="true"
           aria-disabled="true"
         >

@@ -20,6 +20,7 @@ export default function BottomNav() {
           key={item.label}
           data-track-label={`bottom-nav:${item.label}`}
           data-clickable="true"
+         
         >
           <img className={`bottom-nav-icon bottom-nav-icon-${item.key}`} src={item.icon} alt="" aria-hidden="true" />
           <span>{item.label}</span>

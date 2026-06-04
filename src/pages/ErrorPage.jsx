@@ -4,7 +4,7 @@ export default function ErrorPage({ notFound = false }) {
   const { state } = useExperiment();
 
   return (
-    <main className="phone-frame">
+    <main className="phone-frame" data-clarity-unmask="true">
       <section className="screen centered-screen">
         <h1>{notFound ? "페이지를 찾을 수 없습니다" : "실험 URL을 확인해주세요"}</h1>
         {!notFound ? (

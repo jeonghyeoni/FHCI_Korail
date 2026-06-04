@@ -37,6 +37,7 @@ export default function TrainSearchPage() {
               className="select-like"
               data-track-label={`train:filter:${filter}`}
               data-clickable="true"
+             
             >
               {filter} <span>▾</span>
             </button>
@@ -64,6 +65,7 @@ export default function TrainSearchPage() {
                 type="button"
                 data-track-label="train:KTX001:general-fare"
                 data-clickable="true"
+               
                 onClick={handleGeneralFare}
               >
                 {formatWon(TRAIN.price)}
@@ -73,9 +75,10 @@ export default function TrainSearchPage() {
               <button
                 className={row.priceLike ? "fare-button fare-secondary" : "fare-button fare-disabled"}
                 type="button"
-                data-track-label={`train:${index}:general-fare`}
-                data-clickable="true"
-                data-disabled="true"
+              data-track-label={`train:${index}:general-fare`}
+              data-clickable="true"
+             
+              data-disabled="true"
                 aria-disabled="true"
               >
                 {row.priceLike ? (
@@ -97,6 +100,7 @@ export default function TrainSearchPage() {
               type="button"
               data-track-label={`train:${index}:premium-fare`}
               data-clickable="true"
+             
               data-disabled={index === 0 ? "false" : "true"}
               aria-disabled={index === 0 ? "false" : "true"}
             >

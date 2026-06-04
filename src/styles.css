@@ -281,7 +281,7 @@ button {
 }
 
 .timer-button span::after {
-  top: 13px;
+  top: 6px;
   height: 8px;
   transform: rotate(90deg);
 }

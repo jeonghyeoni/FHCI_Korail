@@ -31,16 +31,32 @@ export const TASKS = {
 };
 
 export const CARRIAGES = [
-  { no: 1, remaining: 22, total: 56, note: "" },
+  { no: 1, remaining: 17, total: 56, note: "" },
   { no: 2, remaining: 29, total: 50, note: "" },
   { no: 3, remaining: 29, total: 50, note: "" },
   { no: 4, remaining: 29, total: 50, note: "" },
-  { no: 5, remaining: 6, total: 56, note: "" },
-  { no: 6, remaining: 16, total: 56, note: "" },
-  { no: 7, remaining: 14, total: 56, note: "" },
-  { no: 8, remaining: 13, total: 56, note: "" },
-  { no: 9, remaining: 2, total: 56, note: "" },
+  { no: 5, remaining: 3, total: 56, note: "" },
+  { no: 6, remaining: 39, total: 56, note: "" },
+  { no: 7, remaining: 40, total: 56, note: "" },
+  { no: 8, remaining: 19, total: 56, note: "" },
+  { no: 9, remaining: 20, total: 56, note: "" },
 ];
+
+const columns = ["A", "B", "C", "D"];
+const rowsByCarriage = {
+  5: [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
+  9: [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
+};
+
+function getRowsForCarriage(no) {
+  return rowsByCarriage[no] || [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+}
+
+function makeSeatLabels(rows = [], seatColumns = columns) {
+  return rows.flatMap((row) => seatColumns.map((column) => `${row}${column}`));
+}
+
+const carriage5AvailableSeats = new Set(["11B", "8C", "4B"]);
 
 const unavailableByCarriage = {
   1: [
@@ -51,22 +67,28 @@ const unavailableByCarriage = {
     "10A", "10D",
     "9A", "9B", "9D",
     "8A", "8B", "8D",
-    "7A", "7D",
+    "7A", "7B", "7D",
     "6A", "6C", "6D",
-    "5A", "5D",
-    "4A", "4D",
-    "3A", "3D",
-    "2A", "2D",
+    "5A", "5C", "5D",
+    "4A", "4B", "4D",
+    "3A", "3C", "3D",
+    "2A", "2B", "2D",
     "1A", "1D",
   ],
   2: ["14A", "13A", "12D", "11C", "9A", "9B", "8A", "8B"],
   3: ["14D", "13D", "12A", "12D", "10D", "9C", "8C"],
   4: ["14A", "14D", "13C", "12C", "11D", "10A", "9A"],
-  5: ["15A", "15D", "14A", "14B", "14C", "14D", "13A", "13B", "13C", "13D", "12A", "12B", "12C", "12D", "11A", "11C", "11D", "10A", "10B", "10C", "10D", "9A", "9B", "9C", "9D"],
-  6: ["14D", "13A", "13D", "12D", "11C", "10A", "9D", "8A"],
-  7: ["14C", "14D", "13D", "12A", "11C", "10D", "9A", "8B"],
-  8: ["14A", "14B", "13A", "12C", "11D", "10D", "9A", "8C"],
-  9: ["15A", "15B", "15C", "15D", "14A", "14B", "14C", "14D", "13A", "13B", "13C", "13D", "12A", "12B", "12C", "12D", "11A", "11C", "11D", "10A", "10B", "10C", "10D", "9A", "9B", "9D", "8A", "8B", "8D"],
+  5: makeSeatLabels(getRowsForCarriage(5)).filter((label) => !carriage5AvailableSeats.has(label)),
+  6: ["8A", "8D", "7A", "7B", "6C", "6D", "5A", "5D", "4A", "4B", "4D", "3C", "3D", "2A", "1A", "1B", "1D"],
+  7: ["8A", "8C", "8D", "7D", "6A", "6B", "5A", "5C", "5D", "4A", "3D", "2A", "2B", "1A", "1C", "1D"],
+  8: [
+    ...makeSeatLabels(getRowsForCarriage(8), ["A", "D"]),
+    "8B", "7C", "6B", "6C", "5B", "4C", "3B", "2B", "2C",
+  ],
+  9: [
+    ...makeSeatLabels(getRowsForCarriage(9), ["A", "D"]),
+    "8B", "7B", "6B", "6C", "5C", "4C", "3B", "2B", "2C", "1B",
+  ],
 };
 
 export const PAGE_NAMES = {
@@ -94,13 +116,11 @@ export function getCarriage(no) {
 
 export function getSeatsForCarriage(carriageNo) {
   const no = Number(carriageNo);
-  const rows = no === 5 || no === 9
-    ? [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-    : [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+  const rows = getRowsForCarriage(no);
   const unavailable = new Set(unavailableByCarriage[no] || []);
 
   return rows.flatMap((row) =>
-    ["A", "B", "C", "D"].map((column) => {
+    columns.map((column) => {
       const label = `${row}${column}`;
       return {
         id: `${no}-${label}`,
@@ -110,7 +130,7 @@ export function getSeatsForCarriage(carriageNo) {
         label,
         isWindow: column === "A" || column === "D",
         isAvailable: !unavailable.has(label),
-        direction: row >= 9 ? "reverse" : "forward",
+        direction: no === 5 ? "forward" : row >= 9 ? "reverse" : "forward",
       };
     }),
   );

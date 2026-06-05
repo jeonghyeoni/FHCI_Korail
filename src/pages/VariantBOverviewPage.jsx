@@ -8,14 +8,6 @@ export default function VariantBOverviewPage() {
   const navigate = useNavigate();
   const { state, actions } = useExperiment();
   const visibleCars = CARRIAGES.filter((carriage) => [1, 5, 6, 7, 8, 9].includes(carriage.no));
-  const bOverviewRemaining = {
-    1: 22,
-    5: 33,
-    6: 29,
-    7: 30,
-    8: 13,
-    9: 2,
-  };
 
   function openCarriage(event, carriageNo) {
     actions.selectCarriage(carriageNo, { x: event.clientX, y: event.clientY });
@@ -54,7 +46,6 @@ export default function VariantBOverviewPage() {
           <MiniCarMap
             key={carriage.no}
             carriageNo={carriage.no}
-            displayRemaining={bOverviewRemaining[carriage.no]}
             onOpen={(event) => openCarriage(event, carriage.no)}
           />
         ))}

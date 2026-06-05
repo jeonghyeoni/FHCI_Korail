@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import AppShell from "../components/AppShell.jsx";
 import SeatMap from "../components/SeatMap.jsx";
@@ -9,6 +10,13 @@ import babyIconSvg from "../assets/icons/baby.svg?raw";
 export default function VariantBSeatPage() {
   const navigate = useNavigate();
   const { state, actions } = useExperiment();
+  const seatMapScrollRef = useRef(null);
+
+  useEffect(() => {
+    if (seatMapScrollRef.current) {
+      seatMapScrollRef.current.scrollTop = 0;
+    }
+  }, [state.currentCarriage]);
 
   function handleCarTab(event, carriageNo) {
     actions.selectCarriage(carriageNo, { x: event.clientX, y: event.clientY });
@@ -78,7 +86,7 @@ export default function VariantBSeatPage() {
           <span>{renderDirectionIcon("reverse")}역방향</span>
         </div>
 
-        <div className="seat-map-scroll">
+        <div className="seat-map-scroll" ref={seatMapScrollRef}>
           <SeatMap carriageNo={state.currentCarriage} onSelected={handleSeatSelected} />
         </div>
       </section>

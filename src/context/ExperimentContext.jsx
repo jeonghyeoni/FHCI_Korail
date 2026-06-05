@@ -61,7 +61,7 @@ function initialState() {
     taskStarted: false,
     taskStartTime: null,
     taskEndTime: null,
-    currentCarriage: 1,
+    currentCarriage: 9,
     selectedSeat: null,
     success: false,
   };
@@ -75,12 +75,12 @@ function reducer(state, action) {
         taskStarted: true,
         taskStartTime: action.timestamp,
         taskEndTime: null,
-        currentCarriage: 1,
+        currentCarriage: 9,
         selectedSeat: null,
         success: false,
       };
     case "SET_CARRIAGE":
-      return { ...state, currentCarriage: action.carriageNo };
+      return { ...state, currentCarriage: action.carriageNo, selectedSeat: action.clearSelectedSeat ? null : state.selectedSeat };
     case "SELECT_SEAT":
       return { ...state, selectedSeat: action.seat };
     case "UNSELECT_SEAT":
@@ -149,15 +149,16 @@ export function ExperimentProvider({ children }) {
     dispatch({ type: "START_TASK", timestamp });
   }, []);
 
-  const selectCarriage = useCallback((carriageNo, pointer = {}) => {
+  const selectCarriage = useCallback((carriageNo, pointer = {}, options = {}) => {
     const normalizedCarriageNo = Number(carriageNo);
-    dispatch({ type: "SET_CARRIAGE", carriageNo: normalizedCarriageNo });
+    dispatch({ type: "SET_CARRIAGE", carriageNo: normalizedCarriageNo, clearSelectedSeat: Boolean(options.clearSelectedSeat) });
     logEvent({
       eventType: "car_change",
       eventLabel: `carriage:${normalizedCarriageNo}`,
       carriageNo: normalizedCarriageNo,
       xCoordinate: pointer.x,
       yCoordinate: pointer.y,
+      metadata: { clearedSelectedSeat: Boolean(options.clearSelectedSeat) },
     });
   }, [logEvent]);
 

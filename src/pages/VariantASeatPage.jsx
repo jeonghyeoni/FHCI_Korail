@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import AppShell from "../components/AppShell.jsx";
 import SeatMap from "../components/SeatMap.jsx";
@@ -11,6 +11,7 @@ const A_CARRIAGE_OPTIONS = CARRIAGES.filter((item) => [1, 5, 6, 7, 8, 9].include
 export default function VariantASeatPage({ mode }) {
   const navigate = useNavigate();
   const { state, actions } = useExperiment();
+  const seatMapScrollRef = useRef(null);
   const carriage = getCarriage(state.currentCarriage);
   const showDropdown = mode === "dropdown";
   const dropdownTopCarriage = showDropdown ? A_CARRIAGE_OPTIONS[0] : carriage;
@@ -27,6 +28,12 @@ export default function VariantASeatPage({ mode }) {
     }
   }, [mode, navigate, state.selectedSeat]);
 
+  useEffect(() => {
+    if (seatMapScrollRef.current) {
+      seatMapScrollRef.current.scrollTop = 0;
+    }
+  }, [state.currentCarriage]);
+
   function handleToggleDropdown() {
     navigate(showDropdown ? "/variant-a/3-1" : "/variant-a/3-2");
   }
@@ -41,7 +48,7 @@ export default function VariantASeatPage({ mode }) {
   }
 
   function handleCarriageChange(event, carriageNo) {
-    actions.selectCarriage(carriageNo, { x: event.clientX, y: event.clientY });
+    actions.selectCarriage(carriageNo, { x: event.clientX, y: event.clientY }, { clearSelectedSeat: true });
     navigate("/variant-a/3-1");
   }
 
@@ -141,7 +148,7 @@ export default function VariantASeatPage({ mode }) {
           <span>{renderDirectionIcon("reverse")}역방향</span>
         </div>
 
-        <div className="seat-map-scroll">
+        <div className="seat-map-scroll" ref={seatMapScrollRef}>
           <SeatMap carriageNo={state.currentCarriage} onSelected={handleSeatSelected} />
         </div>
       </section>

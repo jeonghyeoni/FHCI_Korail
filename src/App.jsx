@@ -26,7 +26,7 @@ function ReloadReset() {
   useEffect(() => {
     const navigationEntry = performance.getEntriesByType("navigation")[0];
     if (navigationEntry?.type === "reload" && window.location.pathname !== "/") {
-      window.location.replace("/");
+      window.location.replace("/?reset=1");
     }
   }, []);
 
@@ -43,11 +43,12 @@ function ProtectedRoute({ children }) {
 
 function ConsentRoute() {
   const { state } = useExperiment();
+  const isReloadReset = new URLSearchParams(window.location.search).get("reset") === "1";
   if (state.sequenceComplete) {
     return <Navigate to="/complete" replace />;
   }
 
-  if (hasAcceptedConsent()) {
+  if (hasAcceptedConsent() && !isReloadReset) {
     return <Navigate to={buildConditionUrl({ taskId: state.taskId, variant: state.variant }, state.participantId)} replace />;
   }
 

@@ -1885,6 +1885,114 @@ button {
   text-align: center;
 }
 
+.complete-survey-screen {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  min-height: 100dvh;
+  padding: calc(26px + var(--safe-top)) 20px calc(30px + var(--safe-bottom));
+}
+
+.complete-survey-screen h1 {
+  margin: 0;
+  color: var(--korail-navy);
+  font-size: clamp(25px, 7vw, 34px);
+  font-weight: 400;
+}
+
+.complete-survey-screen > p {
+  margin: 0;
+  color: #30363b;
+  font-size: clamp(15px, 4vw, 17px);
+  line-height: 1.45;
+}
+
+.post-task-survey {
+  display: grid;
+  gap: 14px;
+  border: 1px solid #d9e7ef;
+  border-radius: 8px;
+  padding: 18px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(10, 60, 92, 0.06);
+  text-align: left;
+}
+
+.post-task-survey h2 {
+  margin: 0;
+  color: var(--korail-navy);
+  font-size: clamp(21px, 5.8vw, 28px);
+  font-weight: 400;
+}
+
+.survey-help {
+  margin: -6px 0 0;
+  color: #667079;
+  font-size: clamp(13px, 3.6vw, 15px);
+}
+
+.survey-question {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid #edf2f5;
+  padding: 14px 0 0;
+}
+
+.survey-question legend {
+  padding: 0;
+  color: #111;
+  font-size: clamp(15px, 4vw, 17px);
+  line-height: 1.45;
+}
+
+.survey-scale-labels {
+  display: flex;
+  justify-content: space-between;
+  color: #7b848c;
+  font-size: clamp(12px, 3.3vw, 14px);
+}
+
+.survey-options {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.survey-option {
+  display: grid;
+  cursor: pointer;
+}
+
+.survey-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.survey-option span {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  border: 1px solid #cddce5;
+  border-radius: 8px;
+  background: #f9fbfc;
+  color: #253746;
+  font-size: clamp(16px, 4.4vw, 19px);
+}
+
+.survey-option input:checked + span {
+  border-color: var(--korail-blue);
+  color: #fff;
+  background: var(--korail-blue);
+}
+
+.survey-option input:focus-visible + span {
+  outline: 2px solid #6bb7e8;
+  outline-offset: 2px;
+}
+
 .submission-status {
   margin: -4px 0 0;
   color: #5f666c;
@@ -1903,8 +2011,8 @@ button {
 
 .pid-display {
   color: var(--korail-navy);
-  font-size: clamp(56px, 16vw, 76px);
-  font-weight: 900;
+  font-size: clamp(34px, 10vw, 46px);
+  font-weight: 400;
 }
 
 .summary-panel {

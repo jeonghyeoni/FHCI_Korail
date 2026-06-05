@@ -46,6 +46,7 @@ export default function MiniCarMap({ carriageNo, displayRemaining, onOpen }) {
       <span className="mini-car-meta">
         <strong>{carriageNo}호차</strong>
         <span>{displayRemaining ?? carriage.remaining}석 / {carriage.total}석</span>
+        {carriageNo === 8 ? <em>유아동반석</em> : null}
         {carriage.note ? <em>{carriage.note}</em> : null}
       </span>
       <span className="mini-seat-layout" aria-hidden="true">

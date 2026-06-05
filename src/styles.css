@@ -1274,6 +1274,7 @@ button {
 }
 
 .mini-car-meta strong {
+  color: #111;
   font-size: clamp(14px, 4vw, 29px);
   font-weight: 400;
   line-height: 1.05;
@@ -1289,7 +1290,9 @@ button {
 .mini-car-meta em {
   color: var(--korail-blue);
   font-style: normal;
-  font-weight: 900;
+  font-size: clamp(12px, 3.2vw, 18px);
+  font-weight: 400;
+  line-height: 1.2;
 }
 
 .mini-seat-layout {

@@ -2,6 +2,8 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ExperimentProvider, useExperiment } from "./context/ExperimentContext.jsx";
 import { useGlobalAnalytics } from "./hooks/useGlobalAnalytics.js";
 import { usePageTracking } from "./hooks/usePageTracking.js";
+import { buildConditionUrl, hasAcceptedConsent } from "./utils/experimentSequence.js";
+import ConsentPage from "./pages/ConsentPage.jsx";
 import CompletePage from "./pages/CompletePage.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import IntroPage from "./pages/IntroPage.jsx";
@@ -26,10 +28,27 @@ function ProtectedRoute({ children }) {
   return children;
 }
 
+function ConsentRoute() {
+  const { state } = useExperiment();
+  if (state.sequenceComplete) {
+    return <Navigate to="/complete" replace />;
+  }
+
+  if (hasAcceptedConsent()) {
+    return <Navigate to={buildConditionUrl({ taskId: state.taskId, variant: state.variant }, state.participantId)} replace />;
+  }
+
+  return <ConsentPage />;
+}
+
 function IntroRoute() {
   const { state } = useExperiment();
   if (state.sequenceComplete) {
     return <Navigate to="/complete" replace />;
+  }
+
+  if (!hasAcceptedConsent()) {
+    return <Navigate to="/" replace />;
   }
 
   return <IntroPage />;
@@ -41,7 +60,8 @@ function AppRoutes() {
       <AnalyticsRuntime />
       <Routes>
         <Route path="/invalid" element={<ErrorPage />} />
-        <Route path="/" element={<ProtectedRoute><IntroRoute /></ProtectedRoute>} />
+        <Route path="/" element={<ProtectedRoute><ConsentRoute /></ProtectedRoute>} />
+        <Route path="/intro" element={<ProtectedRoute><IntroRoute /></ProtectedRoute>} />
         <Route path="/train" element={<ProtectedRoute><TrainSearchPage /></ProtectedRoute>} />
         <Route path="/variant-a/3" element={<ProtectedRoute><VariantAReservePage pageKey="A-3" /></ProtectedRoute>} />
         <Route path="/variant-a/3-1" element={<ProtectedRoute><VariantASeatPage mode="seat" /></ProtectedRoute>} />

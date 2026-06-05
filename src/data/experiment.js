@@ -55,7 +55,8 @@ const unavailableByCarriage = {
 };
 
 export const PAGE_NAMES = {
-  "/": "experiment_intro",
+  "/": "consent",
+  "/intro": "experiment_intro",
   "/train": "2",
   "/variant-a/3": "A-3",
   "/variant-a/3-1": "A-3-1",

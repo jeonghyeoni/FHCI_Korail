@@ -14,25 +14,23 @@ export default function IntroPage() {
 
   return (
     <main className="phone-frame intro-frame" data-clarity-unmask="true">
-      <section className="screen intro-screen">
-        <p className="eyebrow">FHCI 사용성 평가</p>
-        <h1>코레일 좌석 예매 A/B 테스트</h1>
-        <div className="intro-meta">
-          <span>참가자 {state.participantId}</span>
-          <span>Variant {state.variant}</span>
+      <section className="screen intro-screen task-intro-screen">
+        <p className="eyebrow">코레일 좌석 예매 A/B 테스트</p>
+        <div className="task-identity">
           <span>{task.title}</span>
+          <span>Variant {state.variant}</span>
         </div>
 
-        <section className="task-panel" data-track-label="intro:task-panel">
-          <h2>현재 과제</h2>
-          <p>{task.description}</p>
-          <small>성공 조건: {task.successText}</small>
+        <section className="task-panel task-goal-panel" data-track-label="intro:task-panel">
+          <span className="task-panel-label">목표</span>
+          <h1>{task.description}</h1>
+          <p>성공 조건: {task.successText}</p>
         </section>
 
-        <section className="train-summary">
-          <h2>{TRAIN.displayName}</h2>
-          <p>{TRAIN.date}</p>
-          <strong>{TRAIN.origin} {TRAIN.departureTime} → {TRAIN.destination} {TRAIN.arrivalTime}</strong>
+        <section className="task-context-panel">
+          <span>{TRAIN.displayName}</span>
+          <span>{TRAIN.date}</span>
+          <span>{TRAIN.origin} {TRAIN.departureTime} → {TRAIN.destination} {TRAIN.arrivalTime}</span>
         </section>
 
         <button

@@ -1,5 +1,6 @@
 export const PARTICIPANT_ID_KEY = "fhci_participant_id";
 export const SEQUENCE_INDEX_KEY = "fhci_sequence_index";
+export const CONSENT_ACCEPTED_KEY = "fhci_consent_accepted";
 
 export const EXPERIMENT_SEQUENCE = [
   { taskId: "1", variant: "A" },
@@ -65,6 +66,14 @@ export function getOrCreateParticipantId(explicitParticipantId = "") {
   return generatedParticipantId;
 }
 
+export function hasAcceptedConsent() {
+  return safeLocalStorageGet(CONSENT_ACCEPTED_KEY) === "true";
+}
+
+export function acceptConsent() {
+  safeLocalStorageSet(CONSENT_ACCEPTED_KEY, "true");
+}
+
 export function getStoredSequenceIndex() {
   const rawIndex = Number(safeLocalStorageGet(SEQUENCE_INDEX_KEY));
   if (!Number.isFinite(rawIndex) || rawIndex < 0) return 0;
@@ -113,5 +122,5 @@ export function buildConditionUrl(condition, participantId) {
     pid: participantId,
   });
 
-  return `/?${params.toString()}`;
+  return `/intro?${params.toString()}`;
 }

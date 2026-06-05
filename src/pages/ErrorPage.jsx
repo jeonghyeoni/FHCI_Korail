@@ -9,8 +9,8 @@ export default function ErrorPage({ notFound = false }) {
         <h1>{notFound ? "페이지를 찾을 수 없습니다" : "실험 URL을 확인해주세요"}</h1>
         {!notFound ? (
           <>
-            <p>앱은 시작 시 URL에서 variant, task, pid를 읽습니다.</p>
-            <div className="example-url">?variant=B&amp;task=2&amp;pid=P013</div>
+            <p>기본 실험 링크로 접속하면 참가자 번호와 테스트 순서가 자동으로 설정됩니다.</p>
+            <div className="example-url">/</div>
             {state.errors?.length ? (
               <ul className="error-list">
                 {state.errors.map((error) => <li key={error}>{error}</li>)}

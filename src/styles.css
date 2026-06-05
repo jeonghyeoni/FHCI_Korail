@@ -2010,15 +2010,44 @@ button {
 }
 
 .pid-display {
-  color: var(--korail-navy);
-  font-size: clamp(34px, 10vw, 46px);
+  justify-self: center;
+  border: 1px solid #d7e6ef;
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: #f8fbfd;
+  color: #5b6b76;
+  font-size: clamp(15px, 4vw, 18px);
   font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 .summary-panel {
   display: grid;
   gap: 8px;
   text-align: left;
+}
+
+.thank-you-screen {
+  text-align: center;
+}
+
+.thank-you-screen h1 {
+  font-size: clamp(38px, 11vw, 54px);
+  font-weight: 400;
+}
+
+.thank-you-screen p {
+  margin: 0;
+  color: #30363b;
+  font-size: clamp(16px, 4.3vw, 20px);
+  line-height: 1.55;
+}
+
+.thank-you-screen a {
+  color: var(--korail-blue);
+  font-size: clamp(18px, 5vw, 22px);
+  text-decoration: underline;
+  word-break: break-all;
 }
 
 /* =========================================================

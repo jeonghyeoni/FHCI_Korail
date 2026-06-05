@@ -68,6 +68,7 @@ export const PAGE_NAMES = {
   "/variant-b/3-2": "B-3-2",
   "/confirm": "4",
   "/complete": "test_complete",
+  "/thanks": "thanks",
   "/invalid": "invalid_params",
 };
 

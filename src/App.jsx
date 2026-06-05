@@ -7,6 +7,7 @@ import ConsentPage from "./pages/ConsentPage.jsx";
 import CompletePage from "./pages/CompletePage.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import IntroPage from "./pages/IntroPage.jsx";
+import ThankYouPage from "./pages/ThankYouPage.jsx";
 import TicketConfirmPage from "./pages/TicketConfirmPage.jsx";
 import TrainSearchPage from "./pages/TrainSearchPage.jsx";
 import VariantAReservePage from "./pages/VariantAReservePage.jsx";
@@ -73,6 +74,7 @@ function AppRoutes() {
         <Route path="/variant-b/3-2" element={<ProtectedRoute><VariantBSeatPage /></ProtectedRoute>} />
         <Route path="/confirm" element={<ProtectedRoute><TicketConfirmPage /></ProtectedRoute>} />
         <Route path="/complete" element={<ProtectedRoute><CompletePage /></ProtectedRoute>} />
+        <Route path="/thanks" element={<ProtectedRoute><ThankYouPage /></ProtectedRoute>} />
         <Route path="*" element={<ErrorPage notFound />} />
       </Routes>
     </>

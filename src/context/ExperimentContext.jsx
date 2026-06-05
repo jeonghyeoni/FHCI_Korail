@@ -57,7 +57,15 @@ function initialState() {
 function reducer(state, action) {
   switch (action.type) {
     case "START_TASK":
-      return { ...state, taskStarted: true, taskStartTime: action.timestamp, taskEndTime: null, success: false };
+      return {
+        ...state,
+        taskStarted: true,
+        taskStartTime: action.timestamp,
+        taskEndTime: null,
+        currentCarriage: 1,
+        selectedSeat: null,
+        success: false,
+      };
     case "SET_CARRIAGE":
       return { ...state, currentCarriage: action.carriageNo };
     case "SELECT_SEAT":

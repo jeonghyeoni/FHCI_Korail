@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { loadEvents, loadSummary } from "../analytics/storage.js";
 import { buildSubmissionPayload, submitExperimentData } from "../analytics/submission.js";
 import { useExperiment } from "../context/ExperimentContext.jsx";
@@ -21,6 +22,7 @@ function getSubmissionStatusText(status) {
 }
 
 export default function CompletePage() {
+  const navigate = useNavigate();
   const { state } = useExperiment();
   const [summary] = useState(() => loadSummary());
   const [submissionStatus, setSubmissionStatus] = useState("idle");
@@ -71,7 +73,7 @@ export default function CompletePage() {
     : !isSurveyComplete
       ? "설문을 완료해주세요"
       : isFinalTest
-        ? "실험 종료"
+        ? "제출하기"
         : "다음 테스트 시작";
 
   const updateSurveyAnswer = (name, value) => {
@@ -82,7 +84,9 @@ export default function CompletePage() {
     if (!canProceed) return;
     if (nextCondition) {
       window.location.assign(buildConditionUrl(nextCondition, state.participantId));
+      return;
     }
+    navigate("/thanks");
   };
 
   const surveyQuestions = [

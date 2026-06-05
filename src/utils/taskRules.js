@@ -1,5 +1,5 @@
 const TASK2_TARGET = {
-  carriageNo: 7,
+  carriageNo: 5,
   label: "4B",
 };
 

@@ -20,8 +20,8 @@ export const TASKS = {
   },
   "2": {
     title: "Task 2",
-    description: "KTX001 일반실 7호차 4B 좌석을 가능한 빨리 예매",
-    successText: "7호차 4B 예약 완료",
+    description: "KTX001 일반실 5호차 4B 좌석을 가능한 빨리 예매",
+    successText: "5호차 4B 예약 완료",
   },
   "3": {
     title: "Task 3",

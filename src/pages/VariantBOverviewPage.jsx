@@ -9,7 +9,7 @@ export default function VariantBOverviewPage() {
   const { state, actions } = useExperiment();
   const visibleCars = CARRIAGES.filter((carriage) => [1, 5, 6, 7, 8, 9].includes(carriage.no));
   const bOverviewRemaining = {
-    1: 30,
+    1: 22,
     5: 33,
     6: 29,
     7: 30,

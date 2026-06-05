@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { loadEvents, loadSummary } from "../analytics/storage.js";
 import { buildSubmissionPayload, submitExperimentData } from "../analytics/submission.js";
 import { useExperiment } from "../context/ExperimentContext.jsx";
+import { buildConditionUrl, getNextCondition, markConditionComplete } from "../utils/experimentSequence.js";
 
 function getSubmissionStatusText(status) {
   switch (status) {
@@ -23,6 +24,8 @@ export default function CompletePage() {
   const [summary] = useState(() => loadSummary());
   const [submissionStatus, setSubmissionStatus] = useState("idle");
   const submitAttemptedRef = useRef(false);
+  const nextCondition = getNextCondition(state.taskId, state.variant);
+  const isFinalTest = !nextCondition;
 
   useEffect(() => {
     if (!summary || submitAttemptedRef.current) return undefined;
@@ -39,6 +42,9 @@ export default function CompletePage() {
 
     submitExperimentData(payload).then((result) => {
       if (!ignore) {
+        if (result.status === "success") {
+          markConditionComplete(state.taskId, state.variant);
+        }
         setSubmissionStatus(result.status);
       }
     });
@@ -50,6 +56,16 @@ export default function CompletePage() {
 
   const submissionStatusText = getSubmissionStatusText(submissionStatus);
   const isSubmissionComplete = submissionStatus === "success";
+  const actionLabel = isSubmissionComplete
+    ? isFinalTest
+      ? "설문 작성하기"
+      : "다음 테스트 시작"
+    : "잠시만 기다려주세요";
+
+  const handlePrimaryAction = () => {
+    if (!isSubmissionComplete || !nextCondition) return;
+    window.location.assign(buildConditionUrl(nextCondition, state.participantId));
+  };
 
   return (
     <main className="phone-frame" data-clarity-unmask="true">
@@ -57,17 +73,18 @@ export default function CompletePage() {
         <p className="eyebrow">테스트 완료</p>
         <h1>참가자 번호</h1>
         <div className="pid-display">{state.participantId}</div>
-        <p>위의 참가자 번호를 복사하여 설문에 입력해주세요.</p>
+        <p>{isFinalTest ? "위의 참가자 번호를 복사하여 설문에 입력해주세요." : "데이터 저장 후 다음 테스트로 진행해주세요."}</p>
         <button
           className="primary-button"
           type="button"
-          data-track-label="complete:survey"
+          data-track-label={isFinalTest ? "complete:survey" : "complete:next-test"}
           data-clickable="true"
           data-disabled={isSubmissionComplete ? "false" : "true"}
           aria-disabled={isSubmissionComplete ? "false" : "true"}
           disabled={!isSubmissionComplete}
+          onClick={handlePrimaryAction}
         >
-          {isSubmissionComplete ? "설문 작성하기" : "잠시만 기다려주세요"}
+          {actionLabel}
         </button>
         {submissionStatusText ? (
           <p className={`submission-status submission-status-${submissionStatus}`} aria-live="polite">

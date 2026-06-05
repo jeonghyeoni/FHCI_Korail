@@ -2,27 +2,41 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useReducer,
 import { appendEvent, buildSummary, loadEvents, saveSession, saveSummary } from "../analytics/storage.js";
 import { setClarityExperimentContext } from "../analytics/clarity.js";
 import { CARRIAGES, getSeatsForCarriage, TRAIN } from "../data/experiment.js";
+import {
+  getCurrentSequenceCondition,
+  getOrCreateParticipantId,
+  isSequenceComplete,
+  isValidParticipantId,
+} from "../utils/experimentSequence.js";
 import { getAutoSeat, getSeatMisclickReason, isTargetSeat } from "../utils/taskRules.js";
 
 const ExperimentContext = createContext(null);
 
 function parseExperimentParams(search) {
   const params = new URLSearchParams(search);
-  const variant = params.get("variant");
-  const taskId = params.get("task");
-  const participantId = params.get("pid");
+  const explicitVariant = params.get("variant");
+  const explicitTaskId = params.get("task");
+  const explicitParticipantId = params.get("pid");
+  const hasExplicitCondition = Boolean(explicitVariant || explicitTaskId);
+  const sequenceCondition = getCurrentSequenceCondition();
+  const variant = explicitVariant || sequenceCondition.variant;
+  const taskId = explicitTaskId || sequenceCondition.taskId;
+  const participantId = getOrCreateParticipantId(explicitParticipantId || "");
   const errors = [];
 
   if (!["A", "B"].includes(variant)) errors.push("variant must be A or B");
   if (!["1", "2", "3"].includes(taskId)) errors.push("task must be 1, 2, or 3");
-  if (!participantId || !/^P\d{3,}$/i.test(participantId)) errors.push("pid must look like P013");
+  if (explicitParticipantId && !isValidParticipantId(explicitParticipantId)) {
+    errors.push("pid must be a valid experiment participant id");
+  }
 
   return {
     isValid: errors.length === 0,
     errors,
-    participantId: participantId || "UNKNOWN",
-    variant: variant || "UNKNOWN",
-    taskId: taskId || "UNKNOWN",
+    participantId,
+    variant,
+    taskId,
+    sequenceComplete: !hasExplicitCondition && isSequenceComplete(),
   };
 }
 

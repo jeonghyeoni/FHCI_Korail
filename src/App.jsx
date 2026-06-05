@@ -26,13 +26,22 @@ function ProtectedRoute({ children }) {
   return children;
 }
 
+function IntroRoute() {
+  const { state } = useExperiment();
+  if (state.sequenceComplete) {
+    return <Navigate to="/complete" replace />;
+  }
+
+  return <IntroPage />;
+}
+
 function AppRoutes() {
   return (
     <>
       <AnalyticsRuntime />
       <Routes>
         <Route path="/invalid" element={<ErrorPage />} />
-        <Route path="/" element={<ProtectedRoute><IntroPage /></ProtectedRoute>} />
+        <Route path="/" element={<ProtectedRoute><IntroRoute /></ProtectedRoute>} />
         <Route path="/train" element={<ProtectedRoute><TrainSearchPage /></ProtectedRoute>} />
         <Route path="/variant-a/3" element={<ProtectedRoute><VariantAReservePage pageKey="A-3" /></ProtectedRoute>} />
         <Route path="/variant-a/3-1" element={<ProtectedRoute><VariantASeatPage mode="seat" /></ProtectedRoute>} />

@@ -1,5 +1,4 @@
 const PENDING_SUBMISSIONS_KEY = "pendingSubmission";
-const SUBMITTED_PREFIX = "fhci_submitted";
 
 const inFlightSubmissions = new Map();
 
@@ -17,18 +16,6 @@ function getEndpoint() {
 
 function getSubmissionId(payload) {
   return [payload.participantId, payload.variant, payload.taskId].join(":");
-}
-
-function getSubmittedKey(payload) {
-  return `${SUBMITTED_PREFIX}:${getSubmissionId(payload)}`;
-}
-
-function isSubmitted(payload) {
-  return localStorage.getItem(getSubmittedKey(payload)) === "true";
-}
-
-function markSubmitted(payload) {
-  localStorage.setItem(getSubmittedKey(payload), "true");
 }
 
 function loadPendingSubmissions() {
@@ -62,11 +49,6 @@ async function postPayload(payload, { savePendingOnFailure = false } = {}) {
   const endpoint = getEndpoint();
   const submissionId = getSubmissionId(payload);
 
-  if (isSubmitted(payload)) {
-    removePendingSubmission(payload);
-    return { status: "success", message: "already_submitted" };
-  }
-
   if (!endpoint) {
     console.warn("VITE_GOOGLE_SHEET_WEBAPP_URL is empty. Experiment data was not submitted.");
     return { status: "missing_endpoint" };
@@ -87,7 +69,6 @@ async function postPayload(payload, { savePendingOnFailure = false } = {}) {
         body: JSON.stringify(payload),
       });
 
-      markSubmitted(payload);
       removePendingSubmission(payload);
       return { status: "success" };
     } catch (error) {
@@ -161,10 +142,6 @@ export async function submitExperimentData(payload) {
 
   if (pendingResult.status === "failed") {
     return pendingResult;
-  }
-
-  if (isSubmitted(payload)) {
-    return { status: "success", message: "already_submitted" };
   }
 
   return postPayload(payload, { savePendingOnFailure: true });

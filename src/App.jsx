@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
 import { ExperimentProvider, useExperiment } from "./context/ExperimentContext.jsx";
 import { useGlobalAnalytics } from "./hooks/useGlobalAnalytics.js";
 import { usePageTracking } from "./hooks/usePageTracking.js";
@@ -18,6 +19,17 @@ import VariantBSeatPage from "./pages/VariantBSeatPage.jsx";
 function AnalyticsRuntime() {
   usePageTracking();
   useGlobalAnalytics();
+  return null;
+}
+
+function ReloadReset() {
+  useEffect(() => {
+    const navigationEntry = performance.getEntriesByType("navigation")[0];
+    if (navigationEntry?.type === "reload" && window.location.pathname !== "/") {
+      window.location.replace("/");
+    }
+  }, []);
+
   return null;
 }
 
@@ -58,6 +70,7 @@ function IntroRoute() {
 function AppRoutes() {
   return (
     <>
+      <ReloadReset />
       <AnalyticsRuntime />
       <Routes>
         <Route path="/invalid" element={<ErrorPage />} />

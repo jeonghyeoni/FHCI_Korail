@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { ExperimentProvider, useExperiment } from "./context/ExperimentContext.jsx";
 import { useGlobalAnalytics } from "./hooks/useGlobalAnalytics.js";
 import { usePageTracking } from "./hooks/usePageTracking.js";
-import { buildConditionUrl, hasAcceptedConsent } from "./utils/experimentSequence.js";
+import { buildConditionUrl, hasAcceptedConsent, isTestMode } from "./utils/experimentSequence.js";
 import ConsentPage from "./pages/ConsentPage.jsx";
 import CompletePage from "./pages/CompletePage.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
@@ -25,8 +25,8 @@ function AnalyticsRuntime() {
 function ReloadReset() {
   useEffect(() => {
     const navigationEntry = performance.getEntriesByType("navigation")[0];
-    if (navigationEntry?.type === "reload" && window.location.pathname !== "/") {
-      window.location.replace("/?reset=1");
+    if (navigationEntry?.type === "reload" && isTestMode(window.location.search, window.location.pathname) && window.location.pathname !== "/test") {
+      window.location.replace("/test");
     }
   }, []);
 
@@ -43,12 +43,15 @@ function ProtectedRoute({ children }) {
 
 function ConsentRoute() {
   const { state } = useExperiment();
-  const isReloadReset = new URLSearchParams(window.location.search).get("reset") === "1";
   if (state.sequenceComplete) {
     return <Navigate to="/complete" replace />;
   }
 
-  if (hasAcceptedConsent() && !isReloadReset) {
+  if (state.isTestMode) {
+    return <ConsentPage />;
+  }
+
+  if (hasAcceptedConsent()) {
     return <Navigate to={buildConditionUrl({ taskId: state.taskId, variant: state.variant }, state.participantId)} replace />;
   }
 
@@ -61,7 +64,7 @@ function IntroRoute() {
     return <Navigate to="/complete" replace />;
   }
 
-  if (!hasAcceptedConsent()) {
+  if (!state.isTestMode && !hasAcceptedConsent()) {
     return <Navigate to="/" replace />;
   }
 
@@ -76,6 +79,7 @@ function AppRoutes() {
       <Routes>
         <Route path="/invalid" element={<ErrorPage />} />
         <Route path="/" element={<ProtectedRoute><ConsentRoute /></ProtectedRoute>} />
+        <Route path="/test" element={<ProtectedRoute><ConsentRoute /></ProtectedRoute>} />
         <Route path="/intro" element={<ProtectedRoute><IntroRoute /></ProtectedRoute>} />
         <Route path="/train" element={<ProtectedRoute><TrainSearchPage /></ProtectedRoute>} />
         <Route path="/variant-a/3" element={<ProtectedRoute><VariantAReservePage pageKey="A-3" /></ProtectedRoute>} />

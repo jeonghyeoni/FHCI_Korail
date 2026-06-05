@@ -16,6 +16,8 @@ function getSubmissionStatusText(status) {
       return "데이터 저장 실패: 관리자에게 알려주세요";
     case "missing_endpoint":
       return "데이터 저장 URL 미설정";
+    case "test_mode":
+      return "테스트 모드: 데이터 전송 안 함";
     default:
       return "";
   }
@@ -24,7 +26,7 @@ function getSubmissionStatusText(status) {
 export default function CompletePage() {
   const navigate = useNavigate();
   const { state } = useExperiment();
-  const [summary] = useState(() => loadSummary());
+  const [summary] = useState(() => loadSummary({ inMemory: state.isTestMode }));
   const [submissionStatus, setSubmissionStatus] = useState("idle");
   const [surveyAnswers, setSurveyAnswers] = useState({
     difficulty: "",
@@ -42,17 +44,23 @@ export default function CompletePage() {
 
     let ignore = false;
     submitAttemptedRef.current = true;
+
+    if (state.isTestMode) {
+      setSubmissionStatus("test_mode");
+      return undefined;
+    }
+
     setSubmissionStatus("submitting");
 
     const payload = buildSubmissionPayload({
       summary,
       state,
-      eventLogs: loadEvents(),
+      eventLogs: loadEvents({ inMemory: state.isTestMode }),
     });
 
     submitExperimentData(payload).then((result) => {
       if (!ignore) {
-        if (result.status === "success") {
+        if (result.status === "success" && !state.isTestMode) {
           markConditionComplete(state.taskId, state.variant);
         }
         setSubmissionStatus(result.status);
@@ -65,7 +73,7 @@ export default function CompletePage() {
   }, [state, summary]);
 
   const submissionStatusText = getSubmissionStatusText(submissionStatus);
-  const isSubmissionComplete = submissionStatus === "success";
+  const isSubmissionComplete = submissionStatus === "success" || submissionStatus === "test_mode";
   const isSurveyComplete = Object.values(surveyAnswers).every(Boolean);
   const canProceed = isSubmissionComplete && isSurveyComplete;
   const actionLabel = !isSubmissionComplete
@@ -83,10 +91,10 @@ export default function CompletePage() {
   const handlePrimaryAction = () => {
     if (!canProceed) return;
     if (nextCondition) {
-      window.location.assign(buildConditionUrl(nextCondition, state.participantId));
+      window.location.assign(buildConditionUrl(nextCondition, state.participantId, { mode: state.mode }));
       return;
     }
-    navigate("/thanks");
+    navigate(state.isTestMode ? "/thanks?mode=test" : "/thanks");
   };
 
   const surveyQuestions = [

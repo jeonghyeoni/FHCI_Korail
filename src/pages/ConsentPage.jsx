@@ -11,8 +11,14 @@ export default function ConsentPage() {
 
   function handleStart() {
     if (!isChecked) return;
-    acceptConsent();
-    navigate(buildConditionUrl({ taskId: state.taskId, variant: state.variant }, state.participantId));
+    if (!state.isTestMode) {
+      acceptConsent();
+    }
+    navigate(buildConditionUrl(
+      { taskId: state.taskId, variant: state.variant },
+      state.participantId,
+      { mode: state.mode },
+    ));
   }
 
   return (

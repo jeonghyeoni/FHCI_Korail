@@ -2,6 +2,12 @@ export const SESSION_KEY = "fhci_experiment_session";
 export const EVENTS_KEY = "fhci_experiment_events";
 export const SUMMARY_KEY = "fhci_experiment_summary";
 
+const memoryStorage = {
+  events: [],
+  session: null,
+  summary: null,
+};
+
 function safeParse(raw, fallback) {
   try {
     return raw ? JSON.parse(raw) : fallback;
@@ -10,26 +16,49 @@ function safeParse(raw, fallback) {
   }
 }
 
-export function loadEvents() {
+export function loadEvents(options = {}) {
+  if (options.inMemory) {
+    return memoryStorage.events;
+  }
+
   return safeParse(localStorage.getItem(EVENTS_KEY), []);
 }
 
-export function appendEvent(event) {
-  const events = loadEvents();
+export function appendEvent(event, options = {}) {
+  const events = loadEvents(options);
   events.push(event);
+
+  if (options.inMemory) {
+    return event;
+  }
+
   localStorage.setItem(EVENTS_KEY, JSON.stringify(events));
   return event;
 }
 
-export function saveSession(session) {
+export function saveSession(session, options = {}) {
+  if (options.inMemory) {
+    memoryStorage.session = session;
+    return;
+  }
+
   localStorage.setItem(SESSION_KEY, JSON.stringify(session));
 }
 
-export function loadSummary() {
+export function loadSummary(options = {}) {
+  if (options.inMemory) {
+    return memoryStorage.summary;
+  }
+
   return safeParse(localStorage.getItem(SUMMARY_KEY), null);
 }
 
-export function saveSummary(summary) {
+export function saveSummary(summary, options = {}) {
+  if (options.inMemory) {
+    memoryStorage.summary = summary;
+    return;
+  }
+
   localStorage.setItem(SUMMARY_KEY, JSON.stringify(summary));
 }
 

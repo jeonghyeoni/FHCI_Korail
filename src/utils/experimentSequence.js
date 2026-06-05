@@ -11,6 +11,8 @@ export const EXPERIMENT_SEQUENCE = [
   { taskId: "3", variant: "B" },
 ];
 
+export const TEST_MODE = "test";
+
 function safeLocalStorageGet(key) {
   try {
     return localStorage.getItem(key);
@@ -46,8 +48,21 @@ export function isValidParticipantId(participantId) {
     /^P[A-Z0-9]{8}$/i.test(participantId);
 }
 
+export function isValidTestParticipantId(participantId) {
+  return /^T[A-Z0-9]{8}$/i.test(participantId);
+}
+
 export function generateParticipantId() {
   return `P${randomBase36(8)}`;
+}
+
+export function generateTestParticipantId() {
+  return `T${randomBase36(8)}`;
+}
+
+export function isTestMode(search = window.location.search, pathname = window.location.pathname) {
+  const params = new URLSearchParams(search);
+  return pathname === "/test" || params.get("mode") === TEST_MODE;
 }
 
 export function getOrCreateParticipantId(explicitParticipantId = "") {
@@ -115,12 +130,16 @@ export function markConditionComplete(taskId, variant) {
   safeLocalStorageSet(SEQUENCE_INDEX_KEY, String(Math.max(storedIndex, nextIndex)));
 }
 
-export function buildConditionUrl(condition, participantId) {
-  const params = new URLSearchParams({
-    variant: condition.variant,
-    task: condition.taskId,
-    pid: participantId,
-  });
+export function buildConditionUrl(condition, participantId, options = {}) {
+  const params = new URLSearchParams();
+
+  if (options.mode === TEST_MODE) {
+    params.set("mode", TEST_MODE);
+  }
+
+  params.set("variant", condition.variant);
+  params.set("task", condition.taskId);
+  params.set("pid", participantId);
 
   return `/intro?${params.toString()}`;
 }

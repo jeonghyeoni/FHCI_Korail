@@ -3,10 +3,15 @@ import { appendEvent, buildSummary, loadEvents, saveSession, saveSummary } from 
 import { setClarityExperimentContext } from "../analytics/clarity.js";
 import { CARRIAGES, getSeatsForCarriage, TRAIN } from "../data/experiment.js";
 import {
+  EXPERIMENT_SEQUENCE,
+  TEST_MODE,
+  generateTestParticipantId,
   getCurrentSequenceCondition,
   getOrCreateParticipantId,
+  isTestMode,
   isSequenceComplete,
   isValidParticipantId,
+  isValidTestParticipantId,
 } from "../utils/experimentSequence.js";
 import { getAutoSeat, getSeatMisclickReason, isTargetSeat } from "../utils/taskRules.js";
 
@@ -14,20 +19,26 @@ const ExperimentContext = createContext(null);
 
 function parseExperimentParams(search) {
   const params = new URLSearchParams(search);
+  const testMode = isTestMode(search, window.location.pathname);
   const explicitVariant = params.get("variant");
   const explicitTaskId = params.get("task");
   const explicitParticipantId = params.get("pid");
   const hasExplicitCondition = Boolean(explicitVariant || explicitTaskId);
-  const sequenceCondition = getCurrentSequenceCondition();
+  const sequenceCondition = testMode ? EXPERIMENT_SEQUENCE[0] : getCurrentSequenceCondition();
   const variant = explicitVariant || sequenceCondition.variant;
   const taskId = explicitTaskId || sequenceCondition.taskId;
-  const participantId = getOrCreateParticipantId(explicitParticipantId || "");
+  const participantId = testMode
+    ? (isValidTestParticipantId(explicitParticipantId) ? explicitParticipantId : generateTestParticipantId())
+    : getOrCreateParticipantId(explicitParticipantId || "");
   const errors = [];
 
   if (!["A", "B"].includes(variant)) errors.push("variant must be A or B");
   if (!["1", "2", "3"].includes(taskId)) errors.push("task must be 1, 2, or 3");
-  if (explicitParticipantId && !isValidParticipantId(explicitParticipantId)) {
+  if (!testMode && explicitParticipantId && !isValidParticipantId(explicitParticipantId)) {
     errors.push("pid must be a valid experiment participant id");
+  }
+  if (testMode && explicitParticipantId && !isValidTestParticipantId(explicitParticipantId)) {
+    errors.push("test pid must be a valid temporary participant id");
   }
 
   return {
@@ -36,7 +47,9 @@ function parseExperimentParams(search) {
     participantId,
     variant,
     taskId,
-    sequenceComplete: !hasExplicitCondition && isSequenceComplete(),
+    isTestMode: testMode,
+    mode: testMode ? TEST_MODE : "production",
+    sequenceComplete: !testMode && !hasExplicitCondition && isSequenceComplete(),
   };
 }
 
@@ -117,7 +130,7 @@ export function ExperimentProvider({ children }) {
 
   useEffect(() => {
     stateRef.current = state;
-    saveSession(publicSession(state));
+    saveSession(publicSession(state), { inMemory: state.isTestMode });
   }, [state]);
 
   useEffect(() => {
@@ -127,7 +140,8 @@ export function ExperimentProvider({ children }) {
   }, [state.isValid, state.participantId, state.taskId, state.variant]);
 
   const logEvent = useCallback((event) => {
-    return appendEvent(normalizeEvent(stateRef.current, event));
+    const current = stateRef.current;
+    return appendEvent(normalizeEvent(current, event), { inMemory: current.isTestMode });
   }, []);
 
   const startTask = useCallback(() => {
@@ -295,8 +309,8 @@ export function ExperimentProvider({ children }) {
       metadata: { success },
     });
 
-    saveSummary(buildSummary(completedSession, loadEvents()));
-    saveSession(completedSession);
+    saveSummary(buildSummary(completedSession, loadEvents({ inMemory: current.isTestMode })), { inMemory: current.isTestMode });
+    saveSession(completedSession, { inMemory: current.isTestMode });
     return success;
   }, [logEvent]);
 

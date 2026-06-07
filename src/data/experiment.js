@@ -20,12 +20,12 @@ export const TASKS = {
   },
   "2": {
     title: "Task 2",
-    description: "KTX001 일반실 5호차 4B 좌석을 가능한 빨리 예매",
+    description: "KTX001 일반실 5호차 4B 좌석을 예매",
     successText: "5호차 4B 예약 완료",
   },
   "3": {
     title: "Task 3",
-    description: "KTX001 일반실 창가 좌석을 가능한 빨리 예매",
+    description: "KTX001 일반실 창가 좌석을 예매",
     successText: "창가 좌석 예약 완료",
   },
 };

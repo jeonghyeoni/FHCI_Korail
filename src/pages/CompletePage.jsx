@@ -63,7 +63,7 @@ const TASK_SURVEY_DETAILS = {
     { name: "task3_a_window_difficulty", type: "scale", label: "A에서 창가 자리를 찾는 과정의 난이도는 어떠했나요?", options: LIKERT_EASY },
     { name: "task3_b_window_difficulty", type: "scale", label: "B에서 창가 자리를 찾는 과정의 난이도는 어떠했나요?", options: LIKERT_EASY },
     { name: "task3_b_status_used", type: "choice", label: "B에서 창가 자리를 찾을 때 좌석 현황 창을 활용했나요?", options: YES_NO },
-    { name: "task3_b_status_helpful", type: "choice", label: "B에서 좌석 현황 창은 창가 자리를 예매하는 데 도움이 되었나요?", options: YES_NO },
+    { name: "task3_b_status_helpful", type: "choice", label: "B에서 좌석 현황 창은 창가 자리를 예매하는 데 도움이 되었나요?", options: YES_NO, showIf: { name: "task3_b_status_used", value: "그렇다" } },
     { name: "task3_b_available_intuitive", type: "choice", label: "B에서 좌석 현황 창에서 예약 가능한 좌석과 예약 불가능한 좌석의 구분이 충분히 직관적이었나요?", options: YES_NO },
     { name: "task3_b_window_intuitive", type: "choice", label: "B에서 좌석 현황 창에서 창가 좌석과 안쪽 좌석의 구분이 충분히 직관적이었나요?", options: YES_NO },
     { name: "task3_window_preference", type: "choice", label: "창가 좌석을 예매하는 과정에 있어서 A와 B 중 어느 쪽을 선호하나요?", options: UI_PREFERENCE },
@@ -132,6 +132,10 @@ function shouldShowTrainScreenComparison(question) {
 
 function shouldShowCarSelectorComparison(question) {
   return question.name === "task2_car_selector_preference";
+}
+
+function shouldShowBOverviewImage(question) {
+  return question.name === "task3_b_status_used";
 }
 
 class CompletePageErrorBoundary extends Component {
@@ -340,6 +344,14 @@ export default function CompletePage() {
             <figure>
               <img src={bSeatSelectionCar1Image} alt="B의 호차 카드형 선택 화면" />
               <figcaption>B의 호차 카드형 선택 화면</figcaption>
+            </figure>
+          </div>
+        ) : null}
+        {shouldShowBOverviewImage(question) ? (
+          <div className="survey-screen-comparison survey-screen-comparison-single" aria-label="B 좌석 현황 창 화면">
+            <figure>
+              <img src={bTrainAfterSelectImage} alt="B의 좌석 현황 창 화면" />
+              <figcaption>B의 좌석 현황 창 화면</figcaption>
             </figure>
           </div>
         ) : null}

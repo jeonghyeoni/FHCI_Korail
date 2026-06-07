@@ -2115,6 +2115,11 @@ button {
   margin-top: 2px;
 }
 
+.survey-screen-comparison-single {
+  grid-template-columns: minmax(0, min(62%, 240px));
+  justify-content: center;
+}
+
 .survey-screen-comparison figure {
   display: grid;
   gap: 7px;

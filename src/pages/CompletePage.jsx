@@ -2,6 +2,10 @@ import { Component, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loadEvents, loadSummary } from "../analytics/storage.js";
 import { buildSubmissionPayload, submitExperimentData } from "../analytics/submission.js";
+import aCarSelectDropdownImage from "../assets/survey/a-car-select-dropdown.png";
+import aTrainAfterSelectImage from "../assets/survey/a-train-after-select.png";
+import bSeatSelectionCar1Image from "../assets/survey/b-seat-selection-car-1.png";
+import bTrainAfterSelectImage from "../assets/survey/b-train-after-select.png";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 import { TASKS } from "../data/experiment.js";
 import { buildConditionUrl, getNextCondition, markConditionComplete } from "../utils/experimentSequence.js";
@@ -120,6 +124,14 @@ function getNumberedSurveyQuestions(questions, answers) {
     items.push({ ...question, number });
     return items;
   }, []);
+}
+
+function shouldShowTrainScreenComparison(question) {
+  return question.name === "task1_entry_preference" || question.name === "task2_entry_preference";
+}
+
+function shouldShowCarSelectorComparison(question) {
+  return question.name === "task2_car_selector_preference";
 }
 
 class CompletePageErrorBoundary extends Component {
@@ -242,17 +254,19 @@ export default function CompletePage() {
     if (!isQuestionVisible(question, surveyAnswers)) return null;
 
     return (
-      <fieldset
+      <div
         className={`survey-question survey-question-${question.type === "scale" ? "scale" : "choice"}`}
         key={question.name}
+        role="group"
+        aria-labelledby={`${question.name}-label`}
       >
-        <legend>
+        <div className="survey-question-title" id={`${question.name}-label`}>
           <span className="survey-question-number">{question.number}.</span>
           <span>{question.label}</span>
           <span className="survey-required-mark" aria-label="필수">
             *
           </span>
-        </legend>
+        </div>
         {question.type === "scale" ? (
           <div className="survey-scale-row">
             <span className="survey-scale-end-label">{question.options[0]}</span>
@@ -305,7 +319,31 @@ export default function CompletePage() {
             rows={3}
           />
         ) : null}
-      </fieldset>
+        {shouldShowTrainScreenComparison(question) ? (
+          <div className="survey-screen-comparison" aria-label="A/B 열차 선택 후 화면 비교">
+            <figure>
+              <img src={aTrainAfterSelectImage} alt="A의 열차 선택 후 화면" />
+              <figcaption>A의 열차 선택 후 화면</figcaption>
+            </figure>
+            <figure>
+              <img src={bTrainAfterSelectImage} alt="B의 열차 선택 후 화면" />
+              <figcaption>B의 열차 선택 후 화면</figcaption>
+            </figure>
+          </div>
+        ) : null}
+        {shouldShowCarSelectorComparison(question) ? (
+          <div className="survey-screen-comparison" aria-label="A/B 호차 변경 방식 비교">
+            <figure>
+              <img src={aCarSelectDropdownImage} alt="A의 호차 선택박스 화면" />
+              <figcaption>A의 호차 선택박스 화면</figcaption>
+            </figure>
+            <figure>
+              <img src={bSeatSelectionCar1Image} alt="B의 호차 카드형 선택 화면" />
+              <figcaption>B의 호차 카드형 선택 화면</figcaption>
+            </figure>
+          </div>
+        ) : null}
+      </div>
     );
   }
 

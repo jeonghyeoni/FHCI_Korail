@@ -1936,6 +1936,7 @@ button {
 
 .survey-question {
   display: grid;
+  position: relative;
   gap: 14px;
   margin: 0;
   border: 0;
@@ -1943,13 +1944,21 @@ button {
 }
 
 .survey-question + .survey-question {
-  margin-top: 18px;
-  padding-top: 18px;
-  border-top: 1px solid #cfd9e1;
+  margin-top: 26px;
+  padding-top: 24px;
 }
 
-.survey-question legend {
-  padding: 0;
+.survey-question + .survey-question::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #e4ebef;
+}
+
+.survey-question-title {
   color: #111;
   font-size: clamp(16px, 4.2vw, 18px);
   line-height: 1.45;
@@ -2097,6 +2106,36 @@ button {
 .survey-textarea:focus {
   border-color: var(--korail-blue);
   outline: 2px solid rgba(0, 105, 180, 0.16);
+}
+
+.survey-screen-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(10px, 3vw, 14px);
+  margin-top: 2px;
+}
+
+.survey-screen-comparison figure {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+}
+
+.survey-screen-comparison img {
+  width: 100%;
+  aspect-ratio: 402 / 816;
+  object-fit: cover;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  background: #f7fafc;
+  box-shadow: 0 2px 8px rgba(29, 48, 62, 0.08);
+}
+
+.survey-screen-comparison figcaption {
+  color: #8a98a4;
+  font-size: clamp(11px, 3vw, 13px);
+  line-height: 1.3;
+  text-align: center;
 }
 
 .submission-status {

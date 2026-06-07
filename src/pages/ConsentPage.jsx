@@ -41,6 +41,7 @@ export default function ConsentPage() {
           <h2>연구 내용</h2>
           <p>
             참가자는 KTX 001 서울-부산 열차의 좌석 예매 과제를 수행합니다. 앱은 완료 시간, 클릭 수, 오클릭, 호차 변경, 좌석 선택 등의 행동 데이터를 자동 기록합니다.
+            각 Task의 A/B 수행이 끝난 뒤 짧은 설문을 작성하며, 전체 실험과 설문에는 약 10분 정도 소요됩니다.
           </p>
         </section>
 
@@ -54,7 +55,7 @@ export default function ConsentPage() {
               </li>
             ))}
           </ol>
-          <p className="consent-note">각 과제는 A안과 B안으로 한 번씩 진행되며, 총 6개의 테스트를 수행합니다.</p>
+          <p className="consent-note">각 과제는 A안과 B안으로 한 번씩 진행되며, 총 6개의 테스트와 Task별 설문 3회, 마지막 종합 설문 1회를 수행합니다.</p>
         </section>
 
         <section className="consent-card">

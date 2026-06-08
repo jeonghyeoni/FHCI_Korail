@@ -4,7 +4,7 @@ import { useExperiment } from "../context/ExperimentContext.jsx";
 import { formatWon, TRAIN } from "../data/experiment.js";
 import { trainRows } from "./TrainSearchPage.jsx";
 
-const SHOW_VARIANT_A_RESERVE_BOTTOM_NAV = false;
+const SHOW_VARIANT_A_RESERVE_BOTTOM_NAV = true;
 
 export default function VariantAReservePage({ pageKey }) {
   const navigate = useNavigate();

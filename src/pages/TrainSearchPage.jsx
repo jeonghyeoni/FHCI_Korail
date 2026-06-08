@@ -12,7 +12,7 @@ export const trainRows = [
   { train: "KTX\n005", depart: "05:58\n서울", arrive: "08:43\n부산", general: "매진", premium: "매진", enabled: false },
 ];
 
-const SHOW_TRAIN_SEARCH_BOTTOM_NAV = false;
+const SHOW_TRAIN_SEARCH_BOTTOM_NAV = true;
 
 export default function TrainSearchPage() {
   const navigate = useNavigate();

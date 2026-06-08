@@ -4,6 +4,8 @@ import { useExperiment } from "../context/ExperimentContext.jsx";
 import { formatWon, TRAIN } from "../data/experiment.js";
 import { trainRows } from "./TrainSearchPage.jsx";
 
+const SHOW_VARIANT_A_RESERVE_BOTTOM_NAV = false;
+
 export default function VariantAReservePage({ pageKey }) {
   const navigate = useNavigate();
   const { state, actions } = useExperiment();
@@ -24,7 +26,7 @@ export default function VariantAReservePage({ pageKey }) {
   }
 
   return (
-    <AppShell title="열차 조회" showRefresh withBottomNav backTo="/">
+    <AppShell title="열차 조회" showRefresh withBottomNav={SHOW_VARIANT_A_RESERVE_BOTTOM_NAV} backTo="/">
       <div className="route-band">{TRAIN.origin} <span>→</span> {TRAIN.destination}</div>
       <section className="search-controls compact">
         <div className="date-row">

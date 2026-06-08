@@ -12,6 +12,8 @@ export const trainRows = [
   { train: "KTX\n005", depart: "05:58\n서울", arrive: "08:43\n부산", general: "매진", premium: "매진", enabled: false },
 ];
 
+const SHOW_TRAIN_SEARCH_BOTTOM_NAV = false;
+
 export default function TrainSearchPage() {
   const navigate = useNavigate();
   const { state } = useExperiment();
@@ -21,7 +23,7 @@ export default function TrainSearchPage() {
   }
 
   return (
-    <AppShell title="열차 조회" showRefresh withBottomNav backTo="/">
+    <AppShell title="열차 조회" showRefresh withBottomNav={SHOW_TRAIN_SEARCH_BOTTOM_NAV} backTo="/">
       <div className="route-band">{TRAIN.origin} <span>→</span> {TRAIN.destination}</div>
       <section className="search-controls">
         <div className="date-row">

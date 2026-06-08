@@ -1772,6 +1772,14 @@ button {
   accent-color: var(--korail-blue);
 }
 
+.consent-caution {
+  margin: -2px 2px 0;
+  color: #8a5a18;
+  font-size: clamp(12px, 3.3vw, 14px);
+  line-height: 1.45;
+  word-break: keep-all;
+}
+
 .eyebrow {
   margin: 0;
   color: var(--korail-blue);

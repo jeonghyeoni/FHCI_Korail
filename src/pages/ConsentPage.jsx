@@ -74,6 +74,10 @@ export default function ConsentPage() {
           <span>위 내용을 확인했으며 실험 참여에 동의합니다.</span>
         </label>
 
+        <p className="consent-caution">
+          ※ 과제 수행과 관련 없는 메뉴 탐색이나 임의의 조작은 결과에 영향을 줄 수 있으므로 가급적 자제 부탁드립니다.
+        </p>
+
         <button
           className="primary-button"
           type="button"

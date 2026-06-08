@@ -611,7 +611,7 @@ button {
 .reserve-sheet {
   position: absolute;
   right: 0;
-  bottom: calc(clamp(70px, 18vw, 86px) - 4px + clamp(90px, 24vw, 106px) + var(--safe-bottom));
+  bottom: calc(clamp(70px, 18vw, 86px) - 4px + clamp(68px, 18vw, 82px) + var(--safe-bottom));
   left: 0;
   z-index: 23;
   margin-top: 0;
@@ -727,7 +727,7 @@ button {
 }
 
 .screen-with-nav .fixed-action {
-  bottom: calc(clamp(90px, 24vw, 106px) + var(--safe-bottom));
+  bottom: calc(clamp(68px, 18vw, 82px) + var(--safe-bottom));
 }
 
 .reserve-sheet + .fixed-action {

@@ -1,6 +1,7 @@
 const SPREADSHEET_ID = "1NyXaqg6f94t8DClS15Z9u1sDrFluS5csosNxX7sjFK4";
 const SUMMARY_SHEET_NAME = "TaskSummary";
 const EVENT_LOG_SHEET_NAME = "EventLogs";
+const SURVEY_RESPONSE_SHEET_NAME = "SurveyResponses";
 
 const SUMMARY_HEADERS = [
   "submissionKey",
@@ -39,6 +40,22 @@ const EVENT_LOG_HEADERS = [
   "metadata",
 ];
 
+const SURVEY_RESPONSE_HEADERS = [
+  "submissionKey",
+  "participantId",
+  "variant",
+  "taskId",
+  "section",
+  "questionNumber",
+  "questionName",
+  "questionLabel",
+  "questionType",
+  "answer",
+  "score",
+  "reason",
+  "receivedAt",
+];
+
 function doPost(e) {
   const lock = LockService.getScriptLock();
   lock.waitLock(30000);
@@ -49,6 +66,7 @@ function doPost(e) {
     const spreadsheet = getSpreadsheet_();
     const summarySheet = ensureSheet_(spreadsheet, SUMMARY_SHEET_NAME, SUMMARY_HEADERS);
     const eventLogSheet = ensureSheet_(spreadsheet, EVENT_LOG_SHEET_NAME, EVENT_LOG_HEADERS);
+    const surveyResponseSheet = ensureSheet_(spreadsheet, SURVEY_RESPONSE_SHEET_NAME, SURVEY_RESPONSE_HEADERS);
 
     if (hasSubmission_(summarySheet, submissionKey)) {
       return jsonResponse_({ ok: true, duplicate: true, submissionKey });
@@ -75,6 +93,7 @@ function doPost(e) {
     ]);
 
     appendEventLogs_(eventLogSheet, submissionKey, payload.eventLogs || []);
+    appendSurveyResponses_(surveyResponseSheet, submissionKey, payload, payload.surveyResponses || []);
 
     return jsonResponse_({ ok: true, duplicate: false, submissionKey });
   } catch (error) {
@@ -128,6 +147,29 @@ function appendEventLogs_(sheet, submissionKey, eventLogs) {
   ]);
 
   sheet.getRange(sheet.getLastRow() + 1, 1, rows.length, EVENT_LOG_HEADERS.length).setValues(rows);
+}
+
+function appendSurveyResponses_(sheet, submissionKey, payload, surveyResponses) {
+  if (!surveyResponses.length) return;
+
+  const receivedAt = new Date().toISOString();
+  const rows = surveyResponses.map((response) => [
+    submissionKey,
+    payload.participantId || "",
+    payload.variant || "",
+    payload.taskId || "",
+    response.section || "",
+    response.questionNumber || "",
+    response.questionName || "",
+    response.questionLabel || "",
+    response.questionType || "",
+    response.answer || "",
+    response.score ?? "",
+    response.reason || "",
+    receivedAt,
+  ]);
+
+  sheet.getRange(sheet.getLastRow() + 1, 1, rows.length, SURVEY_RESPONSE_HEADERS.length).setValues(rows);
 }
 
 function makeSubmissionKey_(payload) {

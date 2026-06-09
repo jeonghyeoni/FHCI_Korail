@@ -119,7 +119,7 @@ async function retryPendingSubmissions() {
   return hadFailure ? { status: "failed" } : { status: "success" };
 }
 
-export function buildSubmissionPayload({ summary, state, eventLogs }) {
+export function buildSubmissionPayload({ summary, state, eventLogs, surveyAnswers = null, surveyResponses = [] }) {
   const participantId = summary?.participantId ?? state.participantId;
   const variant = summary?.variant ?? state.variant;
   const taskId = summary?.taskId ?? state.taskId;
@@ -148,6 +148,8 @@ export function buildSubmissionPayload({ summary, state, eventLogs }) {
     seatSelectionCount: summary?.seatSelectionCount ?? 0,
     startedAt,
     completedAt,
+    surveyAnswers,
+    surveyResponses,
     eventLogs: identityLogs,
   };
 }

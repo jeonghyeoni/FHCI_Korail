@@ -128,6 +128,24 @@ function getNumberedSurveyQuestions(questions, answers) {
   }, []);
 }
 
+function buildSurveyResponses(questions, answers, section) {
+  return getNumberedSurveyQuestions(questions, answers).map((question) => {
+    const answer = answers[question.name] || "";
+    const optionIndex = question.options.findIndex((option) => option === answer);
+
+    return {
+      section,
+      questionName: question.name,
+      questionNumber: question.number,
+      questionLabel: question.label,
+      questionType: question.type,
+      answer,
+      score: question.type === "scale" && optionIndex >= 0 ? optionIndex + 1 : "",
+      reason: question.type === "choice_text" ? answers[`${question.name}_reason`] || "" : "",
+    };
+  });
+}
+
 function shouldShowTrainScreenComparison(question) {
   return question.name === "task1_entry_preference" || question.name === "task2_entry_preference";
 }
@@ -141,7 +159,7 @@ function shouldShowBOverviewImage(question) {
 }
 
 function shouldShowTask2BStatusImage(question) {
-  return question.name === "task2_b_car_button_used";
+  return question.name === "task2_status_helpful";
 }
 
 function getTask1AutoActionImage(question) {
@@ -206,31 +224,57 @@ export default function CompletePage() {
   const nextCondition = getNextCondition(state.taskId, state.variant);
   const isFinalTest = !nextCondition;
   const shouldShowTaskSurvey = state.variant === "B";
+  const taskSurveyQuestions = getTaskSurveyQuestions(state.taskId);
   const activeSurveyQuestions = shouldShowTaskSurvey
     ? surveyStep === "final"
       ? FINAL_SURVEY_QUESTIONS
-      : getTaskSurveyQuestions(state.taskId)
+      : taskSurveyQuestions
     : [];
   const numberedSurveyQuestions = getNumberedSurveyQuestions(activeSurveyQuestions, surveyAnswers);
   const task = TASKS[state.taskId];
+  const activeSurveyComplete = !shouldShowTaskSurvey || isSurveyComplete(activeSurveyQuestions, surveyAnswers);
+  const shouldSubmitExperimentData = Boolean(summary) && (
+    !shouldShowTaskSurvey ||
+    (!isFinalTest && activeSurveyComplete) ||
+    (isFinalTest && surveyStep === "final" && activeSurveyComplete)
+  );
+
+  function getSurveySubmissionData() {
+    if (!shouldShowTaskSurvey) {
+      return { surveyAnswers: null, surveyResponses: [] };
+    }
+
+    const surveyResponses = buildSurveyResponses(taskSurveyQuestions, surveyAnswers, "task");
+
+    if (isFinalTest && surveyStep === "final") {
+      surveyResponses.push(...buildSurveyResponses(FINAL_SURVEY_QUESTIONS, surveyAnswers, "final"));
+    }
+
+    return {
+      surveyAnswers,
+      surveyResponses,
+    };
+  }
 
   useEffect(() => {
-    if (!summary || submitAttemptedRef.current) return undefined;
-
-    let ignore = false;
-    submitAttemptedRef.current = true;
-
     if (state.isTestMode) {
       setSubmissionStatus("test_mode");
       return undefined;
     }
 
+    if (!shouldSubmitExperimentData || submitAttemptedRef.current) return undefined;
+
+    let ignore = false;
+    submitAttemptedRef.current = true;
     setSubmissionStatus("submitting");
+    const surveySubmissionData = getSurveySubmissionData();
 
     const payload = buildSubmissionPayload({
       summary,
       state,
       eventLogs: loadEvents({ inMemory: state.isTestMode }),
+      surveyAnswers: surveySubmissionData.surveyAnswers,
+      surveyResponses: surveySubmissionData.surveyResponses,
     });
 
     submitExperimentData(payload).then((result) => {
@@ -245,16 +289,16 @@ export default function CompletePage() {
     return () => {
       ignore = true;
     };
-  }, [state, summary]);
+  }, [state, summary, shouldSubmitExperimentData, surveyAnswers, surveyStep]);
 
   const submissionStatusText = getSubmissionStatusText(submissionStatus);
   const isSubmissionComplete = submissionStatus === "success" || submissionStatus === "test_mode";
-  const activeSurveyComplete = !shouldShowTaskSurvey || isSurveyComplete(activeSurveyQuestions, surveyAnswers);
-  const canProceed = isSubmissionComplete && activeSurveyComplete;
+  const canMoveToFinalSurvey = shouldShowTaskSurvey && isFinalTest && surveyStep === "task" && activeSurveyComplete;
+  const canProceed = canMoveToFinalSurvey || (isSubmissionComplete && activeSurveyComplete);
   const actionLabel = (() => {
-    if (!isSubmissionComplete) return "잠시만 기다려주세요";
     if (!activeSurveyComplete) return shouldShowTaskSurvey ? "설문을 완료해주세요" : "다음 테스트 준비 중";
-    if (shouldShowTaskSurvey && isFinalTest && surveyStep === "task") return "종합 설문으로 이동";
+    if (canMoveToFinalSurvey) return "종합 설문으로 이동";
+    if (!isSubmissionComplete) return "잠시만 기다려주세요";
     if (isFinalTest) return "제출하기";
     return "다음 테스트 시작";
   })();

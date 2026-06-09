@@ -65,7 +65,7 @@ function removePendingSubmission(payload) {
   savePendingSubmissions(pending);
 }
 
-async function postPayload(payload, { savePendingOnFailure = false } = {}) {
+async function postPayload(payload, { savePendingOnFailure = false, keepalive = false } = {}) {
   const endpoint = getEndpoint();
   const submissionId = getSubmissionId(payload);
 
@@ -88,6 +88,7 @@ async function postPayload(payload, { savePendingOnFailure = false } = {}) {
       await fetch(endpoint, {
         method: "POST",
         mode: "no-cors",
+        keepalive,
         headers: {
           "Content-Type": "text/plain;charset=utf-8",
         },
@@ -163,11 +164,17 @@ export function buildSubmissionPayload({ summary, state, eventLogs, surveyAnswer
 }
 
 export function buildSurveySubmissionPayload({ summary, state, surveyAnswers = {}, surveyResponses = [] }) {
+  const participantId = summary?.participantId ?? state.participantId;
+  const variant = summary?.variant ?? state.variant;
+  const taskId = summary?.taskId ?? state.taskId;
+
   return {
     submissionType: "survey",
-    participantId: summary?.participantId ?? state.participantId,
-    variant: summary?.variant ?? state.variant,
-    taskId: summary?.taskId ?? state.taskId,
+    submissionVersion: "survey-v2",
+    submissionKey: [participantId, variant, taskId, "survey"].join(":"),
+    participantId,
+    variant,
+    taskId,
     submittedAt: new Date().toISOString(),
     surveyAnswers,
     surveyResponses,
@@ -193,5 +200,5 @@ export async function submitExperimentData(payload) {
 }
 
 export async function submitSurveyData(payload) {
-  return postPayload(payload, { savePendingOnFailure: true });
+  return postPayload(payload, { savePendingOnFailure: true, keepalive: true });
 }

@@ -2,6 +2,7 @@ const SPREADSHEET_ID = "1NyXaqg6f94t8DClS15Z9u1sDrFluS5csosNxX7sjFK4";
 const SUMMARY_SHEET_NAME = "TaskSummary";
 const EVENT_LOG_SHEET_NAME = "EventLogs";
 const SURVEY_RESPONSE_SHEET_NAME = "SurveyResponses";
+const SCRIPT_VERSION = "2026-06-10-survey-responses-v2";
 
 const SUMMARY_HEADERS = [
   "submissionKey",
@@ -67,19 +68,23 @@ function doPost(e) {
     const summarySheet = ensureSheet_(spreadsheet, SUMMARY_SHEET_NAME, SUMMARY_HEADERS);
     const eventLogSheet = ensureSheet_(spreadsheet, EVENT_LOG_SHEET_NAME, EVENT_LOG_HEADERS);
     const surveyResponseSheet = ensureSheet_(spreadsheet, SURVEY_RESPONSE_SHEET_NAME, SURVEY_RESPONSE_HEADERS);
-    const submissionType = payload.submissionType || "task";
+    const submissionType = getSubmissionType_(payload);
 
     if (submissionType === "survey") {
+      if (!Array.isArray(payload.surveyResponses) || payload.surveyResponses.length === 0) {
+        return jsonResponse_({ ok: false, error: "surveyResponses is empty", submissionKey, version: SCRIPT_VERSION });
+      }
+
       if (hasSubmission_(surveyResponseSheet, submissionKey)) {
-        return jsonResponse_({ ok: true, duplicate: true, submissionKey });
+        return jsonResponse_({ ok: true, duplicate: true, submissionKey, version: SCRIPT_VERSION });
       }
 
       appendSurveyResponses_(surveyResponseSheet, submissionKey, payload, payload.surveyResponses || []);
-      return jsonResponse_({ ok: true, duplicate: false, submissionKey });
+      return jsonResponse_({ ok: true, duplicate: false, submissionKey, version: SCRIPT_VERSION });
     }
 
     if (hasSubmission_(summarySheet, submissionKey)) {
-      return jsonResponse_({ ok: true, duplicate: true, submissionKey });
+      return jsonResponse_({ ok: true, duplicate: true, submissionKey, version: SCRIPT_VERSION });
     }
 
     summarySheet.appendRow([
@@ -104,12 +109,16 @@ function doPost(e) {
 
     appendEventLogs_(eventLogSheet, submissionKey, payload.eventLogs || []);
 
-    return jsonResponse_({ ok: true, duplicate: false, submissionKey });
+    return jsonResponse_({ ok: true, duplicate: false, submissionKey, version: SCRIPT_VERSION });
   } catch (error) {
-    return jsonResponse_({ ok: false, error: String(error) });
+    return jsonResponse_({ ok: false, error: String(error), version: SCRIPT_VERSION });
   } finally {
     lock.releaseLock();
   }
+}
+
+function doGet() {
+  return jsonResponse_({ ok: true, version: SCRIPT_VERSION });
 }
 
 function getSpreadsheet_() {
@@ -181,8 +190,16 @@ function appendSurveyResponses_(sheet, submissionKey, payload, surveyResponses) 
   sheet.getRange(sheet.getLastRow() + 1, 1, rows.length, SURVEY_RESPONSE_HEADERS.length).setValues(rows);
 }
 
+function getSubmissionType_(payload) {
+  if (payload.submissionType === "survey") return "survey";
+  if (Array.isArray(payload.surveyResponses) && payload.surveyResponses.length > 0) return "survey";
+  return "task";
+}
+
 function makeSubmissionKey_(payload) {
-  const submissionType = payload.submissionType || "task";
+  if (payload.submissionKey) return payload.submissionKey;
+
+  const submissionType = getSubmissionType_(payload);
   const baseKey = [payload.participantId, payload.variant, payload.taskId].join(":");
   return submissionType === "survey" ? `${baseKey}:survey` : baseKey;
 }

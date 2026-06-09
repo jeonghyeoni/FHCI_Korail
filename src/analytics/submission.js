@@ -16,7 +16,8 @@ function getEndpoint() {
 }
 
 function getSubmissionId(payload) {
-  return [payload.participantId, payload.variant, payload.taskId].join(":");
+  const submissionType = payload.submissionType || "task";
+  return [submissionType, payload.participantId, payload.variant, payload.taskId].join(":");
 }
 
 function getSubmittedKey(payload) {
@@ -133,6 +134,7 @@ export function buildSubmissionPayload({ summary, state, eventLogs, surveyAnswer
   );
 
   return {
+    submissionType: "task",
     participantId,
     variant,
     taskId,
@@ -154,7 +156,37 @@ export function buildSubmissionPayload({ summary, state, eventLogs, surveyAnswer
   };
 }
 
+export function buildSurveySubmissionPayload({ summary, state, surveyAnswers = {}, surveyResponses = [] }) {
+  return {
+    submissionType: "survey",
+    participantId: summary?.participantId ?? state.participantId,
+    variant: summary?.variant ?? state.variant,
+    taskId: summary?.taskId ?? state.taskId,
+    submittedAt: new Date().toISOString(),
+    surveyAnswers,
+    surveyResponses,
+  };
+}
+
 export async function submitExperimentData(payload) {
+  const pendingResult = await retryPendingSubmissions();
+
+  if (pendingResult.status === "missing_endpoint") {
+    return pendingResult;
+  }
+
+  if (pendingResult.status === "failed") {
+    return pendingResult;
+  }
+
+  if (isSubmitted(payload)) {
+    return { status: "success", message: "already_submitted" };
+  }
+
+  return postPayload(payload, { savePendingOnFailure: true });
+}
+
+export async function submitSurveyData(payload) {
   const pendingResult = await retryPendingSubmissions();
 
   if (pendingResult.status === "missing_endpoint") {

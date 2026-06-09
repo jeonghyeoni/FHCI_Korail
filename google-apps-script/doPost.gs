@@ -67,6 +67,16 @@ function doPost(e) {
     const summarySheet = ensureSheet_(spreadsheet, SUMMARY_SHEET_NAME, SUMMARY_HEADERS);
     const eventLogSheet = ensureSheet_(spreadsheet, EVENT_LOG_SHEET_NAME, EVENT_LOG_HEADERS);
     const surveyResponseSheet = ensureSheet_(spreadsheet, SURVEY_RESPONSE_SHEET_NAME, SURVEY_RESPONSE_HEADERS);
+    const submissionType = payload.submissionType || "task";
+
+    if (submissionType === "survey") {
+      if (hasSubmission_(surveyResponseSheet, submissionKey)) {
+        return jsonResponse_({ ok: true, duplicate: true, submissionKey });
+      }
+
+      appendSurveyResponses_(surveyResponseSheet, submissionKey, payload, payload.surveyResponses || []);
+      return jsonResponse_({ ok: true, duplicate: false, submissionKey });
+    }
 
     if (hasSubmission_(summarySheet, submissionKey)) {
       return jsonResponse_({ ok: true, duplicate: true, submissionKey });
@@ -93,7 +103,6 @@ function doPost(e) {
     ]);
 
     appendEventLogs_(eventLogSheet, submissionKey, payload.eventLogs || []);
-    appendSurveyResponses_(surveyResponseSheet, submissionKey, payload, payload.surveyResponses || []);
 
     return jsonResponse_({ ok: true, duplicate: false, submissionKey });
   } catch (error) {
@@ -173,7 +182,9 @@ function appendSurveyResponses_(sheet, submissionKey, payload, surveyResponses) 
 }
 
 function makeSubmissionKey_(payload) {
-  return [payload.participantId, payload.variant, payload.taskId].join(":");
+  const submissionType = payload.submissionType || "task";
+  const baseKey = [payload.participantId, payload.variant, payload.taskId].join(":");
+  return submissionType === "survey" ? `${baseKey}:survey` : baseKey;
 }
 
 function jsonResponse_(data) {

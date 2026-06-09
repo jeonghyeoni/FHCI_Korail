@@ -1,7 +1,7 @@
 import { Component, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loadEvents, loadSummary } from "../analytics/storage.js";
-import { buildSubmissionPayload, submitExperimentData } from "../analytics/submission.js";
+import { buildSubmissionPayload, buildSurveySubmissionPayload, submitExperimentData, submitSurveyData } from "../analytics/submission.js";
 import aCarSelectDropdownImage from "../assets/survey/a-car-select-dropdown.png";
 import aTrainAfterSelectImage from "../assets/survey/a-train-after-select.png";
 import aTrainAfterSelectReserveHighlightImage from "../assets/survey/a-train-after-select-reserve-highlight.png";
@@ -24,6 +24,10 @@ function getSubmissionStatusText(status) {
       return "데이터 저장 URL 미설정";
     case "test_mode":
       return "테스트 모드: 데이터 전송 안 함";
+    case "survey_submitting":
+      return "설문 데이터 저장 중...";
+    case "survey_failed":
+      return "설문 데이터 저장 실패: 관리자에게 알려주세요";
     default:
       return "";
   }
@@ -220,7 +224,9 @@ export default function CompletePage() {
   const [submissionStatus, setSubmissionStatus] = useState("idle");
   const [surveyAnswers, setSurveyAnswers] = useState({});
   const [surveyStep, setSurveyStep] = useState("task");
+  const [isSurveyOpen, setIsSurveyOpen] = useState(false);
   const [isSubmittingOnClick, setIsSubmittingOnClick] = useState(false);
+  const [surveySubmissionStatus, setSurveySubmissionStatus] = useState("idle");
   const submitAttemptedRef = useRef(false);
   const nextCondition = getNextCondition(state.taskId, state.variant);
   const isFinalTest = !nextCondition;
@@ -234,7 +240,7 @@ export default function CompletePage() {
   const numberedSurveyQuestions = getNumberedSurveyQuestions(activeSurveyQuestions, surveyAnswers);
   const task = TASKS[state.taskId];
   const activeSurveyComplete = !shouldShowTaskSurvey || isSurveyComplete(activeSurveyQuestions, surveyAnswers);
-  const shouldAutoSubmitExperimentData = Boolean(summary) && !shouldShowTaskSurvey;
+  const shouldAutoSubmitExperimentData = Boolean(summary);
 
   function getSurveySubmissionData() {
     if (!shouldShowTaskSurvey) {
@@ -264,19 +270,16 @@ export default function CompletePage() {
     let ignore = false;
     submitAttemptedRef.current = true;
     setSubmissionStatus("submitting");
-    const surveySubmissionData = getSurveySubmissionData();
 
     const payload = buildSubmissionPayload({
       summary,
       state,
       eventLogs: loadEvents({ inMemory: state.isTestMode }),
-      surveyAnswers: surveySubmissionData.surveyAnswers,
-      surveyResponses: surveySubmissionData.surveyResponses,
     });
 
-    submitExperimentData(payload).then((result) => {
+      submitExperimentData(payload).then((result) => {
       if (!ignore) {
-        if (result.status === "success" && !state.isTestMode) {
+        if (result.status === "success" && !state.isTestMode && !shouldShowTaskSurvey) {
           markConditionComplete(state.taskId, state.variant);
         }
         setSubmissionStatus(result.status);
@@ -286,18 +289,21 @@ export default function CompletePage() {
     return () => {
       ignore = true;
     };
-  }, [state, summary, shouldAutoSubmitExperimentData]);
+  }, [state, summary, shouldAutoSubmitExperimentData, shouldShowTaskSurvey]);
 
-  const submissionStatusText = getSubmissionStatusText(submissionStatus);
+  const statusForDisplay = surveySubmissionStatus !== "idle" ? surveySubmissionStatus : submissionStatus;
+  const submissionStatusText = getSubmissionStatusText(statusForDisplay);
   const isSubmissionComplete = submissionStatus === "success" || submissionStatus === "test_mode";
-  const canMoveToFinalSurvey = shouldShowTaskSurvey && isFinalTest && surveyStep === "task" && activeSurveyComplete;
-  const canSubmitSurvey = shouldShowTaskSurvey && activeSurveyComplete && !isSubmittingOnClick;
-  const canProceed = canMoveToFinalSurvey || canSubmitSurvey || (isSubmissionComplete && activeSurveyComplete);
+  const canOpenSurvey = shouldShowTaskSurvey && !isSurveyOpen && isSubmissionComplete;
+  const canMoveToFinalSurvey = shouldShowTaskSurvey && isSurveyOpen && isFinalTest && surveyStep === "task" && activeSurveyComplete;
+  const canSubmitSurvey = shouldShowTaskSurvey && isSurveyOpen && activeSurveyComplete && !isSubmittingOnClick;
+  const canProceed = canOpenSurvey || canMoveToFinalSurvey || canSubmitSurvey || (!shouldShowTaskSurvey && isSubmissionComplete);
   const actionLabel = (() => {
     if (isSubmittingOnClick) return "잠시만 기다려주세요";
+    if (shouldShowTaskSurvey && !isSurveyOpen) return isSubmissionComplete ? "설문 하러가기" : "잠시만 기다려주세요";
     if (!activeSurveyComplete) return shouldShowTaskSurvey ? "설문을 완료해주세요" : "다음 테스트 준비 중";
     if (canMoveToFinalSurvey) return "종합 설문으로 이동";
-    if (shouldShowTaskSurvey) return isFinalTest ? "제출하기" : "다음 테스트 시작";
+    if (shouldShowTaskSurvey) return "설문 제출";
     if (!isSubmissionComplete) return "잠시만 기다려주세요";
     return isFinalTest ? "제출하기" : "다음 테스트 시작";
   })();
@@ -308,6 +314,11 @@ export default function CompletePage() {
 
   const handlePrimaryAction = () => {
     if (!canProceed || isSubmittingOnClick) return;
+    if (shouldShowTaskSurvey && !isSurveyOpen) {
+      setIsSurveyOpen(true);
+      return;
+    }
+
     if (shouldShowTaskSurvey && isFinalTest && surveyStep === "task") {
       setSurveyStep("final");
       requestAnimationFrame(() => {
@@ -329,18 +340,17 @@ export default function CompletePage() {
       if (!summary) return;
 
       setIsSubmittingOnClick(true);
-      setSubmissionStatus("submitting");
+      setSurveySubmissionStatus("survey_submitting");
       const surveySubmissionData = getSurveySubmissionData();
-      const payload = buildSubmissionPayload({
+      const payload = buildSurveySubmissionPayload({
         summary,
         state,
-        eventLogs: loadEvents({ inMemory: state.isTestMode }),
         surveyAnswers: surveySubmissionData.surveyAnswers,
         surveyResponses: surveySubmissionData.surveyResponses,
       });
 
-      submitExperimentData(payload).then((result) => {
-        setSubmissionStatus(result.status);
+      submitSurveyData(payload).then((result) => {
+        setSurveySubmissionStatus(result.status === "failed" ? "survey_failed" : result.status);
 
         if (result.status === "success") {
           markConditionComplete(state.taskId, state.variant);
@@ -496,9 +506,11 @@ export default function CompletePage() {
         <div className="pid-display">{state.participantId}</div>
         <p>
           {shouldShowTaskSurvey
-            ? surveyStep === "final"
-              ? "마지막 종합 설문을 작성해주세요."
-            : "A/B 테스트 쌍이 끝났습니다. 아래 Task 설문을 작성해주세요."
+            ? !isSurveyOpen
+              ? "실험 데이터 저장이 완료되면 설문으로 이동할 수 있습니다."
+              : surveyStep === "final"
+                ? "마지막 종합 설문을 작성해주세요."
+                : "A/B 테스트 쌍이 끝났습니다. 아래 Task 설문을 작성해주세요."
             : "데이터 저장이 완료되면 다음 테스트로 진행해주세요."}
         </p>
         {submissionStatusText ? (
@@ -507,7 +519,7 @@ export default function CompletePage() {
           </p>
         ) : null}
 
-        {shouldShowTaskSurvey ? (
+        {shouldShowTaskSurvey && isSurveyOpen ? (
           <section className="post-task-survey" aria-label={surveyStep === "final" ? "종합 설문" : "Task별 설문"}>
             <h2>{surveyStep === "final" ? "종합 설문" : `${task?.title} 설문`}</h2>
             <p className="survey-help">필수 문항을 선택하고, 이유 입력란은 필요한 경우에만 작성해주세요.</p>

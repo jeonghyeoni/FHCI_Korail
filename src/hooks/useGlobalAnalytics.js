@@ -38,6 +38,10 @@ export function useGlobalAnalytics() {
 
   useEffect(() => {
     function handleClick(event) {
+      if (window.location.pathname === "/complete") {
+        return;
+      }
+
       const label = getTrackLabel(event.target);
       const x = event.clientX;
       const y = event.clientY;

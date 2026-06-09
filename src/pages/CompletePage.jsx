@@ -407,7 +407,7 @@ export default function CompletePage() {
       <main className="phone-frame" data-clarity-unmask="true">
       <section className="screen complete-screen complete-survey-screen">
         <p className="eyebrow">테스트 완료</p>
-        <h1>{task?.title} - Variant {state.variant}</h1>
+        <h1>{task?.title} - {state.variant}</h1>
         <div className="pid-display">{state.participantId}</div>
         <p>
           {shouldShowTaskSurvey

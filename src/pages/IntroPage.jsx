@@ -17,8 +17,7 @@ export default function IntroPage() {
       <section className="screen intro-screen task-intro-screen">
         <p className="eyebrow">코레일 좌석 예매 A/B 테스트</p>
         <div className="task-identity">
-          <span>{task.title}</span>
-          <span>Variant {state.variant}</span>
+          {task.title} - {state.variant}
         </div>
 
         <section className="task-panel task-goal-panel" data-track-label="intro:task-panel">

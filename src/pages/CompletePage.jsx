@@ -220,6 +220,7 @@ export default function CompletePage() {
   const [submissionStatus, setSubmissionStatus] = useState("idle");
   const [surveyAnswers, setSurveyAnswers] = useState({});
   const [surveyStep, setSurveyStep] = useState("task");
+  const [isSubmittingOnClick, setIsSubmittingOnClick] = useState(false);
   const submitAttemptedRef = useRef(false);
   const nextCondition = getNextCondition(state.taskId, state.variant);
   const isFinalTest = !nextCondition;
@@ -233,11 +234,7 @@ export default function CompletePage() {
   const numberedSurveyQuestions = getNumberedSurveyQuestions(activeSurveyQuestions, surveyAnswers);
   const task = TASKS[state.taskId];
   const activeSurveyComplete = !shouldShowTaskSurvey || isSurveyComplete(activeSurveyQuestions, surveyAnswers);
-  const shouldSubmitExperimentData = Boolean(summary) && (
-    !shouldShowTaskSurvey ||
-    (!isFinalTest && activeSurveyComplete) ||
-    (isFinalTest && surveyStep === "final" && activeSurveyComplete)
-  );
+  const shouldAutoSubmitExperimentData = Boolean(summary) && !shouldShowTaskSurvey;
 
   function getSurveySubmissionData() {
     if (!shouldShowTaskSurvey) {
@@ -262,7 +259,7 @@ export default function CompletePage() {
       return undefined;
     }
 
-    if (!shouldSubmitExperimentData || submitAttemptedRef.current) return undefined;
+    if (!shouldAutoSubmitExperimentData || submitAttemptedRef.current) return undefined;
 
     let ignore = false;
     submitAttemptedRef.current = true;
@@ -289,18 +286,20 @@ export default function CompletePage() {
     return () => {
       ignore = true;
     };
-  }, [state, summary, shouldSubmitExperimentData, surveyAnswers, surveyStep]);
+  }, [state, summary, shouldAutoSubmitExperimentData]);
 
   const submissionStatusText = getSubmissionStatusText(submissionStatus);
   const isSubmissionComplete = submissionStatus === "success" || submissionStatus === "test_mode";
   const canMoveToFinalSurvey = shouldShowTaskSurvey && isFinalTest && surveyStep === "task" && activeSurveyComplete;
-  const canProceed = canMoveToFinalSurvey || (isSubmissionComplete && activeSurveyComplete);
+  const canSubmitSurvey = shouldShowTaskSurvey && activeSurveyComplete && !isSubmittingOnClick;
+  const canProceed = canMoveToFinalSurvey || canSubmitSurvey || (isSubmissionComplete && activeSurveyComplete);
   const actionLabel = (() => {
+    if (isSubmittingOnClick) return "잠시만 기다려주세요";
     if (!activeSurveyComplete) return shouldShowTaskSurvey ? "설문을 완료해주세요" : "다음 테스트 준비 중";
     if (canMoveToFinalSurvey) return "종합 설문으로 이동";
+    if (shouldShowTaskSurvey) return isFinalTest ? "제출하기" : "다음 테스트 시작";
     if (!isSubmissionComplete) return "잠시만 기다려주세요";
-    if (isFinalTest) return "제출하기";
-    return "다음 테스트 시작";
+    return isFinalTest ? "제출하기" : "다음 테스트 시작";
   })();
 
   const updateSurveyAnswer = (name, value) => {
@@ -308,7 +307,7 @@ export default function CompletePage() {
   };
 
   const handlePrimaryAction = () => {
-    if (!canProceed) return;
+    if (!canProceed || isSubmittingOnClick) return;
     if (shouldShowTaskSurvey && isFinalTest && surveyStep === "task") {
       setSurveyStep("final");
       requestAnimationFrame(() => {
@@ -316,6 +315,48 @@ export default function CompletePage() {
       });
       return;
     }
+
+    if (shouldShowTaskSurvey) {
+      if (state.isTestMode) {
+        if (nextCondition) {
+          window.location.assign(buildConditionUrl(nextCondition, state.participantId, { mode: state.mode }));
+          return;
+        }
+        navigate("/thanks?mode=test");
+        return;
+      }
+
+      if (!summary) return;
+
+      setIsSubmittingOnClick(true);
+      setSubmissionStatus("submitting");
+      const surveySubmissionData = getSurveySubmissionData();
+      const payload = buildSubmissionPayload({
+        summary,
+        state,
+        eventLogs: loadEvents({ inMemory: state.isTestMode }),
+        surveyAnswers: surveySubmissionData.surveyAnswers,
+        surveyResponses: surveySubmissionData.surveyResponses,
+      });
+
+      submitExperimentData(payload).then((result) => {
+        setSubmissionStatus(result.status);
+
+        if (result.status === "success") {
+          markConditionComplete(state.taskId, state.variant);
+          if (nextCondition) {
+            window.location.assign(buildConditionUrl(nextCondition, state.participantId, { mode: state.mode }));
+            return;
+          }
+          navigate("/thanks");
+          return;
+        }
+
+        setIsSubmittingOnClick(false);
+      });
+      return;
+    }
+
     if (nextCondition) {
       window.location.assign(buildConditionUrl(nextCondition, state.participantId, { mode: state.mode }));
       return;
@@ -481,7 +522,7 @@ export default function CompletePage() {
           data-clickable="true"
           data-disabled={canProceed ? "false" : "true"}
           aria-disabled={canProceed ? "false" : "true"}
-          disabled={!canProceed}
+          disabled={!canProceed || isSubmittingOnClick}
           onClick={handlePrimaryAction}
         >
           {actionLabel}

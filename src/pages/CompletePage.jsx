@@ -49,7 +49,7 @@ function getCommonTaskSurveyQuestions(taskId) {
 const TASK_SURVEY_DETAILS = {
   "1": [
     { name: "task1_a_auto_awareness", type: "choice", label: "A에서 '예매'를 누르면 좌석이 자동으로 배정된다는 사실을 인지하고 있었나요?", options: YES_NO },
-    { name: "task1_a_auto_used", type: "choice", label: "A에서 아무 좌석이나 예매할 때 '예매' 버튼을 이용했나요?", options: YES_NO },
+    { name: "task1_a_auto_used", type: "choice", label: "A에서 아무 좌석이나 예매할 때 '좌석 선택' 버튼 대신 '예매' 버튼을 이용했나요?", options: YES_NO },
     { name: "task1_a_auto_helpful", type: "scale", label: "A에서 아무 좌석이나 예매할 때 '예매' 버튼은 도움이 되었나요?", options: LIKERT_AGREE, showIf: { name: "task1_a_auto_used", value: "그렇다" } },
     { name: "task1_b_auto_used", type: "choice", label: "B에서 아무 좌석이나 예매할 때 '좌석 자동배정' 버튼을 이용했나요?", options: YES_NO },
     { name: "task1_b_auto_helpful", type: "scale", label: "B에서 아무 좌석이나 예매할 때 '좌석 자동배정' 버튼은 도움이 되었나요?", options: LIKERT_AGREE, showIf: { name: "task1_b_auto_used", value: "그렇다" } },
@@ -57,7 +57,7 @@ const TASK_SURVEY_DETAILS = {
   ],
   "2": [
     { name: "task2_status_helpful", type: "scale", label: "B에서 특정 좌석을 예매하기 위해 호차를 선택할 때 좌석 현황 창이 도움이 되었나요?", options: LIKERT_AGREE },
-    { name: "task2_b_car_button_used", type: "choice", label: "B에서 호차 변경 버튼을 이용했나요?", options: YES_NO },
+    { name: "task2_b_car_button_used", type: "choice", label: "B에서 호차 변경 버튼을 이용했나요? (9번 질문에 첨부된 사진 참고)", options: YES_NO },
     { name: "task2_car_selector_preference", type: "choice", label: "호차 변경 버튼의 경우 A(선택박스형)와 B(카드형) 중 어느 쪽을 더 선호하나요?", options: UI_PREFERENCE },
     { name: "task2_entry_preference", type: "choice", label: "A는 열차 선택 시 좌석 선택과 예매 버튼이 있는 추가 팝업 창이 뜨는 반면, B는 바로 좌석 선택 화면으로 이동합니다. 본 Task를 수행하는 데 있어서 어느 쪽을 선호하나요?", options: UI_PREFERENCE },
   ],
@@ -66,19 +66,19 @@ const TASK_SURVEY_DETAILS = {
     { name: "task3_b_window_difficulty", type: "scale", label: "B에서 창가 자리를 찾는 과정의 난이도는 어떠했나요?", options: LIKERT_EASY },
     { name: "task3_b_status_used", type: "choice", label: "B에서 창가 자리를 찾을 때 좌석 현황 창을 활용했나요?", options: YES_NO },
     { name: "task3_b_status_helpful", type: "choice", label: "B에서 좌석 현황 창은 창가 자리를 예매하는 데 도움이 되었나요?", options: YES_NO, showIf: { name: "task3_b_status_used", value: "그렇다" } },
-    { name: "task3_b_available_intuitive", type: "choice", label: "B에서 좌석 현황 창에서 예약 가능한 좌석과 예약 불가능한 좌석의 구분이 충분히 직관적이었나요?", options: YES_NO },
-    { name: "task3_b_window_intuitive", type: "choice", label: "B에서 좌석 현황 창에서 창가 좌석과 안쪽 좌석의 구분이 충분히 직관적이었나요?", options: YES_NO },
+    { name: "task3_b_available_intuitive", type: "choice", label: "B의 좌석 현황 창에서 예약 가능한 좌석과 예약 불가능한 좌석의 구분이 충분히 직관적이었나요?", options: YES_NO },
+    { name: "task3_b_window_intuitive", type: "choice", label: "B의 좌석 현황 창에서 창가 좌석과 안쪽 좌석의 구분이 충분히 직관적이었나요?", options: YES_NO },
     { name: "task3_window_preference", type: "choice", label: "창가 좌석을 예매하는 과정에 있어서 A와 B 중 어느 쪽을 선호하나요?", options: UI_PREFERENCE },
   ],
 };
 
 const FINAL_SURVEY_QUESTIONS = [
-  { name: "final_a_control", type: "choice", label: "A의 예매 과정에서 내가 직접 선택과 진행을 통제하고 있다고 느꼈나요?", options: YES_NO },
-  { name: "final_a_error_safe", type: "choice", label: "A의 예매 과정에서 실수하거나 잘못된 선택을 할 가능성이 적다고 느꼈나요?", options: YES_NO },
-  { name: "final_a_status_clear", type: "choice", label: "A의 예매 과정에서 현재 어떤 상태에 있는지 쉽게 이해할 수 있었나요?", options: YES_NO },
-  { name: "final_b_control", type: "choice", label: "B의 예매 과정에서 내가 직접 선택과 진행을 통제하고 있다고 느꼈나요?", options: YES_NO },
-  { name: "final_b_error_safe", type: "choice", label: "B의 예매 과정에서 실수하거나 잘못된 선택을 할 가능성이 적다고 느꼈나요?", options: YES_NO },
-  { name: "final_b_status_clear", type: "choice", label: "B의 예매 과정에서 현재 어떤 상태에 있는지 쉽게 이해할 수 있었나요?", options: YES_NO },
+  { name: "final_a_control", type: "scale", label: "A의 예매 과정에서 내가 직접 선택과 진행을 통제하고 있다고 느꼈나요?", options: LIKERT_AGREE },
+  { name: "final_a_error_safe", type: "scale", label: "A의 예매 과정에서 실수하거나 잘못된 선택을 할 가능성이 적다고 느꼈나요?", options: LIKERT_AGREE },
+  { name: "final_a_status_clear", type: "scale", label: "A의 예매 과정에서 현재 어떤 상태에 있는지 쉽게 이해할 수 있었나요?", options: LIKERT_AGREE },
+  { name: "final_b_control", type: "scale", label: "B의 예매 과정에서 내가 직접 선택과 진행을 통제하고 있다고 느꼈나요?", options: LIKERT_AGREE },
+  { name: "final_b_error_safe", type: "scale", label: "B의 예매 과정에서 실수하거나 잘못된 선택을 할 가능성이 적다고 느꼈나요?", options: LIKERT_AGREE },
+  { name: "final_b_status_clear", type: "scale", label: "B의 예매 과정에서 현재 어떤 상태에 있는지 쉽게 이해할 수 있었나요?", options: LIKERT_AGREE },
   { name: "final_ui_preference", type: "choice", label: "전체적으로 어느 UI를 더 선호하나요?", options: ["A", "B", "차이를 느끼지 못함"] },
   { name: "final_gender", type: "choice", label: "성별이 무엇인가요?", options: ["여성", "남성"] },
   { name: "final_age", type: "choice", label: "나이대가 어떻게 되나요?", options: ["10대", "20대", "30대", "40대", "50대", "60대 이상"] },
@@ -149,7 +149,7 @@ function getTask1AutoActionImage(question) {
     return {
       src: aTrainAfterSelectReserveHighlightImage,
       alt: "A의 열차 선택 후 화면에서 예매 버튼이 강조된 화면",
-      caption: "A의 열차 선택 후 화면",
+      caption: "A의 예매 버튼 (빨간색 강조 표시)",
     };
   }
 
@@ -157,7 +157,7 @@ function getTask1AutoActionImage(question) {
     return {
       src: bTrainAfterSelectAutoHighlightImage,
       alt: "B의 열차 선택 후 화면에서 좌석 자동선택 버튼이 강조된 화면",
-      caption: "B의 열차 선택 후 화면",
+      caption: "B의 좌석 자동선택 버튼 (빨간색 강조 표시)",
     };
   }
 

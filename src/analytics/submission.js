@@ -20,15 +20,21 @@ function getSubmissionId(payload) {
   return [submissionType, payload.participantId, payload.variant, payload.taskId].join(":");
 }
 
+function isSurveyPayload(payload) {
+  return (payload.submissionType || "task") === "survey";
+}
+
 function getSubmittedKey(payload) {
   return `${SUBMITTED_PREFIX}:${getSubmissionId(payload)}`;
 }
 
 function isSubmitted(payload) {
+  if (isSurveyPayload(payload)) return false;
   return localStorage.getItem(getSubmittedKey(payload)) === "true";
 }
 
 function markSubmitted(payload) {
+  if (isSurveyPayload(payload)) return;
   localStorage.setItem(getSubmittedKey(payload), "true");
 }
 
@@ -187,19 +193,5 @@ export async function submitExperimentData(payload) {
 }
 
 export async function submitSurveyData(payload) {
-  const pendingResult = await retryPendingSubmissions();
-
-  if (pendingResult.status === "missing_endpoint") {
-    return pendingResult;
-  }
-
-  if (pendingResult.status === "failed") {
-    return pendingResult;
-  }
-
-  if (isSubmitted(payload)) {
-    return { status: "success", message: "already_submitted" };
-  }
-
   return postPayload(payload, { savePendingOnFailure: true });
 }

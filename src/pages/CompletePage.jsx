@@ -26,6 +26,8 @@ function getSubmissionStatusText(status) {
       return "테스트 모드: 데이터 전송 안 함";
     case "survey_submitting":
       return "설문 데이터 저장 중...";
+    case "survey_success":
+      return "설문 데이터 저장 완료";
     case "survey_failed":
       return "설문 데이터 저장 실패: 관리자에게 알려주세요";
     default:
@@ -277,7 +279,7 @@ export default function CompletePage() {
       eventLogs: loadEvents({ inMemory: state.isTestMode }),
     });
 
-      submitExperimentData(payload).then((result) => {
+    submitExperimentData(payload).then((result) => {
       if (!ignore) {
         if (result.status === "success" && !state.isTestMode && !shouldShowTaskSurvey) {
           markConditionComplete(state.taskId, state.variant);
@@ -350,7 +352,7 @@ export default function CompletePage() {
       });
 
       submitSurveyData(payload).then((result) => {
-        setSurveySubmissionStatus(result.status === "failed" ? "survey_failed" : result.status);
+        setSurveySubmissionStatus(result.status === "success" ? "survey_success" : result.status === "failed" ? "survey_failed" : result.status);
 
         if (result.status === "success") {
           markConditionComplete(state.taskId, state.variant);
@@ -514,7 +516,7 @@ export default function CompletePage() {
             : "데이터 저장이 완료되면 다음 테스트로 진행해주세요."}
         </p>
         {submissionStatusText ? (
-          <p className={`submission-status submission-status-${submissionStatus}`} aria-live="polite">
+          <p className={`submission-status submission-status-${statusForDisplay}`} aria-live="polite">
             {submissionStatusText}
           </p>
         ) : null}

@@ -106,16 +106,18 @@ const LEGACY_TASK_SURVEY_DETAILS = {
 };
 
 const FINAL_SURVEY_QUESTIONS = [
-  { name: "final_a_control", type: "scale", label: "A의 예매 과정에서 내가 직접 선택과 진행을 통제하고 있다고 느꼈나요?", options: LIKERT_AGREE },
-  { name: "final_a_error_safe", type: "scale", label: "A의 예매 과정에서 실수하거나 잘못된 선택을 할 가능성이 적다고 느꼈나요?", options: LIKERT_AGREE },
-  { name: "final_a_status_clear", type: "scale", label: "A의 예매 과정에서 현재 어떤 상태에 있는지 쉽게 이해할 수 있었나요?", options: LIKERT_AGREE },
-  { name: "final_b_control", type: "scale", label: "B의 예매 과정에서 내가 직접 선택과 진행을 통제하고 있다고 느꼈나요?", options: LIKERT_AGREE },
-  { name: "final_b_error_safe", type: "scale", label: "B의 예매 과정에서 실수하거나 잘못된 선택을 할 가능성이 적다고 느꼈나요?", options: LIKERT_AGREE },
-  { name: "final_b_status_clear", type: "scale", label: "B의 예매 과정에서 현재 어떤 상태에 있는지 쉽게 이해할 수 있었나요?", options: LIKERT_AGREE },
   { name: "final_ui_preference", type: "choice", label: "전체적으로 어느 UI를 더 선호하나요?", options: ["A", "B", "차이를 느끼지 못함"] },
   { name: "final_gender", type: "choice", label: "성별이 무엇인가요?", options: ["여성", "남성"] },
   { name: "final_age", type: "choice", label: "나이대가 어떻게 되나요?", options: ["10대", "20대", "30대", "40대", "50대", "60대 이상"] },
   { name: "final_korailtalk_used", type: "choice", label: "기존에 KTX 예매를 위해 코레일톡을 사용해본 적이 있나요?", options: YES_NO },
+  {
+    name: "final_followup_phone",
+    type: "text",
+    label:
+      "전화번호를 기재해주시면 필요에 따라 추가 설문을 위한 연락이 갈 수 있습니다. 추가 설문에 참여해주시면 소정의 기프티콘을 드립니다. 많은 참여 부탁드립니다.",
+    placeholder: "전화번호 입력 (선택)",
+    required: false,
+  },
 ];
 
 function getLegacyTaskSurveyQuestions(taskId) {
@@ -130,6 +132,7 @@ function isQuestionVisible(question, answers) {
 function isSurveyComplete(questions, answers) {
   return questions.every((question) => {
     if (!isQuestionVisible(question, answers)) return true;
+    if (question.required === false) return true;
     if (question.type === "choice_text") {
       return Boolean(answers[question.name]);
     }
@@ -164,7 +167,7 @@ function getNumberedSurveyQuestions(questions, answers) {
 function buildSurveyResponses(questions, answers, section) {
   return getNumberedSurveyQuestions(questions, answers).map((question) => {
     const answer = answers[question.name] || "";
-    const optionIndex = question.options.findIndex((option) => option === answer);
+    const optionIndex = Array.isArray(question.options) ? question.options.findIndex((option) => option === answer) : -1;
 
     return {
       section,
@@ -401,7 +404,7 @@ export default function CompletePage() {
   };
 
   function renderSurveyQuestion(question) {
-    if (!question || !Array.isArray(question.options)) return null;
+    if (!question) return null;
     if (!isQuestionVisible(question, surveyAnswers)) return null;
     const autoActionImage = getAutoActionImage(question);
 
@@ -415,9 +418,11 @@ export default function CompletePage() {
         <div className="survey-question-title" id={`${question.name}-label`}>
           <span className="survey-question-number">{question.number}.</span>
           <span>{question.label}</span>
-          <span className="survey-required-mark" aria-label="필수">
-            *
-          </span>
+          {question.required === false ? null : (
+            <span className="survey-required-mark" aria-label="필수">
+              *
+            </span>
+          )}
         </div>
         {question.type === "scale" ? (
           <div className="survey-scale-row">
@@ -445,6 +450,14 @@ export default function CompletePage() {
             </div>
             <span className="survey-scale-end-label">{question.options[question.options.length - 1]}</span>
           </div>
+        ) : question.type === "text" ? (
+          <textarea
+            className="survey-textarea"
+            value={surveyAnswers[question.name] || ""}
+            onChange={(event) => updateSurveyAnswer(question.name, event.currentTarget.value)}
+            placeholder={question.placeholder || "입력해주세요."}
+            rows={3}
+          />
         ) : (
           <div className="survey-choice-list">
             {question.options.map((option) => (

@@ -35,24 +35,51 @@ function getSubmissionStatusText(status) {
   }
 }
 
-const LIKERT_EASY = ["매우 어렵다", "어렵다", "약간 어렵다", "약간 쉽다", "쉽다", "매우 쉽다"];
-const LIKERT_SATISFACTION = ["매우 불만족", "불만족", "약간 불만족", "약간 만족", "만족", "매우 만족"];
 const LIKERT_AGREE = ["매우 그렇지 않다", "그렇지 않다", "약간 그렇지 않다", "약간 그렇다", "그렇다", "매우 그렇다"];
+const LEGACY_LIKERT_EASY = ["매우 어렵다", "어렵다", "약간 어렵다", "약간 쉽다", "쉽다", "매우 쉽다"];
+const LEGACY_LIKERT_SATISFACTION = ["매우 불만족", "불만족", "약간 불만족", "약간 만족", "만족", "매우 만족"];
 const YES_NO = ["그렇다", "그렇지 않다"];
 const UI_PREFERENCE = ["A", "B", "잘 모르겠다"];
 
-function getCommonTaskSurveyQuestions(taskId) {
+function getTaskSurveyQuestions(taskId) {
+  const taskSurveys = {
+    "1": [
+      { name: "task1_error_prevention_1", type: "scale", label: "원치 않는 좌석을 잘못 선택할 가능성이 적었다.", options: LIKERT_AGREE },
+      { name: "task1_error_prevention_2", type: "scale", label: "다음 단계에서 어떤 일이 일어날지 예측하기 쉬웠다.", options: LIKERT_AGREE },
+      { name: "task1_error_prevention_3", type: "scale", label: "의도하지 않은 방식으로 예매가 진행될 가능성이 적었다.", options: LIKERT_AGREE },
+      { name: "task1_error_prevention_4", type: "scale", label: "예매 화면이 원하는 좌석을 예매하기 위한 올바른 경로를 명확하게 제시해 준다고 느껴졌다.", options: LIKERT_AGREE },
+    ],
+    "2": [
+      { name: "task2_controllability_1", type: "scale", label: "예매 과정이 나의 의도에 맞게 흘러갔다.", options: LIKERT_AGREE },
+      { name: "task2_controllability_2", type: "scale", label: "어떤 버튼을 눌러야 좌석이 자동으로 배정될지 쉽게 예측할 수 있었다.", options: LIKERT_AGREE },
+      { name: "task2_controllability_3", type: "scale", label: "예매 과정에서 내가 직접 선택과 진행을 통제하고 있다고 느껴졌다.", options: LIKERT_AGREE },
+    ],
+    "3": [
+      { name: "task3_recognition_1", type: "scale", label: "원하는 좌석을 찾기 위해 이전에 본 정보를 기억할 필요가 적었다.", options: LIKERT_AGREE },
+      { name: "task3_recognition_2", type: "scale", label: "원하는 좌석을 직관적으로 찾을 수 있었다.", options: LIKERT_AGREE },
+      { name: "task3_recognition_3", type: "scale", label: "여러 좌석을 비교하는 과정이 쉬웠다.", options: LIKERT_AGREE },
+      { name: "task3_visibility_4", type: "scale", label: "어떤 좌석이 예약 가능한지 명확하게 알 수 있었다.", options: LIKERT_AGREE },
+      { name: "task3_visibility_5", type: "scale", label: "창가 좌석의 현황을 쉽게 파악할 수 있었다.", options: LIKERT_AGREE },
+      { name: "task3_visibility_6", type: "scale", label: "원하는 좌석을 찾기 위해 필요한 정보가 명확하게 제공되었다.", options: LIKERT_AGREE },
+    ],
+  };
+
+  return taskSurveys[taskId] || [];
+}
+
+// Legacy survey set kept for future small-sample reruns.
+function getLegacyCommonTaskSurveyQuestions(taskId) {
   return [
-    { name: `task${taskId}_a_difficulty`, type: "scale", label: "A에서 예매 과정의 난이도는 어땠나요?", options: LIKERT_EASY },
-    { name: `task${taskId}_a_intuitive`, type: "scale", label: "A에서 예매 과정의 UI는 충분히 직관적이었나요?", options: LIKERT_SATISFACTION },
+    { name: `task${taskId}_a_difficulty`, type: "scale", label: "A에서 예매 과정의 난이도는 어땠나요?", options: LEGACY_LIKERT_EASY },
+    { name: `task${taskId}_a_intuitive`, type: "scale", label: "A에서 예매 과정의 UI는 충분히 직관적이었나요?", options: LEGACY_LIKERT_SATISFACTION },
     { name: `task${taskId}_a_goal_selection`, type: "choice_text", label: "A의 좌석 선택에서 목표 좌석을 빠르고 정확하게 선택할 수 있었나요? 그 이유는 무엇인가요?", options: YES_NO },
-    { name: `task${taskId}_b_difficulty`, type: "scale", label: "B에서 예매 과정의 난이도는 어땠나요?", options: LIKERT_EASY },
-    { name: `task${taskId}_b_intuitive`, type: "scale", label: "B의 예매 과정에서 UI는 충분히 직관적이었나요?", options: LIKERT_SATISFACTION },
+    { name: `task${taskId}_b_difficulty`, type: "scale", label: "B에서 예매 과정의 난이도는 어땠나요?", options: LEGACY_LIKERT_EASY },
+    { name: `task${taskId}_b_intuitive`, type: "scale", label: "B의 예매 과정에서 UI는 충분히 직관적이었나요?", options: LEGACY_LIKERT_SATISFACTION },
     { name: `task${taskId}_b_goal_selection`, type: "choice_text", label: "B의 좌석 선택에서 목표 좌석을 빠르고 정확하게 선택할 수 있었나요? 그 이유는 무엇인가요?", options: YES_NO },
   ];
 }
 
-const TASK_SURVEY_DETAILS = {
+const LEGACY_TASK_SURVEY_DETAILS = {
   "1": [
     { name: "task1_status_helpful", type: "scale", label: "B에서 특정 좌석을 예매하기 위해 호차를 선택할 때 좌석 현황 창이 도움이 되었나요?", options: LIKERT_AGREE },
     { name: "task1_b_car_button_used", type: "choice", label: "B에서 호차 변경 버튼을 이용했나요? (9번 질문에 첨부된 사진 참고)", options: YES_NO },
@@ -68,8 +95,8 @@ const TASK_SURVEY_DETAILS = {
     { name: "task2_entry_preference", type: "choice", label: "A는 열차 선택 시 좌석 선택과 예매 버튼이 있는 추가 팝업 창이 뜨는 반면, B는 바로 좌석 선택 화면으로 이동합니다. 본 Task를 수행하는 데 있어서 어느 쪽을 선호하나요?", options: UI_PREFERENCE },
   ],
   "3": [
-    { name: "task3_a_window_difficulty", type: "scale", label: "A에서 창가 자리를 찾는 과정의 난이도는 어떠했나요?", options: LIKERT_EASY },
-    { name: "task3_b_window_difficulty", type: "scale", label: "B에서 창가 자리를 찾는 과정의 난이도는 어떠했나요?", options: LIKERT_EASY },
+    { name: "task3_a_window_difficulty", type: "scale", label: "A에서 창가 자리를 찾는 과정의 난이도는 어떠했나요?", options: LEGACY_LIKERT_EASY },
+    { name: "task3_b_window_difficulty", type: "scale", label: "B에서 창가 자리를 찾는 과정의 난이도는 어떠했나요?", options: LEGACY_LIKERT_EASY },
     { name: "task3_b_status_used", type: "choice", label: "B에서 창가 자리를 찾을 때 좌석 현황 창을 활용했나요?", options: YES_NO },
     { name: "task3_b_status_helpful", type: "choice", label: "B에서 좌석 현황 창은 창가 자리를 예매하는 데 도움이 되었나요?", options: YES_NO, showIf: { name: "task3_b_status_used", value: "그렇다" } },
     { name: "task3_b_available_intuitive", type: "choice", label: "B의 좌석 현황 창에서 예약 가능한 좌석과 예약 불가능한 좌석의 구분이 충분히 직관적이었나요?", options: YES_NO },
@@ -91,8 +118,8 @@ const FINAL_SURVEY_QUESTIONS = [
   { name: "final_korailtalk_used", type: "choice", label: "기존에 KTX 예매를 위해 코레일톡을 사용해본 적이 있나요?", options: YES_NO },
 ];
 
-function getTaskSurveyQuestions(taskId) {
-  return [...getCommonTaskSurveyQuestions(taskId), ...(TASK_SURVEY_DETAILS[taskId] || [])];
+function getLegacyTaskSurveyQuestions(taskId) {
+  return [...getLegacyCommonTaskSurveyQuestions(taskId), ...(LEGACY_TASK_SURVEY_DETAILS[taskId] || [])];
 }
 
 function isQuestionVisible(question, answers) {
@@ -232,7 +259,7 @@ export default function CompletePage() {
   const submitAttemptedRef = useRef(false);
   const nextCondition = getNextCondition(state.taskId, state.variant);
   const isFinalTest = !nextCondition;
-  const shouldShowTaskSurvey = state.variant === "B";
+  const shouldShowTaskSurvey = true;
   const taskSurveyQuestions = getTaskSurveyQuestions(state.taskId);
   const activeSurveyQuestions = shouldShowTaskSurvey
     ? surveyStep === "final"
@@ -281,9 +308,6 @@ export default function CompletePage() {
 
     submitExperimentData(payload).then((result) => {
       if (!ignore) {
-        if (result.status === "success" && !state.isTestMode && !shouldShowTaskSurvey) {
-          markConditionComplete(state.taskId, state.variant);
-        }
         setSubmissionStatus(result.status);
       }
     });
@@ -512,7 +536,7 @@ export default function CompletePage() {
               ? "실험 데이터 저장이 완료되면 설문으로 이동할 수 있습니다."
               : surveyStep === "final"
                 ? "마지막 종합 설문을 작성해주세요."
-                : "A/B 테스트 쌍이 끝났습니다. 아래 Task 설문을 작성해주세요."
+                : "테스트가 끝났습니다. 아래 설문을 작성해주세요."
             : "데이터 저장이 완료되면 다음 테스트로 진행해주세요."}
         </p>
         {submissionStatusText ? (
@@ -524,7 +548,7 @@ export default function CompletePage() {
         {shouldShowTaskSurvey && isSurveyOpen ? (
           <section className="post-task-survey" aria-label={surveyStep === "final" ? "종합 설문" : "Task별 설문"}>
             <h2>{surveyStep === "final" ? "종합 설문" : `${task?.title} 설문`}</h2>
-            <p className="survey-help">필수 문항을 선택하고, 이유 입력란은 필요한 경우에만 작성해주세요.</p>
+            <p className="survey-help">필수 문항을 모두 선택해주세요.</p>
             {numberedSurveyQuestions.map(renderSurveyQuestion)}
           </section>
         ) : null}

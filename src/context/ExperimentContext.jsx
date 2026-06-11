@@ -291,24 +291,36 @@ export function ExperimentProvider({ children }) {
     const current = stateRef.current;
     const timestamp = new Date().toISOString();
     const success = isTargetSeat(current.taskId, current.selectedSeat);
-    const completedSession = { ...publicSession(current), taskEndTime: timestamp, success };
 
-    dispatch({ type: "COMPLETE_TASK", timestamp, success });
-
-    if (success) {
+    if (!success) {
       logEvent({
-        eventType: "task_success",
-        eventLabel: `task:${current.taskId}:success`,
+        eventType: "misclick",
+        eventLabel: `task:${current.taskId}:wrong_payment_seat`,
         seatId: current.selectedSeat?.id,
         carriageNo: current.selectedSeat?.carriageNo,
         xCoordinate: pointer.x,
         yCoordinate: pointer.y,
+        metadata: { reason: "payment_with_wrong_seat" },
       });
+      return false;
     }
+
+    const completedSession = { ...publicSession(current), taskEndTime: timestamp, success };
+
+    dispatch({ type: "COMPLETE_TASK", timestamp, success });
+
+    logEvent({
+      eventType: "task_success",
+      eventLabel: `task:${current.taskId}:success`,
+      seatId: current.selectedSeat?.id,
+      carriageNo: current.selectedSeat?.carriageNo,
+      xCoordinate: pointer.x,
+      yCoordinate: pointer.y,
+    });
 
     logEvent({
       eventType: "task_complete",
-      eventLabel: success ? "complete_success" : "complete_failed",
+      eventLabel: "complete_success",
       seatId: current.selectedSeat?.id,
       carriageNo: current.selectedSeat?.carriageNo,
       xCoordinate: pointer.x,

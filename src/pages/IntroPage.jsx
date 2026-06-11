@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 import { TASKS, TRAIN } from "../data/experiment.js";
@@ -5,9 +6,11 @@ import { TASKS, TRAIN } from "../data/experiment.js";
 export default function IntroPage() {
   const navigate = useNavigate();
   const { state, actions } = useExperiment();
+  const [hasConfirmedTask, setHasConfirmedTask] = useState(false);
   const task = TASKS[state.taskId];
 
   function handleStart() {
+    if (!hasConfirmedTask) return;
     actions.startTask();
     navigate("/train");
   }
@@ -32,12 +35,22 @@ export default function IntroPage() {
           <span>{TRAIN.origin} {TRAIN.departureTime} → {TRAIN.destination} {TRAIN.arrivalTime}</span>
         </section>
 
+        <label className="task-confirm-check">
+          <input
+            type="checkbox"
+            checked={hasConfirmedTask}
+            onChange={(event) => setHasConfirmedTask(event.target.checked)}
+          />
+          <span>Task 내용을 확인했습니다.</span>
+        </label>
+
         <button
           className="primary-button"
           type="button"
           data-track-label="intro:start"
           data-clickable="true"
-         
+          data-disabled={hasConfirmedTask ? "false" : "true"}
+          disabled={!hasConfirmedTask}
           onClick={handleStart}
         >
           시작하기

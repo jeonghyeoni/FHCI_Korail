@@ -11,7 +11,11 @@ export default function TicketConfirmPage() {
     : "좌석 미선택";
 
   function handlePayment(event) {
-    actions.completeTask({ x: event.clientX, y: event.clientY });
+    const isCompleted = actions.completeTask({ x: event.clientX, y: event.clientY });
+    if (!isCompleted) {
+      window.dispatchEvent(new CustomEvent("fhci:highlight-goal"));
+      return;
+    }
     navigate("/complete");
   }
 

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 
 const TASK_GOAL_LABELS = {
@@ -10,7 +11,23 @@ const TASK_GOAL_LABELS = {
 export default function TopBar({ title, showRefresh = false, backTo = "" }) {
   const navigate = useNavigate();
   const { state } = useExperiment();
+  const [isGoalHighlighted, setIsGoalHighlighted] = useState(false);
   const goalLabel = TASK_GOAL_LABELS[state.taskId] || "목표";
+
+  useEffect(() => {
+    let timerId;
+    function handleGoalHighlight() {
+      setIsGoalHighlighted(true);
+      window.clearTimeout(timerId);
+      timerId = window.setTimeout(() => setIsGoalHighlighted(false), 950);
+    }
+
+    window.addEventListener("fhci:highlight-goal", handleGoalHighlight);
+    return () => {
+      window.clearTimeout(timerId);
+      window.removeEventListener("fhci:highlight-goal", handleGoalHighlight);
+    };
+  }, []);
 
   function handleBack() {
     if (backTo) {
@@ -41,7 +58,7 @@ export default function TopBar({ title, showRefresh = false, backTo = "" }) {
         </button>
         <h1>{title}</h1>
         <div className="top-actions">
-          <div className="top-goal-badge" aria-label={`목표 좌석 ${goalLabel}`}>
+          <div className={`top-goal-badge${isGoalHighlighted ? " top-goal-badge-alert" : ""}`} aria-label={`목표 좌석 ${goalLabel}`}>
             <span>목표 좌석</span>
             <strong>{goalLabel}</strong>
           </div>

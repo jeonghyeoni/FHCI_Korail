@@ -15,13 +15,13 @@ export const TRAIN = {
 export const TASKS = {
   "1": {
     title: "Task 1",
-    description: "KTX001 일반실 아무 좌석이나 가능한 빨리 예매",
-    successText: "어떤 좌석이든 예약 완료",
+    description: "KTX001 일반실 5호차 4B 좌석을 예매",
+    successText: "5호차 4B 예약 완료",
   },
   "2": {
     title: "Task 2",
-    description: "KTX001 일반실 5호차 4B 좌석을 예매",
-    successText: "5호차 4B 예약 완료",
+    description: "KTX001 일반실 아무 좌석이나 가능한 빨리 예매",
+    successText: "어떤 좌석이든 예약 완료",
   },
   "3": {
     title: "Task 3",

@@ -54,17 +54,17 @@ function getCommonTaskSurveyQuestions(taskId) {
 
 const TASK_SURVEY_DETAILS = {
   "1": [
-    { name: "task1_a_auto_awareness", type: "choice", label: "A에서 '예매'를 누르면 좌석이 자동으로 배정된다는 사실을 인지하고 있었나요?", options: YES_NO },
-    { name: "task1_a_auto_used", type: "choice", label: "A에서 아무 좌석이나 예매할 때 '좌석 선택' 버튼 대신 '예매' 버튼을 이용했나요?", options: YES_NO },
-    { name: "task1_a_auto_helpful", type: "scale", label: "A에서 아무 좌석이나 예매할 때 '예매' 버튼은 도움이 되었나요?", options: LIKERT_AGREE, showIf: { name: "task1_a_auto_used", value: "그렇다" } },
-    { name: "task1_b_auto_used", type: "choice", label: "B에서 아무 좌석이나 예매할 때 '좌석 자동배정' 버튼을 이용했나요?", options: YES_NO },
-    { name: "task1_b_auto_helpful", type: "scale", label: "B에서 아무 좌석이나 예매할 때 '좌석 자동배정' 버튼은 도움이 되었나요?", options: LIKERT_AGREE, showIf: { name: "task1_b_auto_used", value: "그렇다" } },
+    { name: "task1_status_helpful", type: "scale", label: "B에서 특정 좌석을 예매하기 위해 호차를 선택할 때 좌석 현황 창이 도움이 되었나요?", options: LIKERT_AGREE },
+    { name: "task1_b_car_button_used", type: "choice", label: "B에서 호차 변경 버튼을 이용했나요? (9번 질문에 첨부된 사진 참고)", options: YES_NO },
+    { name: "task1_car_selector_preference", type: "choice", label: "호차 변경 버튼의 경우 A(선택박스형)와 B(카드형) 중 어느 쪽을 더 선호하나요?", options: UI_PREFERENCE },
     { name: "task1_entry_preference", type: "choice", label: "A는 열차 선택 시 좌석 선택과 예매 버튼이 있는 추가 팝업 창이 뜨는 반면, B는 바로 좌석 선택 화면으로 이동합니다. 본 Task를 수행하는 데 있어서 어느 쪽을 선호하나요?", options: UI_PREFERENCE },
   ],
   "2": [
-    { name: "task2_status_helpful", type: "scale", label: "B에서 특정 좌석을 예매하기 위해 호차를 선택할 때 좌석 현황 창이 도움이 되었나요?", options: LIKERT_AGREE },
-    { name: "task2_b_car_button_used", type: "choice", label: "B에서 호차 변경 버튼을 이용했나요? (9번 질문에 첨부된 사진 참고)", options: YES_NO },
-    { name: "task2_car_selector_preference", type: "choice", label: "호차 변경 버튼의 경우 A(선택박스형)와 B(카드형) 중 어느 쪽을 더 선호하나요?", options: UI_PREFERENCE },
+    { name: "task2_a_auto_awareness", type: "choice", label: "A에서 '예매'를 누르면 좌석이 자동으로 배정된다는 사실을 인지하고 있었나요?", options: YES_NO },
+    { name: "task2_a_auto_used", type: "choice", label: "A에서 아무 좌석이나 예매할 때 '좌석 선택' 버튼 대신 '예매' 버튼을 이용했나요?", options: YES_NO },
+    { name: "task2_a_auto_helpful", type: "scale", label: "A에서 아무 좌석이나 예매할 때 '예매' 버튼은 도움이 되었나요?", options: LIKERT_AGREE, showIf: { name: "task2_a_auto_used", value: "그렇다" } },
+    { name: "task2_b_auto_used", type: "choice", label: "B에서 아무 좌석이나 예매할 때 '좌석 자동배정' 버튼을 이용했나요?", options: YES_NO },
+    { name: "task2_b_auto_helpful", type: "scale", label: "B에서 아무 좌석이나 예매할 때 '좌석 자동배정' 버튼은 도움이 되었나요?", options: LIKERT_AGREE, showIf: { name: "task2_b_auto_used", value: "그렇다" } },
     { name: "task2_entry_preference", type: "choice", label: "A는 열차 선택 시 좌석 선택과 예매 버튼이 있는 추가 팝업 창이 뜨는 반면, B는 바로 좌석 선택 화면으로 이동합니다. 본 Task를 수행하는 데 있어서 어느 쪽을 선호하나요?", options: UI_PREFERENCE },
   ],
   "3": [
@@ -157,7 +157,7 @@ function shouldShowTrainScreenComparison(question) {
 }
 
 function shouldShowCarSelectorComparison(question) {
-  return question.name === "task2_car_selector_preference";
+  return question.name === "task1_car_selector_preference";
 }
 
 function shouldShowBOverviewImage(question) {
@@ -165,11 +165,11 @@ function shouldShowBOverviewImage(question) {
 }
 
 function shouldShowTask2BStatusImage(question) {
-  return question.name === "task2_status_helpful";
+  return question.name === "task1_status_helpful";
 }
 
-function getTask1AutoActionImage(question) {
-  if (question.name === "task1_a_auto_used") {
+function getAutoActionImage(question) {
+  if (question.name === "task2_a_auto_used") {
     return {
       src: aTrainAfterSelectReserveHighlightImage,
       alt: "A의 열차 선택 후 화면에서 예매 버튼이 강조된 화면",
@@ -177,7 +177,7 @@ function getTask1AutoActionImage(question) {
     };
   }
 
-  if (question.name === "task1_b_auto_used") {
+  if (question.name === "task2_b_auto_used") {
     return {
       src: bTrainAfterSelectAutoHighlightImage,
       alt: "B의 열차 선택 후 화면에서 좌석 자동선택 버튼이 강조된 화면",
@@ -379,7 +379,7 @@ export default function CompletePage() {
   function renderSurveyQuestion(question) {
     if (!question || !Array.isArray(question.options)) return null;
     if (!isQuestionVisible(question, surveyAnswers)) return null;
-    const task1AutoActionImage = getTask1AutoActionImage(question);
+    const autoActionImage = getAutoActionImage(question);
 
     return (
       <div
@@ -487,11 +487,11 @@ export default function CompletePage() {
             </figure>
           </div>
         ) : null}
-        {task1AutoActionImage ? (
-          <div className="survey-screen-comparison survey-screen-comparison-single" aria-label={task1AutoActionImage.caption}>
+        {autoActionImage ? (
+          <div className="survey-screen-comparison survey-screen-comparison-single" aria-label={autoActionImage.caption}>
             <figure>
-              <img src={task1AutoActionImage.src} alt={task1AutoActionImage.alt} />
-              <figcaption>{task1AutoActionImage.caption}</figcaption>
+              <img src={autoActionImage.src} alt={autoActionImage.alt} />
+              <figcaption>{autoActionImage.caption}</figcaption>
             </figure>
           </div>
         ) : null}

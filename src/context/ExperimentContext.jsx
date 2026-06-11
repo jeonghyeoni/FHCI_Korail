@@ -222,7 +222,7 @@ export function ExperimentProvider({ children }) {
     const current = stateRef.current;
     const allSeats = CARRIAGES.flatMap((carriage) => getSeatsForCarriage(carriage.no));
     const currentSeats = getSeatsForCarriage(current.currentCarriage);
-    const pool = current.taskId === "2" ? allSeats : currentSeats;
+    const pool = current.taskId === "1" ? allSeats : currentSeats;
     const seat = getAutoSeat(current.taskId, pool);
     if (!seat) return { selected: false, reason: "no_available_seat" };
     if (seat.carriageNo !== current.currentCarriage) {

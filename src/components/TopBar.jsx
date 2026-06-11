@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 
 const TASK_GOAL_LABELS = {
-  "1": "아무 좌석",
-  "2": "5호차 4B",
+  "1": "5호차 4B",
+  "2": "아무 좌석",
   "3": "창가 좌석",
 };
 

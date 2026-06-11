@@ -220,9 +220,9 @@ export function ExperimentProvider({ children }) {
 
   const autoSelectSeat = useCallback((pointer = {}) => {
     const current = stateRef.current;
-    const allSeats = CARRIAGES.flatMap((carriage) => getSeatsForCarriage(carriage.no));
-    const currentSeats = getSeatsForCarriage(current.currentCarriage);
-    const pool = current.taskId === "1" ? allSeats : currentSeats;
+    const allSeats = CARRIAGES.flatMap((carriage) => getSeatsForCarriage(carriage.no, current.taskId));
+    const currentSeats = getSeatsForCarriage(current.currentCarriage, current.taskId);
+    const pool = ["1", "2"].includes(current.taskId) ? allSeats : currentSeats;
     const seat = getAutoSeat(current.taskId, pool);
     if (!seat) return { selected: false, reason: "no_available_seat" };
     if (seat.carriageNo !== current.currentCarriage) {
@@ -242,7 +242,7 @@ export function ExperimentProvider({ children }) {
   const autoSelectRandomSeat = useCallback((pointer = {}) => {
     const current = stateRef.current;
     const availableSeats = CARRIAGES
-      .flatMap((carriage) => getSeatsForCarriage(carriage.no))
+      .flatMap((carriage) => getSeatsForCarriage(carriage.no, current.taskId))
       .filter((seat) => seat.isAvailable);
     const seat = availableSeats[Math.floor(Math.random() * availableSeats.length)];
 

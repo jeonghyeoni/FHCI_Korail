@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AppShell from "../components/AppShell.jsx";
 import SeatMap from "../components/SeatMap.jsx";
 import { useExperiment } from "../context/ExperimentContext.jsx";
-import { CARRIAGES, formatWon, TRAIN } from "../data/experiment.js";
+import { CARRIAGES, formatWon, getCarriage, TRAIN } from "../data/experiment.js";
 import seatIconSvg from "../assets/icons/seat.svg?raw";
 import babyIconSvg from "../assets/icons/baby.svg?raw";
 
@@ -11,6 +11,9 @@ export default function VariantBSeatPage() {
   const navigate = useNavigate();
   const { state, actions } = useExperiment();
   const seatMapScrollRef = useRef(null);
+  const visibleCars = CARRIAGES
+    .filter((item) => [1, 5, 6, 7, 8, 9].includes(item.no))
+    .map((item) => getCarriage(item.no, state.taskId));
 
   useEffect(() => {
     if (seatMapScrollRef.current) {
@@ -49,7 +52,7 @@ export default function VariantBSeatPage() {
     <AppShell title="좌석 선택">
       <section className="b-seat-page">
         <section className="car-tab-strip" aria-label="호차 선택">
-          {CARRIAGES.filter((item) => [1, 5, 6, 7, 8, 9].includes(item.no)).map((item) => (
+          {visibleCars.map((item) => (
             <button
               className={item.no === state.currentCarriage ? "car-tab is-active" : "car-tab"}
               type="button"

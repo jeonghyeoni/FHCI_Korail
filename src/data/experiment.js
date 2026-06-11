@@ -1,3 +1,5 @@
+import { TASK2_TARGET } from "./taskTargets.js";
+
 export const TRAIN = {
   id: "KTX001",
   displayName: "KTX 001",
@@ -20,8 +22,8 @@ export const TASKS = {
   },
   "2": {
     title: "Task 2",
-    description: "KTX001 일반실 아무 좌석이나 가능한 빨리 예매",
-    successText: "어떤 좌석이든 예약 완료",
+    description: "KTX001 일반실 마지막 남은 한 좌석을 가능한 빨리 예매",
+    successText: "마지막 남은 한 좌석 예약 완료",
   },
   "3": {
     title: "Task 3",
@@ -110,11 +112,22 @@ export const PAGE_NAMES = {
   "/invalid": "invalid_params",
 };
 
-export function getCarriage(no) {
-  return CARRIAGES.find((carriage) => carriage.no === Number(no)) || CARRIAGES[0];
+function isTask2AvailableSeat(carriageNo, label, taskId) {
+  return String(taskId) === "2" && Number(carriageNo) === TASK2_TARGET.carriageNo && label === TASK2_TARGET.label;
 }
 
-export function getSeatsForCarriage(carriageNo) {
+export function getCarriage(no, taskId = "") {
+  const carriage = CARRIAGES.find((item) => item.no === Number(no)) || CARRIAGES[0];
+
+  if (String(taskId) !== "2") return carriage;
+
+  return {
+    ...carriage,
+    remaining: carriage.no === TASK2_TARGET.carriageNo ? 1 : 0,
+  };
+}
+
+export function getSeatsForCarriage(carriageNo, taskId = "") {
   const no = Number(carriageNo);
   const rows = getRowsForCarriage(no);
   const unavailable = new Set(unavailableByCarriage[no] || []);
@@ -129,7 +142,7 @@ export function getSeatsForCarriage(carriageNo) {
         column,
         label,
         isWindow: column === "A" || column === "D",
-        isAvailable: !unavailable.has(label),
+        isAvailable: String(taskId) === "2" ? isTask2AvailableSeat(no, label, taskId) : !unavailable.has(label),
         direction: no === 5 ? "forward" : row >= 9 ? "reverse" : "forward",
       };
     }),

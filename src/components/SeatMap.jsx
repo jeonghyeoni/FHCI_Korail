@@ -25,7 +25,7 @@ function SeatButton({ seat, selected, onSelected }) {
 
 export default function SeatMap({ carriageNo, onSelected }) {
   const { state } = useExperiment();
-  const seats = getSeatsForCarriage(carriageNo);
+  const seats = getSeatsForCarriage(carriageNo, state.taskId);
   const rows = groupSeatsByRow(seats);
   const rowNumbers = Object.keys(rows).map(Number).sort((a, b) => b - a);
 

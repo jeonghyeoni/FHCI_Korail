@@ -6,20 +6,21 @@ import { useExperiment } from "../context/ExperimentContext.jsx";
 import { CARRIAGES, getCarriage, TRAIN } from "../data/experiment.js";
 import seatIconSvg from "../assets/icons/seat.svg?raw";
 
-const A_CARRIAGE_OPTIONS = CARRIAGES.filter((item) => [1, 5, 6, 7, 8, 9].includes(item.no));
+const A_CARRIAGE_NUMBERS = CARRIAGES.filter((item) => [1, 5, 6, 7, 8, 9].includes(item.no)).map((item) => item.no);
 
 export default function VariantASeatPage({ mode }) {
   const navigate = useNavigate();
   const { state, actions } = useExperiment();
   const seatMapScrollRef = useRef(null);
-  const carriage = getCarriage(state.currentCarriage);
+  const carriageOptions = A_CARRIAGE_NUMBERS.map((no) => getCarriage(no, state.taskId));
+  const carriage = getCarriage(state.currentCarriage, state.taskId);
   const showDropdown = mode === "dropdown";
-  const dropdownTopCarriage = showDropdown ? A_CARRIAGE_OPTIONS[0] : carriage;
-  const dropdownOptions = showDropdown ? A_CARRIAGE_OPTIONS.slice(1) : A_CARRIAGE_OPTIONS;
-  const currentCarriageIndex = A_CARRIAGE_OPTIONS.findIndex((item) => item.no === state.currentCarriage);
-  const previousCarriage = currentCarriageIndex > 0 ? A_CARRIAGE_OPTIONS[currentCarriageIndex - 1] : null;
-  const nextCarriage = currentCarriageIndex >= 0 && currentCarriageIndex < A_CARRIAGE_OPTIONS.length - 1
-    ? A_CARRIAGE_OPTIONS[currentCarriageIndex + 1]
+  const dropdownTopCarriage = showDropdown ? carriageOptions[0] : carriage;
+  const dropdownOptions = showDropdown ? carriageOptions.slice(1) : carriageOptions;
+  const currentCarriageIndex = carriageOptions.findIndex((item) => item.no === state.currentCarriage);
+  const previousCarriage = currentCarriageIndex > 0 ? carriageOptions[currentCarriageIndex - 1] : null;
+  const nextCarriage = currentCarriageIndex >= 0 && currentCarriageIndex < carriageOptions.length - 1
+    ? carriageOptions[currentCarriageIndex + 1]
     : null;
 
   useEffect(() => {

@@ -1,5 +1,6 @@
 import { getSeatsForCarriage, getCarriage } from "../data/experiment.js";
 import miniSeatSvg from "../assets/icons/mini_seat.svg?raw";
+import { useExperiment } from "../context/ExperimentContext.jsx";
 
 function groupSeatsByRow(seats) {
   return seats.reduce((rows, seat) => {
@@ -10,8 +11,9 @@ function groupSeatsByRow(seats) {
 }
 
 export default function MiniCarMap({ carriageNo, displayRemaining, onOpen }) {
-  const seats = getSeatsForCarriage(carriageNo);
-  const carriage = getCarriage(carriageNo);
+  const { state } = useExperiment();
+  const seats = getSeatsForCarriage(carriageNo, state.taskId);
+  const carriage = getCarriage(carriageNo, state.taskId);
   const seatsByRow = groupSeatsByRow(seats);
   const rowNumbers = Object.keys(seatsByRow).map(Number).sort((a, b) => a - b);
   const seatRows = ["A", "B", "C", "D"].map((column) =>

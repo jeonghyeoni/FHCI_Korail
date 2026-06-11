@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useReducer,
 import { appendEvent, buildSummary, loadEvents, saveSession, saveSummary } from "../analytics/storage.js";
 import { setClarityExperimentContext } from "../analytics/clarity.js";
 import { CARRIAGES, getSeatsForCarriage, TRAIN } from "../data/experiment.js";
+import { TASK1_TARGET, isSameSeatTarget } from "../data/taskTargets.js";
 import {
   EXPERIMENT_SEQUENCE,
   TEST_MODE,
@@ -223,7 +224,12 @@ export function ExperimentProvider({ children }) {
     const allSeats = CARRIAGES.flatMap((carriage) => getSeatsForCarriage(carriage.no, current.taskId));
     const currentSeats = getSeatsForCarriage(current.currentCarriage, current.taskId);
     const pool = ["1", "2"].includes(current.taskId) ? allSeats : currentSeats;
-    const seat = getAutoSeat(current.taskId, pool);
+    const task1AlternativeSeats = current.taskId === "1"
+      ? pool.filter((seat) => seat.isAvailable && !isSameSeatTarget(seat, TASK1_TARGET))
+      : [];
+    const seat = current.taskId === "1" && task1AlternativeSeats.length
+      ? task1AlternativeSeats[Math.floor(Math.random() * task1AlternativeSeats.length)]
+      : getAutoSeat(current.taskId, pool);
     if (!seat) return { selected: false, reason: "no_available_seat" };
     if (seat.carriageNo !== current.currentCarriage) {
       dispatch({ type: "SET_CARRIAGE", carriageNo: seat.carriageNo });

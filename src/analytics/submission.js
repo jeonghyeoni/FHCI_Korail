@@ -163,15 +163,16 @@ export function buildSubmissionPayload({ summary, state, eventLogs, surveyAnswer
   };
 }
 
-export function buildSurveySubmissionPayload({ summary, state, surveyAnswers = {}, surveyResponses = [] }) {
+export function buildSurveySubmissionPayload({ summary, state, surveyAnswers = {}, surveyResponses = [], identity = null }) {
   const participantId = summary?.participantId ?? state.participantId;
-  const variant = summary?.variant ?? state.variant;
-  const taskId = summary?.taskId ?? state.taskId;
+  const variant = identity?.variant ?? summary?.variant ?? state.variant;
+  const taskId = identity?.taskId ?? summary?.taskId ?? state.taskId;
+  const keySuffix = identity?.keySuffix ?? "survey";
 
   return {
     submissionType: "survey",
     submissionVersion: "survey-v2",
-    submissionKey: [participantId, variant, taskId, "survey"].join(":"),
+    submissionKey: [participantId, variant, taskId, keySuffix].join(":"),
     participantId,
     variant,
     taskId,

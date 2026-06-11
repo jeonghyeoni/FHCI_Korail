@@ -106,10 +106,28 @@ const LEGACY_TASK_SURVEY_DETAILS = {
 };
 
 const FINAL_SURVEY_QUESTIONS = [
-  { name: "final_ui_preference", type: "choice", label: "전체적으로 어느 UI를 더 선호하나요?", options: ["A", "B", "차이를 느끼지 못함"] },
+  {
+    name: "final_ui_preference",
+    type: "choice",
+    label: "전체적으로 어느 UI를 더 선호하나요?",
+    options: ["A", "B", "차이를 느끼지 못함"],
+    scoreMap: { A: -1, B: 1, "차이를 느끼지 못함": 0 },
+  },
   { name: "final_gender", type: "choice", label: "성별이 무엇인가요?", options: ["여성", "남성"] },
-  { name: "final_age", type: "choice", label: "나이대가 어떻게 되나요?", options: ["10대", "20대", "30대", "40대", "50대", "60대 이상"] },
-  { name: "final_korailtalk_used", type: "choice", label: "기존에 KTX 예매를 위해 코레일톡을 사용해본 적이 있나요?", options: YES_NO },
+  {
+    name: "final_age",
+    type: "choice",
+    label: "나이대가 어떻게 되나요?",
+    options: ["10대", "20대", "30대", "40대", "50대", "60대 이상"],
+    scoreMap: { "10대": 10, "20대": 20, "30대": 30, "40대": 40, "50대": 50, "60대 이상": 60 },
+  },
+  {
+    name: "final_korailtalk_used",
+    type: "choice",
+    label: "기존에 KTX 예매를 위해 코레일톡을 사용해본 적이 있나요?",
+    options: YES_NO,
+    scoreMap: { "그렇지 않다": 0, 그렇다: 1 },
+  },
   {
     name: "final_followup_phone",
     type: "text",
@@ -117,6 +135,7 @@ const FINAL_SURVEY_QUESTIONS = [
       "전화번호를 기재해주시면 필요에 따라 추가 설문을 위한 연락이 갈 수 있습니다. 추가 설문에 참여해주시면 소정의 기프티콘을 드립니다. 많은 참여 부탁드립니다.",
     placeholder: "전화번호 입력 (선택)",
     required: false,
+    scoreByPresence: true,
   },
 ];
 
@@ -164,10 +183,19 @@ function getNumberedSurveyQuestions(questions, answers) {
   }, []);
 }
 
+function getSurveyQuestionScore(question, answer, optionIndex) {
+  if (question.type === "scale" && optionIndex >= 0) return optionIndex + 1;
+  if (question.scoreMap && Object.prototype.hasOwnProperty.call(question.scoreMap, answer)) return question.scoreMap[answer];
+  if ((question.type === "choice" || question.type === "choice_text") && optionIndex >= 0) return optionIndex + 1;
+  if (question.type === "text" && question.scoreByPresence) return answer.trim() ? 1 : 0;
+  return "";
+}
+
 function buildSurveyResponses(questions, answers, section) {
   return getNumberedSurveyQuestions(questions, answers).map((question) => {
     const answer = answers[question.name] || "";
     const optionIndex = Array.isArray(question.options) ? question.options.findIndex((option) => option === answer) : -1;
+    const score = getSurveyQuestionScore(question, answer, optionIndex);
 
     return {
       section,
@@ -176,7 +204,7 @@ function buildSurveyResponses(questions, answers, section) {
       questionLabel: question.label,
       questionType: question.type,
       answer,
-      score: question.type === "scale" && optionIndex >= 0 ? optionIndex + 1 : "",
+      score,
       reason: question.type === "choice_text" ? answers[`${question.name}_reason`] || "" : "",
     };
   });
@@ -276,18 +304,19 @@ export default function CompletePage() {
 
   function getSurveySubmissionData() {
     if (!shouldShowTaskSurvey) {
-      return { surveyAnswers: null, surveyResponses: [] };
+      return { surveyAnswers: null, surveyResponses: [], taskSurveyResponses: [], finalSurveyResponses: [] };
     }
 
-    const surveyResponses = buildSurveyResponses(taskSurveyQuestions, surveyAnswers, "task");
-
-    if (isFinalTest && surveyStep === "final") {
-      surveyResponses.push(...buildSurveyResponses(FINAL_SURVEY_QUESTIONS, surveyAnswers, "final"));
-    }
+    const taskSurveyResponses = buildSurveyResponses(taskSurveyQuestions, surveyAnswers, "task");
+    const finalSurveyResponses = isFinalTest && surveyStep === "final"
+      ? buildSurveyResponses(FINAL_SURVEY_QUESTIONS, surveyAnswers, "final")
+      : [];
 
     return {
       surveyAnswers,
-      surveyResponses,
+      surveyResponses: [...taskSurveyResponses, ...finalSurveyResponses],
+      taskSurveyResponses,
+      finalSurveyResponses,
     };
   }
 
@@ -375,10 +404,30 @@ export default function CompletePage() {
         summary,
         state,
         surveyAnswers: surveySubmissionData.surveyAnswers,
-        surveyResponses: surveySubmissionData.surveyResponses,
+        surveyResponses: surveySubmissionData.taskSurveyResponses,
       });
 
-      submitSurveyData(payload).then((result) => {
+      const submitPromise = isFinalTest && surveyStep === "final"
+        ? submitSurveyData(payload).then((taskSurveyResult) => {
+          if (taskSurveyResult.status !== "success") return taskSurveyResult;
+
+          const finalPayload = buildSurveySubmissionPayload({
+            summary,
+            state,
+            surveyAnswers: surveySubmissionData.surveyAnswers,
+            surveyResponses: surveySubmissionData.finalSurveyResponses,
+            identity: {
+              variant: "FINAL",
+              taskId: "final",
+              keySuffix: "final-survey",
+            },
+          });
+
+          return submitSurveyData(finalPayload);
+        })
+        : submitSurveyData(payload);
+
+      submitPromise.then((result) => {
         setSurveySubmissionStatus(result.status === "success" ? "survey_success" : result.status === "failed" ? "survey_failed" : result.status);
 
         if (result.status === "success") {

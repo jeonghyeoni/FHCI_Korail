@@ -57,7 +57,7 @@ function getTaskSurveyQuestions(taskId) {
     "3": [
       { name: "task3_recognition_1", type: "scale", label: "원하는 좌석을 찾기 위해 이전에 본 정보를 기억할 필요가 적었다.", options: LIKERT_AGREE },
       { name: "task3_recognition_2", type: "scale", label: "원하는 좌석을 직관적으로 찾을 수 있었다.", options: LIKERT_AGREE },
-      { name: "task3_recognition_3", type: "scale", label: "여러 좌석을 비교하는 과정이 쉬웠다.", options: LIKERT_AGREE },
+      { name: "task3_recognition_3", type: "scale", label: "여러 좌석을 한눈에 비교할 수 있었다.", options: LIKERT_AGREE },
       { name: "task3_visibility_4", type: "scale", label: "어떤 좌석이 예약 가능한지 명확하게 알 수 있었다.", options: LIKERT_AGREE },
       { name: "task3_visibility_5", type: "scale", label: "창가 좌석의 현황을 쉽게 파악할 수 있었다.", options: LIKERT_AGREE },
       { name: "task3_visibility_6", type: "scale", label: "원하는 좌석을 찾기 위해 필요한 정보가 명확하게 제공되었다.", options: LIKERT_AGREE },

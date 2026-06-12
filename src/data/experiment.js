@@ -41,12 +41,12 @@ export const CARRIAGES = [
   { no: 6, remaining: 39, total: 56, note: "" },
   { no: 7, remaining: 40, total: 56, note: "" },
   { no: 8, remaining: 19, total: 56, note: "" },
-  { no: 9, remaining: 20, total: 56, note: "" },
+  { no: 9, remaining: 20, total: 60, note: "" },
 ];
 
 const columns = ["A", "B", "C", "D"];
 const rowsByCarriage = {
-  5: [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
+  5: [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
   9: [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
 };
 

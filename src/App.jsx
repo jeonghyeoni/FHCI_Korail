@@ -1,8 +1,9 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { ExperimentProvider, useExperiment } from "./context/ExperimentContext.jsx";
 import { useGlobalAnalytics } from "./hooks/useGlobalAnalytics.js";
 import { usePageTracking } from "./hooks/usePageTracking.js";
+import { TASKS } from "./data/experiment.js";
 import { buildConditionUrl, hasAcceptedConsent, isTestMode } from "./utils/experimentSequence.js";
 import ConsentPage from "./pages/ConsentPage.jsx";
 import CompletePage from "./pages/CompletePage.jsx";
@@ -41,6 +42,22 @@ function ProtectedRoute({ children }) {
   return children;
 }
 
+function DesktopTaskRail() {
+  const location = useLocation();
+  const { state } = useExperiment();
+  const task = TASKS[state.taskId];
+  const hiddenPaths = new Set(["/", "/test", "/invalid", "/thanks"]);
+
+  if (!task || hiddenPaths.has(location.pathname)) return null;
+
+  return (
+    <aside className="desktop-task-rail" aria-label="현재 Task 목표">
+      <span>{task.title} - {state.variant}</span>
+      <strong>{task.description}</strong>
+    </aside>
+  );
+}
+
 function ConsentRoute() {
   const { state } = useExperiment();
   if (state.sequenceComplete) {
@@ -76,6 +93,7 @@ function AppRoutes() {
     <>
       <ReloadReset />
       <AnalyticsRuntime />
+      <DesktopTaskRail />
       <Routes>
         <Route path="/invalid" element={<ErrorPage />} />
         <Route path="/" element={<ProtectedRoute><ConsentRoute /></ProtectedRoute>} />

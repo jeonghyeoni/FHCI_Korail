@@ -764,13 +764,14 @@ button {
    Variant A Seat Page / A-3-1, A-3-2, A-3-3 좌석 선택 화면 전체 배경
    ========================================================= */
 .seat-selector-panel {
+  --seat-selector-inline-padding: clamp(11px, 3vw, 15px);
   position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
   min-height: 0;
   overflow: hidden;
-  padding: clamp(11px, 2.8vw, 14px) clamp(11px, 3vw, 15px) 0;
+  padding: clamp(11px, 2.8vw, 14px) var(--seat-selector-inline-padding) 0;
   background: #f8f8f8;
 }
 
@@ -987,8 +988,13 @@ button {
   min-height: 0;
   overflow-x: hidden;
   overflow-y: auto;
-  padding-bottom: calc(150px + var(--safe-bottom));
+  padding: 0 clamp(11px, 3vw, 15px) calc(150px + var(--safe-bottom));
   scrollbar-width: none;
+}
+
+.seat-selector-panel > .seat-map-scroll {
+  margin-right: calc(var(--seat-selector-inline-padding) * -1);
+  margin-left: calc(var(--seat-selector-inline-padding) * -1);
 }
 
 .seat-map-scroll::-webkit-scrollbar {

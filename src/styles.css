@@ -1013,7 +1013,7 @@ button {
 .seat-side-labels,
 .seat-row {
   display: grid;
-  grid-template-columns: minmax(42px, 70px) minmax(42px, 70px) clamp(30px, 21vw, 85px) minmax(42px, 70px) minmax(42px, 70px);
+  grid-template-columns: minmax(42px, 65px) minmax(42px, 65px) clamp(30px, 21vw, 85px) minmax(42px, 65px) minmax(42px, 65px);
   justify-content: center;
   gap: clamp(5px, 1.2vw, 8px);
   align-items: center;

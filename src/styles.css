@@ -71,7 +71,7 @@ button {
   overflow: hidden;
   background: var(--surface);
   box-shadow: 0 0 0 1px rgba(5, 35, 52, 0.08), 0 18px 50px rgba(5, 35, 52, 0.16);
-}56
+}
 
 .screen {
   height: calc(100dvh - clamp(56px, 14vw, 72px) - var(--safe-top));
@@ -1705,7 +1705,10 @@ button {
 .consent-screen {
   display: grid;
   gap: 14px;
+  height: 100%;
   min-height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: calc(24px + var(--safe-top)) 20px calc(28px + var(--safe-bottom));
 }
 

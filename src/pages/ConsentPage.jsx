@@ -2,7 +2,19 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 import { TASKS } from "../data/experiment.js";
-import { acceptConsent, buildConditionUrl } from "../utils/experimentSequence.js";
+import { EXPERIMENT_SEQUENCE, TEST_MODE, acceptConsent, buildConditionUrl } from "../utils/experimentSequence.js";
+
+function buildTestSurveyUrl(condition, participantId, surveyStep = "task") {
+  const params = new URLSearchParams({
+    mode: TEST_MODE,
+    variant: condition.variant,
+    task: condition.taskId,
+    pid: participantId,
+    survey: surveyStep,
+  });
+
+  return `/complete?${params.toString()}`;
+}
 
 export default function ConsentPage() {
   const navigate = useNavigate();
@@ -24,6 +36,36 @@ export default function ConsentPage() {
   return (
     <main className="phone-frame intro-frame" data-clarity-unmask="true">
       <section className="screen consent-screen">
+        {state.isTestMode ? (
+          <section className="test-quick-nav" aria-label="테스트 모드 빠른 이동">
+            <h2>테스트 빠른 이동</h2>
+            <div className="test-quick-grid">
+              {EXPERIMENT_SEQUENCE.flatMap((condition) => [
+                <button
+                  type="button"
+                  key={`${condition.taskId}-${condition.variant}-task`}
+                  onClick={() => navigate(buildConditionUrl(condition, state.participantId, { mode: state.mode }))}
+                >
+                  Task{condition.taskId}-{condition.variant}
+                </button>,
+                <button
+                  type="button"
+                  key={`${condition.taskId}-${condition.variant}-survey`}
+                  onClick={() => navigate(buildTestSurveyUrl(condition, state.participantId))}
+                >
+                  Task{condition.taskId}-{condition.variant}-설문
+                </button>,
+              ])}
+              <button
+                type="button"
+                onClick={() => navigate(buildTestSurveyUrl(EXPERIMENT_SEQUENCE[EXPERIMENT_SEQUENCE.length - 1], state.participantId, "final"))}
+              >
+                종합 설문
+              </button>
+            </div>
+          </section>
+        ) : null}
+
         <div className="consent-hero">
           <p className="eyebrow">서강대학교 아트앤테크놀로지학과</p>
           <h1>Foundations of Human-Computer Interaction</h1>

@@ -1719,6 +1719,39 @@ button {
   padding: calc(24px + var(--safe-top)) 20px calc(28px + var(--safe-bottom));
 }
 
+.test-quick-nav {
+  display: grid;
+  gap: 10px;
+  border: 1px dashed #9dc8e1;
+  border-radius: 8px;
+  padding: 12px;
+  background: rgba(239, 248, 253, 0.95);
+}
+
+.test-quick-nav h2 {
+  margin: 0;
+  color: var(--korail-navy);
+  font-size: clamp(15px, 4cqw, 18px);
+  font-weight: 400;
+}
+
+.test-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.test-quick-grid button {
+  min-height: 34px;
+  border: 1px solid #b8d4e5;
+  border-radius: 999px;
+  padding: 6px 8px;
+  color: #174f78;
+  background: #fff;
+  font-size: clamp(11px, 3.1cqw, 13px);
+  line-height: 1.2;
+}
+
 .consent-hero {
   display: grid;
   gap: 8px;

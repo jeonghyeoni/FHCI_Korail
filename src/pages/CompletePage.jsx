@@ -343,13 +343,14 @@ export default function CompletePage() {
   const [summary] = useState(() => loadSummary({ inMemory: state.isTestMode }));
   const [submissionStatus, setSubmissionStatus] = useState("idle");
   const [surveyAnswers, setSurveyAnswers] = useState({});
-  const [surveyStep, setSurveyStep] = useState("task");
-  const [isSurveyOpen, setIsSurveyOpen] = useState(false);
   const [isSubmittingOnClick, setIsSubmittingOnClick] = useState(false);
   const [surveySubmissionStatus, setSurveySubmissionStatus] = useState("idle");
   const submitAttemptedRef = useRef(false);
   const nextCondition = getNextCondition(state.taskId, state.variant);
   const isFinalTest = !nextCondition;
+  const requestedSurveyStep = state.isTestMode ? new URLSearchParams(window.location.search).get("survey") : null;
+  const [surveyStep, setSurveyStep] = useState(() => (requestedSurveyStep === "final" && isFinalTest ? "final" : "task"));
+  const [isSurveyOpen, setIsSurveyOpen] = useState(() => state.isTestMode && ["task", "final"].includes(requestedSurveyStep));
   const shouldShowTaskSurvey = true;
   const taskSurveyQuestions = getTaskSurveyQuestions(state.taskId);
   const activeSurveyQuestions = shouldShowTaskSurvey
@@ -413,13 +414,14 @@ export default function CompletePage() {
   const submissionStatusText = getSubmissionStatusText(statusForDisplay);
   const isSubmissionComplete = submissionStatus === "success" || submissionStatus === "test_mode";
   const canOpenSurvey = shouldShowTaskSurvey && !isSurveyOpen && isSubmissionComplete;
-  const canMoveToFinalSurvey = shouldShowTaskSurvey && isSurveyOpen && isFinalTest && surveyStep === "task" && activeSurveyComplete;
-  const canSubmitSurvey = shouldShowTaskSurvey && isSurveyOpen && activeSurveyComplete && !isSubmittingOnClick;
+  const effectiveSurveyComplete = state.isTestMode || activeSurveyComplete;
+  const canMoveToFinalSurvey = shouldShowTaskSurvey && isSurveyOpen && isFinalTest && surveyStep === "task" && effectiveSurveyComplete;
+  const canSubmitSurvey = shouldShowTaskSurvey && isSurveyOpen && effectiveSurveyComplete && !isSubmittingOnClick;
   const canProceed = canOpenSurvey || canMoveToFinalSurvey || canSubmitSurvey || (!shouldShowTaskSurvey && isSubmissionComplete);
   const actionLabel = (() => {
     if (isSubmittingOnClick) return "잠시만 기다려주세요";
     if (shouldShowTaskSurvey && !isSurveyOpen) return isSubmissionComplete ? "설문 하러가기" : "잠시만 기다려주세요";
-    if (!activeSurveyComplete) return shouldShowTaskSurvey ? "설문을 완료해주세요" : "다음 테스트 준비 중";
+    if (!effectiveSurveyComplete) return shouldShowTaskSurvey ? "설문을 완료해주세요" : "다음 테스트 준비 중";
     if (canMoveToFinalSurvey) return "종합 설문으로 이동";
     if (shouldShowTaskSurvey) return "설문 제출";
     if (!isSubmissionComplete) return "잠시만 기다려주세요";

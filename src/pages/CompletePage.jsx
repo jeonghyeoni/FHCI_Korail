@@ -210,7 +210,7 @@ function buildSurveyResponses(questions, answers, section) {
 }
 
 function shouldShowTrainScreenComparison(question) {
-  return question.name === "task1_entry_preference" || question.name === "task2_entry_preference";
+  return question.name === "task1_entry_preference" || question.name === "task2_entry_preference" || question.name === "final_ui_preference";
 }
 
 function shouldShowCarSelectorComparison(question) {
@@ -536,11 +536,11 @@ export default function CompletePage() {
           <div className="survey-screen-comparison" aria-label="A/B 열차 선택 후 화면 비교">
             <figure>
               <img src={aTrainAfterSelectImage} alt="A의 열차 선택 후 화면" />
-              <figcaption>A의 열차 선택 후 화면</figcaption>
+              <figcaption>A의 열차선택 후 화면</figcaption>
             </figure>
             <figure>
               <img src={bTrainAfterSelectImage} alt="B의 열차 선택 후 화면" />
-              <figcaption>B의 열차 선택 후 화면</figcaption>
+              <figcaption>B의 열차선택 후 화면</figcaption>
             </figure>
           </div>
         ) : null}

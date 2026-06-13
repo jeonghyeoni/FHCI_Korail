@@ -1,3 +1,5 @@
+import { toKstISOString } from "../utils/time.js";
+
 const PENDING_SUBMISSIONS_KEY = "pendingSubmission";
 const SUBMITTED_PREFIX = "fhci_submitted";
 
@@ -176,7 +178,7 @@ export function buildSurveySubmissionPayload({ summary, state, surveyAnswers = {
     participantId,
     variant,
     taskId,
-    submittedAt: new Date().toISOString(),
+    submittedAt: toKstISOString(),
     surveyAnswers,
     surveyResponses,
   };

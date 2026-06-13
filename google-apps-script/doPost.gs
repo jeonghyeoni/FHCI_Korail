@@ -104,7 +104,7 @@ function doPost(e) {
       payload.seatSelectionCount ?? 0,
       payload.startedAt || "",
       payload.completedAt || "",
-      new Date().toISOString(),
+      toKstISOString_(new Date()),
     ]);
 
     appendEventLogs_(eventLogSheet, submissionKey, payload.eventLogs || []);
@@ -170,7 +170,7 @@ function appendEventLogs_(sheet, submissionKey, eventLogs) {
 function appendSurveyResponses_(sheet, submissionKey, payload, surveyResponses) {
   if (!surveyResponses.length) return;
 
-  const receivedAt = new Date().toISOString();
+  const receivedAt = toKstISOString_(new Date());
   const rows = surveyResponses.map((response) => [
     submissionKey,
     payload.participantId || "",
@@ -202,6 +202,12 @@ function makeSubmissionKey_(payload) {
   const submissionType = getSubmissionType_(payload);
   const baseKey = [payload.participantId, payload.variant, payload.taskId].join(":");
   return submissionType === "survey" ? `${baseKey}:survey` : baseKey;
+}
+
+function toKstISOString_(date) {
+  const kstOffsetMs = 9 * 60 * 60 * 1000;
+  const kstDate = new Date(date.getTime() + kstOffsetMs);
+  return kstDate.toISOString().replace("Z", "+09:00");
 }
 
 function jsonResponse_(data) {

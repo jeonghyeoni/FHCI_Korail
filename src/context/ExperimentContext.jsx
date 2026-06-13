@@ -15,6 +15,7 @@ import {
   isValidTestParticipantId,
 } from "../utils/experimentSequence.js";
 import { getAutoSeat, getSeatMisclickReason, isTargetSeat } from "../utils/taskRules.js";
+import { toKstISOString } from "../utils/time.js";
 
 const ExperimentContext = createContext(null);
 
@@ -112,7 +113,7 @@ function normalizeEvent(state, event) {
     participantId: state.participantId,
     variant: state.variant,
     taskId: state.taskId,
-    timestamp: event.timestamp || new Date().toISOString(),
+    timestamp: event.timestamp || toKstISOString(),
     pageName: event.pageName || document.body.dataset.pageName || "unknown",
     eventType: event.eventType,
     eventLabel: event.eventLabel || "",
@@ -146,7 +147,7 @@ export function ExperimentProvider({ children }) {
   }, []);
 
   const startTask = useCallback(() => {
-    const timestamp = new Date().toISOString();
+    const timestamp = toKstISOString();
     dispatch({ type: "START_TASK", timestamp });
   }, []);
 
@@ -289,7 +290,7 @@ export function ExperimentProvider({ children }) {
 
   const completeTask = useCallback((pointer = {}) => {
     const current = stateRef.current;
-    const timestamp = new Date().toISOString();
+    const timestamp = toKstISOString();
     const success = isTargetSeat(current.taskId, current.selectedSeat);
 
     if (!success) {

@@ -1,4 +1,4 @@
-import { toKstISOString, toKstTimestampText } from "../utils/time.js";
+import { formatKstTimestampText, toKstISOString, toKstTimestampText } from "../utils/time.js";
 
 const PENDING_SUBMISSIONS_KEY = "pendingSubmission";
 const SUBMITTED_PREFIX = "fhci_submitted";
@@ -136,11 +136,16 @@ export function buildSubmissionPayload({ summary, state, eventLogs, surveyAnswer
   const selectedSeat = summary?.selectedSeat ?? state.selectedSeat ?? null;
   const startedAt = summary?.startedAt ?? summary?.taskStartTime ?? state.taskStartTime ?? null;
   const completedAt = summary?.completedAt ?? summary?.taskEndTime ?? state.taskEndTime ?? null;
-  const identityLogs = eventLogs.filter((event) =>
-    event.participantId === participantId &&
-    event.variant === variant &&
-    event.taskId === taskId
-  );
+  const identityLogs = eventLogs
+    .filter((event) =>
+      event.participantId === participantId &&
+      event.variant === variant &&
+      event.taskId === taskId
+    )
+    .map((event) => ({
+      ...event,
+      timestamp: formatKstTimestampText(event.timestamp),
+    }));
 
   return {
     submissionType: "task",
@@ -157,8 +162,8 @@ export function buildSubmissionPayload({ summary, state, eventLogs, surveyAnswer
     pageTransitionCount: summary?.pageTransitionCount ?? 0,
     carriageChangeCount: summary?.carriageChangeCount ?? 0,
     seatSelectionCount: summary?.seatSelectionCount ?? 0,
-    startedAt,
-    completedAt,
+    startedAt: formatKstTimestampText(startedAt),
+    completedAt: formatKstTimestampText(completedAt),
     receivedAt: toKstTimestampText(),
     surveyAnswers,
     surveyResponses,

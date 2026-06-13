@@ -1,4 +1,4 @@
-import { toKstISOString } from "../utils/time.js";
+import { toKstISOString, toKstTimestampText } from "../utils/time.js";
 
 const PENDING_SUBMISSIONS_KEY = "pendingSubmission";
 const SUBMITTED_PREFIX = "fhci_submitted";
@@ -159,6 +159,7 @@ export function buildSubmissionPayload({ summary, state, eventLogs, surveyAnswer
     seatSelectionCount: summary?.seatSelectionCount ?? 0,
     startedAt,
     completedAt,
+    receivedAt: toKstTimestampText(),
     surveyAnswers,
     surveyResponses,
     eventLogs: identityLogs,
@@ -179,6 +180,7 @@ export function buildSurveySubmissionPayload({ summary, state, surveyAnswers = {
     variant,
     taskId,
     submittedAt: toKstISOString(),
+    receivedAt: toKstTimestampText(),
     surveyAnswers,
     surveyResponses,
   };

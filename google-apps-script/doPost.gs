@@ -2,7 +2,7 @@ const SPREADSHEET_ID = "1NyXaqg6f94t8DClS15Z9u1sDrFluS5csosNxX7sjFK4";
 const SUMMARY_SHEET_NAME = "TaskSummary";
 const EVENT_LOG_SHEET_NAME = "EventLogs";
 const SURVEY_RESPONSE_SHEET_NAME = "SurveyResponses";
-const SCRIPT_VERSION = "2026-06-13-kst-received-at-v3";
+const SCRIPT_VERSION = "2026-06-13-client-kst-received-at-v4";
 
 const SUMMARY_HEADERS = [
   "submissionKey",
@@ -104,7 +104,7 @@ function doPost(e) {
       payload.seatSelectionCount ?? 0,
       payload.startedAt || "",
       payload.completedAt || "",
-      toKstTimestampText_(new Date()),
+      payload.receivedAt || toKstTimestampText_(new Date()),
     ]);
 
     appendEventLogs_(eventLogSheet, submissionKey, payload.eventLogs || []);
@@ -170,7 +170,7 @@ function appendEventLogs_(sheet, submissionKey, eventLogs) {
 function appendSurveyResponses_(sheet, submissionKey, payload, surveyResponses) {
   if (!surveyResponses.length) return;
 
-  const receivedAt = toKstTimestampText_(new Date());
+  const receivedAt = payload.receivedAt || toKstTimestampText_(new Date());
   const rows = surveyResponses.map((response) => [
     submissionKey,
     payload.participantId || "",

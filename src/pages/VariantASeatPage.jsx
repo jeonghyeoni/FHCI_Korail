@@ -4,6 +4,7 @@ import AppShell from "../components/AppShell.jsx";
 import SeatMap from "../components/SeatMap.jsx";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 import { CARRIAGES, getCarriage, TRAIN } from "../data/experiment.js";
+import { buildRouteUrl } from "../utils/experimentSequence.js";
 import seatIconSvg from "../assets/icons/seat.svg?raw";
 
 const A_CARRIAGE_NUMBERS = CARRIAGES.filter((item) => [1, 5, 6, 7, 8, 9].includes(item.no)).map((item) => item.no);
@@ -25,9 +26,9 @@ export default function VariantASeatPage({ mode }) {
 
   useEffect(() => {
     if (mode === "selected" && !state.selectedSeat) {
-      navigate("/variant-a/3-1", { replace: true });
+      navigate(buildRouteUrl("/variant-a/3-1", state), { replace: true });
     }
-  }, [mode, navigate, state.selectedSeat]);
+  }, [mode, navigate, state, state.selectedSeat]);
 
   useEffect(() => {
     if (seatMapScrollRef.current) {
@@ -36,7 +37,7 @@ export default function VariantASeatPage({ mode }) {
   }, [state.currentCarriage]);
 
   function handleToggleDropdown() {
-    navigate(showDropdown ? "/variant-a/3-1" : "/variant-a/3-2");
+    navigate(buildRouteUrl(showDropdown ? "/variant-a/3-1" : "/variant-a/3-2", state));
   }
 
   function handleDropdownHeaderClick(event) {
@@ -50,15 +51,15 @@ export default function VariantASeatPage({ mode }) {
 
   function handleCarriageChange(event, carriageNo) {
     actions.selectCarriage(carriageNo, { x: event.clientX, y: event.clientY }, { clearSelectedSeat: true });
-    navigate("/variant-a/3-1");
+    navigate(buildRouteUrl("/variant-a/3-1", state));
   }
 
   function handleSeatSelected() {
-    navigate("/variant-a/3-3");
+    navigate(buildRouteUrl("/variant-a/3-3", state));
   }
 
   function handleDone() {
-    navigate("/variant-a/3-4");
+    navigate(buildRouteUrl("/variant-a/3-4", state));
   }
 
   function renderDirectionIcon(direction) {

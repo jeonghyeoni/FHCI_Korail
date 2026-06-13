@@ -10,7 +10,7 @@ import bTrainAfterSelectImage from "../assets/survey/b-train-after-select.png";
 import bTrainAfterSelectAutoHighlightImage from "../assets/survey/b-train-after-select-auto-highlight.png";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 import { TASKS } from "../data/experiment.js";
-import { buildConditionUrl, getNextCondition, markConditionComplete } from "../utils/experimentSequence.js";
+import { buildConditionUrl, buildRouteUrl, getNextCondition, markConditionComplete } from "../utils/experimentSequence.js";
 
 function getSubmissionStatusText(status) {
   switch (status) {
@@ -390,7 +390,7 @@ export default function CompletePage() {
           window.location.assign(buildConditionUrl(nextCondition, state.participantId, { mode: state.mode }));
           return;
         }
-        navigate("/thanks?mode=test");
+        navigate(buildRouteUrl("/thanks", state));
         return;
       }
 
@@ -435,7 +435,7 @@ export default function CompletePage() {
             window.location.assign(buildConditionUrl(nextCondition, state.participantId, { mode: state.mode }));
             return;
           }
-          navigate("/thanks");
+          navigate(buildRouteUrl("/thanks", state));
           return;
         }
 
@@ -448,7 +448,7 @@ export default function CompletePage() {
       window.location.assign(buildConditionUrl(nextCondition, state.participantId, { mode: state.mode }));
       return;
     }
-    navigate(state.isTestMode ? "/thanks?mode=test" : "/thanks");
+    navigate(buildRouteUrl("/thanks", state));
   };
 
   function renderSurveyQuestion(question) {

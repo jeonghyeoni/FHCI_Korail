@@ -143,3 +143,18 @@ export function buildConditionUrl(condition, participantId, options = {}) {
 
   return `/intro?${params.toString()}`;
 }
+
+export function buildRouteUrl(path, state) {
+  if (!state?.isTestMode && state?.mode !== TEST_MODE) {
+    return path;
+  }
+
+  const [pathname, rawSearch = ""] = path.split("?");
+  const params = new URLSearchParams(rawSearch);
+  params.set("mode", TEST_MODE);
+  params.set("variant", state.variant);
+  params.set("task", state.taskId);
+  params.set("pid", state.participantId);
+
+  return `${pathname}?${params.toString()}`;
+}

@@ -3,6 +3,7 @@ import AppShell from "../components/AppShell.jsx";
 import MiniCarMap from "../components/MiniCarMap.jsx";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 import { CARRIAGES, formatWon, TRAIN } from "../data/experiment.js";
+import { buildRouteUrl } from "../utils/experimentSequence.js";
 
 export default function VariantBOverviewPage() {
   const navigate = useNavigate();
@@ -11,18 +12,18 @@ export default function VariantBOverviewPage() {
 
   function openCarriage(event, carriageNo) {
     actions.selectCarriage(carriageNo, { x: event.clientX, y: event.clientY });
-    navigate("/variant-b/3-1");
+    navigate(buildRouteUrl("/variant-b/3-1", state));
   }
 
   function handleAutoSelect(event) {
     const result = actions.autoSelectSeat({ x: event.clientX, y: event.clientY });
     if (result.selected) {
-      navigate("/confirm");
+      navigate(buildRouteUrl("/confirm", state));
     }
   }
 
   function handlePay() {
-    navigate("/confirm");
+    navigate(buildRouteUrl("/confirm", state));
   }
 
   return (

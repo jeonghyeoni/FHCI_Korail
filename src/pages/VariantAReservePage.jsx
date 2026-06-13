@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import AppShell from "../components/AppShell.jsx";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 import { formatWon, TRAIN } from "../data/experiment.js";
+import { buildRouteUrl } from "../utils/experimentSequence.js";
 import { trainRows } from "./TrainSearchPage.jsx";
 
 const SHOW_VARIANT_A_RESERVE_BOTTOM_NAV = true;
@@ -15,14 +16,14 @@ export default function VariantAReservePage({ pageKey }) {
     if (!hasSeat && pageKey !== "A-3-4") {
       actions.autoSelectRandomSeat({ x: event.clientX, y: event.clientY });
     }
-    navigate("/confirm");
+    navigate(buildRouteUrl("/confirm", state));
   }
 
   function handleSeatSelection(event) {
     if (pageKey === "A-3-4") {
       actions.clearSelectedSeat({ x: event.clientX, y: event.clientY });
     }
-    navigate("/variant-a/3-1");
+    navigate(buildRouteUrl("/variant-a/3-1", state));
   }
 
   return (

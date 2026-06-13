@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 import { TASKS, TRAIN } from "../data/experiment.js";
+import { buildRouteUrl } from "../utils/experimentSequence.js";
 
 export default function IntroPage() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export default function IntroPage() {
   function handleStart() {
     if (!hasConfirmedTask) return;
     actions.startTask();
-    navigate("/train");
+    navigate(buildRouteUrl("/train", state));
   }
 
   return (

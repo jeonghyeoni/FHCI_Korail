@@ -2,7 +2,7 @@ const SPREADSHEET_ID = "1NyXaqg6f94t8DClS15Z9u1sDrFluS5csosNxX7sjFK4";
 const SUMMARY_SHEET_NAME = "TaskSummary";
 const EVENT_LOG_SHEET_NAME = "EventLogs";
 const SURVEY_RESPONSE_SHEET_NAME = "SurveyResponses";
-const SCRIPT_VERSION = "2026-06-10-survey-responses-v2";
+const SCRIPT_VERSION = "2026-06-13-kst-received-at-v3";
 
 const SUMMARY_HEADERS = [
   "submissionKey",
@@ -104,7 +104,7 @@ function doPost(e) {
       payload.seatSelectionCount ?? 0,
       payload.startedAt || "",
       payload.completedAt || "",
-      toKstISOString_(new Date()),
+      toKstTimestampText_(new Date()),
     ]);
 
     appendEventLogs_(eventLogSheet, submissionKey, payload.eventLogs || []);
@@ -170,7 +170,7 @@ function appendEventLogs_(sheet, submissionKey, eventLogs) {
 function appendSurveyResponses_(sheet, submissionKey, payload, surveyResponses) {
   if (!surveyResponses.length) return;
 
-  const receivedAt = toKstISOString_(new Date());
+  const receivedAt = toKstTimestampText_(new Date());
   const rows = surveyResponses.map((response) => [
     submissionKey,
     payload.participantId || "",
@@ -204,10 +204,8 @@ function makeSubmissionKey_(payload) {
   return submissionType === "survey" ? `${baseKey}:survey` : baseKey;
 }
 
-function toKstISOString_(date) {
-  const kstOffsetMs = 9 * 60 * 60 * 1000;
-  const kstDate = new Date(date.getTime() + kstOffsetMs);
-  return kstDate.toISOString().replace("Z", "+09:00");
+function toKstTimestampText_(date) {
+  return Utilities.formatDate(date, "Asia/Seoul", "yyyy-MM-dd HH:mm:ss 'KST'");
 }
 
 function jsonResponse_(data) {

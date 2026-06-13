@@ -560,8 +560,8 @@ button {
 
 .fare-disabled {
   border-color: #ad8595;
-  color: #c36100;
-  background: #fff;
+  color: #a57588;
+  background: #f7f7f7;
 }
 
 .fare-secondary {
@@ -582,11 +582,6 @@ button {
   border-bottom-width: 3px;
   clip-path: polygon(0 0, 100% 0, 58% 50%, 100% 100%, 0 100%, 42% 50%);
   background: transparent;
-}
-
-.train-row-muted .fare-disabled {
-  color: #a57588;
-  background: #f7f7f7;
 }
 
 .fare-button.is-selected {

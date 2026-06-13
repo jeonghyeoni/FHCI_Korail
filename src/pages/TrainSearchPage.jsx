@@ -87,17 +87,13 @@ export default function TrainSearchPage() {
               </button>
             )}
             <button
-              className={[
-                "fare-button",
-                index === 0 ? "fare-secondary" : "fare-disabled",
-                index === 0 ? "has-hourglass" : "",
-              ].filter(Boolean).join(" ")}
+              className="fare-button fare-disabled"
               type="button"
               data-track-label={`train:${index}:premium-fare`}
               data-clickable="true"
              
-              data-disabled={index === 0 ? "false" : "true"}
-              aria-disabled={index === 0 ? "false" : "true"}
+              data-disabled="true"
+              aria-disabled="true"
             >
               매진
             </button>

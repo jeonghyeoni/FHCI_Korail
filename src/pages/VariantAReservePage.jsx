@@ -67,12 +67,12 @@ export default function VariantAReservePage({ pageKey }) {
 
       <section className="train-list a-reserve-list" aria-label="선택된 열차 이후 목록">
         {trainRows.slice(1).map((row, index) => (
-          <article className={row.muted ? "train-row train-row-muted" : "train-row"} key={`${row.train}-a-${index}`}>
+          <article className="train-row train-row-muted" key={`${row.train}-a-${index}`}>
             <span>{row.train.split("\n").map((line) => <b key={line}>{line}</b>)}</span>
             <span>{row.depart.split("\n").map((line) => <b key={line}>{line}</b>)}</span>
             <span>{row.arrive.split("\n").map((line) => <b key={line}>{line}</b>)}</span>
             <button
-              className={row.priceLike ? "fare-button fare-secondary" : "fare-button fare-disabled"}
+              className="fare-button fare-disabled"
               type="button"
               data-track-label={`a-reserve:visible-row:${index}:general`}
               data-clickable="true"
@@ -80,20 +80,10 @@ export default function VariantAReservePage({ pageKey }) {
               data-disabled="true"
               aria-disabled="true"
             >
-              {row.priceLike ? (
-                <>
-                  {row.general}
-                  <small><span className="reward-badge">M</span>5%적립</small>
-                </>
-              ) : (
-                row.general.split("\n").map((line) => <span className="fare-line" key={line}>{line}</span>)
-              )}
+              {row.general.split("\n").map((line) => <span className="fare-line" key={line}>{line}</span>)}
             </button>
             <button
-              className={[
-                "fare-button",
-                row.priceLike ? "fare-secondary has-hourglass" : "fare-disabled",
-              ].filter(Boolean).join(" ")}
+              className="fare-button fare-disabled"
               type="button"
               data-track-label={`a-reserve:visible-row:${index}:premium`}
               data-clickable="true"
@@ -101,8 +91,7 @@ export default function VariantAReservePage({ pageKey }) {
               data-disabled="true"
               aria-disabled="true"
             >
-              {row.premium}
-              {row.priceLike ? <small><span className="reward-badge">M</span>5%적립</small> : null}
+              매진
             </button>
           </article>
         ))}

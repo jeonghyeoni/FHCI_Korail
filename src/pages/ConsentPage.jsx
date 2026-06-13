@@ -21,6 +21,10 @@ export default function ConsentPage() {
   const { state } = useExperiment();
   const [isChecked, setIsChecked] = useState(false);
 
+  function openTestUrl(url) {
+    window.location.assign(url);
+  }
+
   function handleStart() {
     if (!isChecked) return;
     if (!state.isTestMode) {
@@ -44,21 +48,21 @@ export default function ConsentPage() {
                 <button
                   type="button"
                   key={`${condition.taskId}-${condition.variant}-task`}
-                  onClick={() => navigate(buildConditionUrl(condition, state.participantId, { mode: state.mode }))}
+                  onClick={() => openTestUrl(buildConditionUrl(condition, state.participantId, { mode: state.mode }))}
                 >
                   Task{condition.taskId}-{condition.variant}
                 </button>,
                 <button
                   type="button"
                   key={`${condition.taskId}-${condition.variant}-survey`}
-                  onClick={() => navigate(buildTestSurveyUrl(condition, state.participantId))}
+                  onClick={() => openTestUrl(buildTestSurveyUrl(condition, state.participantId))}
                 >
                   Task{condition.taskId}-{condition.variant}-설문
                 </button>,
               ])}
               <button
                 type="button"
-                onClick={() => navigate(buildTestSurveyUrl(EXPERIMENT_SEQUENCE[EXPERIMENT_SEQUENCE.length - 1], state.participantId, "final"))}
+                onClick={() => openTestUrl(buildTestSurveyUrl(EXPERIMENT_SEQUENCE[EXPERIMENT_SEQUENCE.length - 1], state.participantId, "final"))}
               >
                 종합 설문
               </button>

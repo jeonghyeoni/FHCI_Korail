@@ -8,6 +8,13 @@ import aTrainAfterSelectReserveHighlightImage from "../assets/survey/a-train-aft
 import bSeatSelectionCar1Image from "../assets/survey/b-seat-selection-car-1.png";
 import bTrainAfterSelectImage from "../assets/survey/b-train-after-select.png";
 import bTrainAfterSelectAutoHighlightImage from "../assets/survey/b-train-after-select-auto-highlight.png";
+import flow2TrainListImage from "../assets/survey/flow-2-train-list.png";
+import flow4ConfirmImage from "../assets/survey/flow-4-confirm.png";
+import flowA3ReserveSheetImage from "../assets/survey/flow-a-3-reserve-sheet.png";
+import flowA31SeatSelectImage from "../assets/survey/flow-a-3-1-seat-select.png";
+import flowA34SelectedReserveImage from "../assets/survey/flow-a-3-4-selected-reserve.png";
+import flowB3OverviewImage from "../assets/survey/flow-b-3-overview.png";
+import flowB31SeatSelectImage from "../assets/survey/flow-b-3-1-seat-select.png";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 import { TASKS } from "../data/experiment.js";
 import { buildConditionUrl, buildRouteUrl, getNextCondition, markConditionComplete } from "../utils/experimentSequence.js";
@@ -139,6 +146,22 @@ const FINAL_SURVEY_QUESTIONS = [
   },
 ];
 
+const SURVEY_FLOW_IMAGES = {
+  A: [
+    { src: flow2TrainListImage, alt: "A 플로우 열차 조회 화면" },
+    { src: flowA3ReserveSheetImage, alt: "A 플로우 열차 선택 후 예매 시트 화면" },
+    { src: flowA31SeatSelectImage, alt: "A 플로우 좌석 선택 화면" },
+    { src: flowA34SelectedReserveImage, alt: "A 플로우 좌석 선택 완료 후 화면" },
+    { src: flow4ConfirmImage, alt: "A 플로우 승차권 정보 확인 화면" },
+  ],
+  B: [
+    { src: flow2TrainListImage, alt: "B 플로우 열차 조회 화면" },
+    { src: flowB3OverviewImage, alt: "B 플로우 좌석 현황 화면" },
+    { src: flowB31SeatSelectImage, alt: "B 플로우 좌석 선택 화면" },
+    { src: flow4ConfirmImage, alt: "B 플로우 승차권 정보 확인 화면" },
+  ],
+};
+
 function getLegacyTaskSurveyQuestions(taskId) {
   return [...getLegacyCommonTaskSurveyQuestions(taskId), ...(LEGACY_TASK_SURVEY_DETAILS[taskId] || [])];
 }
@@ -211,7 +234,11 @@ function buildSurveyResponses(questions, answers, section) {
 }
 
 function shouldShowTrainScreenComparison(question) {
-  return question.name === "task1_entry_preference" || question.name === "task2_entry_preference" || question.name === "final_ui_preference";
+  return question.name === "task1_entry_preference" || question.name === "task2_entry_preference";
+}
+
+function shouldShowFinalFlowReminder(question) {
+  return question.name === "final_ui_preference";
 }
 
 function shouldShowCarSelectorComparison(question) {
@@ -244,6 +271,39 @@ function getAutoActionImage(question) {
   }
 
   return null;
+}
+
+function SurveyFlowReminder() {
+  return (
+    <details className="survey-flow-reminder">
+      <summary>
+        <span>기억이 안나요</span>
+        <span className="survey-flow-toggle-mark" aria-hidden="true">▾</span>
+      </summary>
+      <div className="survey-flow-gallery" aria-label="A/B 일반 예매 플로우 참고 화면">
+        <section className="survey-flow-section" aria-label="A의 일반적인 예매 플로우">
+          <div className="survey-flow-strip">
+            {SURVEY_FLOW_IMAGES.A.map((image) => (
+              <figure key={image.alt}>
+                <img src={image.src} alt={image.alt} />
+              </figure>
+            ))}
+          </div>
+          <p>A의 일반적인 예매 플로우</p>
+        </section>
+        <section className="survey-flow-section" aria-label="B의 일반적인 예매 플로우">
+          <div className="survey-flow-strip">
+            {SURVEY_FLOW_IMAGES.B.map((image) => (
+              <figure key={image.alt}>
+                <img src={image.src} alt={image.alt} />
+              </figure>
+            ))}
+          </div>
+          <p>B의 일반적인 예매 플로우</p>
+        </section>
+      </div>
+    </details>
+  );
 }
 
 class CompletePageErrorBoundary extends Component {
@@ -545,6 +605,7 @@ export default function CompletePage() {
             </figure>
           </div>
         ) : null}
+        {shouldShowFinalFlowReminder(question) ? <SurveyFlowReminder /> : null}
         {shouldShowCarSelectorComparison(question) ? (
           <div className="survey-screen-comparison" aria-label="A/B 호차 변경 방식 비교">
             <figure>

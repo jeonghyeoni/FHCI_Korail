@@ -4,7 +4,7 @@ import { useExperiment } from "../context/ExperimentContext.jsx";
 import { formatWon, TRAIN } from "../data/experiment.js";
 
 export const trainRows = [
-  { train: "KTX\n001", depart: "05:13\n서울", arrive: "07:50\n부산", general: "target", premium: formatWon(83700), enabled: true },
+  { train: "KTX\n001", depart: "05:13\n서울", arrive: "07:50\n부산", general: "target", premium: "매진", enabled: true },
   { train: "KTX\n003", depart: "05:27\n서울", arrive: "08:16\n부산", general: "매진", premium: "매진", enabled: false, muted: true },
   { train: "SRT\n301", depart: "05:30\n수서", arrive: "08:06\n부산", general: "매진", premium: "매진", enabled: false, muted: true },
   { train: "KTX-이음\n701", depart: "05:40\n청량리", arrive: "09:24\n부전", general: "매진", premium: "매진", enabled: false, muted: true },
@@ -99,8 +99,7 @@ export default function TrainSearchPage() {
               data-disabled={index === 0 ? "false" : "true"}
               aria-disabled={index === 0 ? "false" : "true"}
             >
-              {index === 0 ? row.premium : "매진"}
-              {index === 0 ? <small><span className="reward-badge">M</span>5%적립</small> : null}
+              매진
             </button>
           </article>
         ))}

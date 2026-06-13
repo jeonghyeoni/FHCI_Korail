@@ -59,9 +59,8 @@ export default function VariantAReservePage({ pageKey }) {
           {formatWon(TRAIN.price)}
           <small>M 5%적립</small>
         </button>
-        <button className="fare-button" type="button" data-track-label="a-reserve:premium" data-clickable="true">
-          83,700원
-          <small>M 5%적립</small>
+        <button className="fare-button fare-disabled" type="button" data-track-label="a-reserve:premium" data-clickable="true" data-disabled="true" aria-disabled="true">
+          매진
         </button>
       </article>
 

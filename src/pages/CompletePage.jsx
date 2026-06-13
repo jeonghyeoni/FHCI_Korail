@@ -133,7 +133,8 @@ const FINAL_SURVEY_QUESTIONS = [
     type: "text",
     label:
       "전화번호를 기재해주시면 필요에 따라 추가 설문을 위한 연락이 갈 수 있습니다. 추가 설문에 참여해주시면 소정의 기프티콘을 드립니다. 많은 참여 부탁드립니다.",
-    placeholder: "전화번호 입력",
+    placeholder: "전화번호 입력 (선택)",
+    required: false,
     scoreByPresence: true,
   },
 ];

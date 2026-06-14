@@ -55,11 +55,11 @@ export default function ConsentPage() {
             <dl>
               <div>
                 <dt>Android</dt>
-                <dd>우측 상단 메뉴(⋯) -&gt; 외부 브라우저로 열기</dd>
+                <dd>우측 상단 메뉴(⋯) 버튼 -&gt; 외부 브라우저로 열기</dd>
               </div>
               <div>
                 <dt>iPhone</dt>
-                <dd>우측 하단 공유 -&gt; Safari로 열기</dd>
+                <dd>우측 하단 공유 버튼 -&gt; Safari로 열기</dd>
               </div>
             </dl>
             <p>불편을 드려 죄송합니다.</p>

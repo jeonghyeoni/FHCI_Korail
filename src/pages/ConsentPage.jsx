@@ -16,10 +16,16 @@ function buildTestSurveyUrl(condition, participantId, surveyStep = "task") {
   return `/complete?${params.toString()}`;
 }
 
+function isKakaoInAppBrowser() {
+  if (typeof navigator === "undefined") return false;
+  return /KAKAOTALK|KakaoTalk/i.test(navigator.userAgent);
+}
+
 export default function ConsentPage() {
   const navigate = useNavigate();
   const { state } = useExperiment();
   const [isChecked, setIsChecked] = useState(false);
+  const showKakaoWarning = isKakaoInAppBrowser();
 
   function openTestUrl(url) {
     window.location.assign(url);
@@ -40,6 +46,26 @@ export default function ConsentPage() {
   return (
     <main className="phone-frame intro-frame" data-clarity-unmask="true">
       <section className="screen consent-screen">
+        {showKakaoWarning ? (
+          <aside className="kakao-browser-warning" aria-label="카카오톡 인앱 브라우저 안내">
+            <strong>Chrome 또는 Safari 등 외부 브라우저에서 진행해 주세요.</strong>
+            <p>
+              카카오톡 내부 브라우저에서는 일부 기능이 정상적으로 작동하지 않을 수 있습니다.
+            </p>
+            <dl>
+              <div>
+                <dt>Android</dt>
+                <dd>카카오톡 우측 상단 메뉴(⋯) -&gt; 외부 브라우저로 열기</dd>
+              </div>
+              <div>
+                <dt>iPhone</dt>
+                <dd>우측 하단 공유 -&gt; Safari로 열기</dd>
+              </div>
+            </dl>
+            <p>불편을 드려 죄송합니다.</p>
+          </aside>
+        ) : null}
+
         {state.isTestMode ? (
           <section className="test-quick-nav" aria-label="테스트 모드 빠른 이동">
             <h2>테스트 빠른 이동</h2>

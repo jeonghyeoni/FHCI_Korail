@@ -1719,6 +1719,56 @@ button {
   padding: calc(24px + var(--safe-top)) 20px calc(28px + var(--safe-bottom));
 }
 
+.kakao-browser-warning {
+  display: grid;
+  align-content: center;
+  gap: clamp(14px, 4cqw, 18px);
+  min-height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 52px);
+  border: 2px solid #f04b36;
+  border-radius: 14px;
+  padding: clamp(22px, 6cqw, 30px);
+  color: #241210;
+  background: linear-gradient(180deg, #fff7d6 0%, #ffe7df 100%);
+  box-shadow: 0 12px 30px rgba(176, 45, 29, 0.18);
+}
+
+.kakao-browser-warning strong {
+  display: block;
+  color: #b3261e;
+  font-size: clamp(24px, 7.2cqw, 34px);
+  font-weight: 900;
+  line-height: 1.22;
+  word-break: keep-all;
+}
+
+.kakao-browser-warning p,
+.kakao-browser-warning dd {
+  margin: 0;
+  font-size: clamp(16px, 4.4cqw, 20px);
+  line-height: 1.55;
+  word-break: keep-all;
+}
+
+.kakao-browser-warning dl {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.kakao-browser-warning div {
+  display: grid;
+  gap: 4px;
+  border-radius: 10px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.kakao-browser-warning dt {
+  color: #8e1f17;
+  font-size: clamp(15px, 4.2cqw, 18px);
+  font-weight: 900;
+}
+
 .test-quick-nav {
   display: grid;
   gap: 10px;

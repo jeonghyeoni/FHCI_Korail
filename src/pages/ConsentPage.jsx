@@ -55,7 +55,7 @@ export default function ConsentPage() {
             <dl>
               <div>
                 <dt>Android</dt>
-                <dd>카카오톡 우측 상단 메뉴(⋯) -&gt; 외부 브라우저로 열기</dd>
+                <dd>우측 상단 메뉴(⋯) -&gt; 외부 브라우저로 열기</dd>
               </div>
               <div>
                 <dt>iPhone</dt>

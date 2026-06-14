@@ -55,7 +55,7 @@ export default function ConsentPage() {
             <dl>
               <div>
                 <dt>Android</dt>
-                <dd>우측 상단 메뉴(⋯) 버튼 -&gt; 외부 브라우저로 열기</dd>
+                <dd>우측 상단 혹은 하단 메뉴(⋯) 버튼 -&gt; 다른 브라우저로 열기</dd>
               </div>
               <div>
                 <dt>iPhone</dt>

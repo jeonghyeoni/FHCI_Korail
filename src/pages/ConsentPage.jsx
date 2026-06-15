@@ -16,22 +16,31 @@ function buildTestSurveyUrl(condition, participantId, surveyStep = "task") {
   return `/complete?${params.toString()}`;
 }
 
-function isKakaoInAppBrowser() {
-  if (typeof navigator === "undefined") return false;
-  return /KAKAOTALK|KakaoTalk/i.test(navigator.userAgent);
+function getInAppBrowserInfo() {
+  if (typeof navigator === "undefined") return { isKakao: false, isInApp: false };
+  const { userAgent } = navigator;
+  const isKakao = /KAKAOTALK|KakaoTalk/i.test(userAgent);
+  const isOtherInApp = /FBAN|FBAV|Instagram|Line\/|NAVER|DaumApps|Twitter|XWEB|Whale\/inapp|Pinterest|LinkedInApp|Snapchat|TikTok|wv\)/i.test(userAgent);
+
+  return {
+    isKakao,
+    isInApp: isKakao || isOtherInApp,
+  };
 }
 
 export default function ConsentPage() {
   const navigate = useNavigate();
   const { state } = useExperiment();
   const [isChecked, setIsChecked] = useState(false);
-  const showKakaoWarning = isKakaoInAppBrowser();
+  const inAppBrowser = getInAppBrowserInfo();
+  const showInAppWarning = inAppBrowser.isInApp;
 
   function openTestUrl(url) {
     window.location.assign(url);
   }
 
   function handleStart() {
+    if (showInAppWarning) return;
     if (!isChecked) return;
     if (!state.isTestMode) {
       acceptConsent();
@@ -46,22 +55,24 @@ export default function ConsentPage() {
   return (
     <main className="phone-frame intro-frame" data-clarity-unmask="true">
       <section className="screen consent-screen">
-        {showKakaoWarning ? (
-          <aside className="kakao-browser-warning" aria-label="카카오톡 인앱 브라우저 안내">
+        {showInAppWarning ? (
+          <aside className="kakao-browser-warning" aria-label="인앱 브라우저 안내">
             <strong>Chrome 또는 Safari 등 외부 브라우저에서 진행해 주세요.</strong>
             <p>
-              카카오톡 내부 브라우저에서는 일부 기능이 정상적으로 작동하지 않을 수 있습니다.
+              앱 내부 브라우저에서는 일부 기능이 정상적으로 작동하지 않을 수 있습니다.
             </p>
-            <dl>
-              <div>
-                <dt>Android</dt>
-                <dd>우측 상단 혹은 하단 메뉴(⋯) 버튼 -&gt; 다른 브라우저로 열기</dd>
-              </div>
-              <div>
-                <dt>iPhone</dt>
-                <dd>우측 하단 공유 버튼 -&gt; Safari로 열기</dd>
-              </div>
-            </dl>
+            {inAppBrowser.isKakao ? (
+              <dl>
+                <div>
+                  <dt>Android</dt>
+                  <dd>우측 상단 혹은 하단 메뉴(⋯) 버튼 -&gt; 다른 브라우저로 열기</dd>
+                </div>
+                <div>
+                  <dt>iPhone</dt>
+                  <dd>우측 하단 공유 버튼 -&gt; Safari로 열기</dd>
+                </div>
+              </dl>
+            ) : null}
             <p>불편을 드려 죄송합니다.</p>
           </aside>
         ) : null}
@@ -162,11 +173,11 @@ export default function ConsentPage() {
           type="button"
           data-track-label="consent:start"
           data-clickable="true"
-          data-disabled={isChecked ? "false" : "true"}
-          disabled={!isChecked}
+          data-disabled={isChecked && !showInAppWarning ? "false" : "true"}
+          disabled={!isChecked || showInAppWarning}
           onClick={handleStart}
         >
-          테스트 시작
+          {showInAppWarning ? "외부 브라우저를 이용해주세요" : "테스트 시작"}
         </button>
       </section>
     </main>

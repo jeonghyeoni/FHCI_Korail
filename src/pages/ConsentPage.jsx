@@ -20,7 +20,7 @@ function getInAppBrowserInfo() {
   if (typeof navigator === "undefined") return { isKakao: false, isInApp: false };
   const { userAgent } = navigator;
   const isKakao = /KAKAOTALK|KakaoTalk/i.test(userAgent);
-  const isKnownInApp = /FBAN|FBAV|Instagram|Line\/|NAVER|DaumApps|Twitter|XWEB|Whale\/inapp|Pinterest|LinkedInApp|Snapchat|TikTok|Everytime|EveApp|ssodam|sodam|seodam|sogang|sogangtalk|SogangUniv|서담/i.test(userAgent);
+  const isKnownInApp = /FBAN|FBAV|Instagram|Line\/|NAVER|DaumApps|Twitter|XWEB|Whale\/inapp|Pinterest|LinkedInApp|Snapchat|TikTok|Everytime|EveApp/i.test(userAgent);
   const isAndroidWebView = /; wv\)|; wv;|Version\/[\d.]+.*Chrome\/[\d.]+.*Mobile Safari/i.test(userAgent);
   const isIosWebView = /(?:iPhone|iPad|iPod).*AppleWebKit/i.test(userAgent) && !/Safari|CriOS|FxiOS|EdgiOS/i.test(userAgent);
   const isOtherInApp = isKnownInApp || isAndroidWebView || isIosWebView;
@@ -31,12 +31,18 @@ function getInAppBrowserInfo() {
   };
 }
 
+function isMobileBrowser() {
+  if (typeof navigator === "undefined") return false;
+  return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+}
+
 export default function ConsentPage() {
   const navigate = useNavigate();
   const { state } = useExperiment();
   const [isChecked, setIsChecked] = useState(false);
   const inAppBrowser = getInAppBrowserInfo();
   const showInAppWarning = inAppBrowser.isInApp;
+  const showMobileBrowserNotice = isMobileBrowser() && !showInAppWarning;
 
   function openTestUrl(url) {
     window.location.assign(url);
@@ -77,6 +83,13 @@ export default function ConsentPage() {
               </dl>
             ) : null}
             <p>불편을 드려 죄송합니다.</p>
+          </aside>
+        ) : null}
+
+        {showMobileBrowserNotice ? (
+          <aside className="mobile-browser-notice" aria-label="외부 브라우저 이용 안내">
+            <strong>Chrome 또는 Safari 등 외부 브라우저에서 진행해 주세요.</strong>
+            <p>앱 내부 브라우저에서는 일부 기능이 정상적으로 작동하지 않을 수 있습니다.</p>
           </aside>
         ) : null}
 

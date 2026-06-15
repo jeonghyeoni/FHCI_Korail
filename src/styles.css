@@ -1769,6 +1769,31 @@ button {
   font-weight: 900;
 }
 
+.mobile-browser-notice {
+  display: grid;
+  gap: 7px;
+  border: 1px solid #9dc8e1;
+  border-left: 5px solid var(--korail-blue);
+  border-radius: 8px;
+  padding: 14px 15px;
+  background: #eef8fd;
+  box-shadow: 0 4px 14px rgba(10, 60, 92, 0.08);
+}
+
+.mobile-browser-notice strong {
+  color: var(--korail-navy);
+  font-size: clamp(16px, 4.5cqw, 19px);
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.mobile-browser-notice p {
+  margin: 0;
+  color: #344c5c;
+  font-size: clamp(13px, 3.6cqw, 15px);
+  line-height: 1.45;
+}
+
 .test-quick-nav {
   display: grid;
   gap: 10px;

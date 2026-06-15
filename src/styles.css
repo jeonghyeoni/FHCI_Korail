@@ -2429,6 +2429,24 @@ button {
   color: #c4392d;
 }
 
+.submission-status-retrying,
+.submission-status-survey_retrying,
+.submission-status-submitting,
+.submission-status-survey_submitting {
+  color: #b85a00;
+}
+
+.submission-retry-notice {
+  margin: -4px 0 0;
+  border: 1px solid #ffd49b;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #6b3a00;
+  background: #fff8e8;
+  font-size: clamp(12px, 3.4cqw, 14px);
+  line-height: 1.45;
+}
+
 .pid-display {
   justify-self: center;
   border: 1px solid #d7e6ef;

@@ -23,6 +23,8 @@ function getSubmissionStatusText(status) {
   switch (status) {
     case "submitting":
       return "실험 데이터 저장 중...";
+    case "retrying":
+      return "데이터 저장 실패, 다시 시도 중...";
     case "success":
       return "실험 데이터 저장 완료";
     case "failed":
@@ -33,6 +35,8 @@ function getSubmissionStatusText(status) {
       return "테스트 모드: 데이터 전송 안 함";
     case "survey_submitting":
       return "설문 데이터 저장 중...";
+    case "survey_retrying":
+      return "설문 데이터 저장 실패, 다시 시도 중...";
     case "survey_success":
       return "설문 데이터 저장 완료";
     case "survey_failed":
@@ -40,6 +44,47 @@ function getSubmissionStatusText(status) {
     default:
       return "";
   }
+}
+
+const SUBMISSION_RETRY_DELAY_MS = 3000;
+const SURVEY_DRAFT_PREFIX = "fhci_survey_draft";
+
+function wait(ms) {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, ms);
+  });
+}
+
+function getSurveyDraftKey(state) {
+  return `${SURVEY_DRAFT_PREFIX}:${state.participantId}:${state.variant}:${state.taskId}`;
+}
+
+function loadSurveyDraft(key) {
+  try {
+    return JSON.parse(sessionStorage.getItem(key) || "null");
+  } catch {
+    return null;
+  }
+}
+
+function saveSurveyDraft(key, draft) {
+  try {
+    sessionStorage.setItem(key, JSON.stringify(draft));
+  } catch {
+    // Draft recovery is best-effort only.
+  }
+}
+
+function removeSurveyDraft(key) {
+  try {
+    sessionStorage.removeItem(key);
+  } catch {
+    // Ignore storage cleanup failures.
+  }
+}
+
+function isBlockingSubmissionStatus(status) {
+  return ["submitting", "retrying", "survey_submitting", "survey_retrying"].includes(status);
 }
 
 const LIKERT_AGREE = ["매우 그렇지 않다", "그렇지 않다", "약간 그렇지 않다", "약간 그렇다", "그렇다", "매우 그렇다"];
@@ -340,17 +385,25 @@ class CompletePageErrorBoundary extends Component {
 export default function CompletePage() {
   const navigate = useNavigate();
   const { state } = useExperiment();
-  const [summary] = useState(() => loadSummary({ inMemory: state.isTestMode }));
-  const [submissionStatus, setSubmissionStatus] = useState("idle");
-  const [surveyAnswers, setSurveyAnswers] = useState({});
-  const [isSubmittingOnClick, setIsSubmittingOnClick] = useState(false);
-  const [surveySubmissionStatus, setSurveySubmissionStatus] = useState("idle");
-  const submitAttemptedRef = useRef(false);
   const nextCondition = getNextCondition(state.taskId, state.variant);
   const isFinalTest = !nextCondition;
   const requestedSurveyStep = state.isTestMode ? new URLSearchParams(window.location.search).get("survey") : null;
-  const [surveyStep, setSurveyStep] = useState(() => (requestedSurveyStep === "final" && isFinalTest ? "final" : "task"));
-  const [isSurveyOpen, setIsSurveyOpen] = useState(() => state.isTestMode && ["task", "final"].includes(requestedSurveyStep));
+  const surveyDraftKey = getSurveyDraftKey(state);
+  const [initialSurveyDraft] = useState(() => state.isTestMode ? null : loadSurveyDraft(surveyDraftKey));
+  const [summary] = useState(() => loadSummary({ inMemory: state.isTestMode }));
+  const [submissionStatus, setSubmissionStatus] = useState("idle");
+  const [surveyAnswers, setSurveyAnswers] = useState(() => initialSurveyDraft?.answers || {});
+  const [isSubmittingOnClick, setIsSubmittingOnClick] = useState(false);
+  const [surveySubmissionStatus, setSurveySubmissionStatus] = useState("idle");
+  const submitAttemptedRef = useRef(false);
+  const [surveyStep, setSurveyStep] = useState(() => {
+    if (requestedSurveyStep === "final" && isFinalTest) return "final";
+    if (initialSurveyDraft?.step === "final" && isFinalTest) return "final";
+    return "task";
+  });
+  const [isSurveyOpen, setIsSurveyOpen] = useState(() =>
+    (state.isTestMode && ["task", "final"].includes(requestedSurveyStep)) || Boolean(initialSurveyDraft?.isOpen)
+  );
   const shouldShowTaskSurvey = true;
   const taskSurveyQuestions = getTaskSurveyQuestions(state.taskId);
   const activeSurveyQuestions = shouldShowTaskSurvey
@@ -382,6 +435,15 @@ export default function CompletePage() {
   }
 
   useEffect(() => {
+    if (state.isTestMode || !isSurveyOpen) return;
+    saveSurveyDraft(surveyDraftKey, {
+      answers: surveyAnswers,
+      step: surveyStep,
+      isOpen: true,
+    });
+  }, [state.isTestMode, isSurveyOpen, surveyAnswers, surveyDraftKey, surveyStep]);
+
+  useEffect(() => {
     if (state.isTestMode) {
       setSubmissionStatus("test_mode");
       return undefined;
@@ -393,17 +455,38 @@ export default function CompletePage() {
     submitAttemptedRef.current = true;
     setSubmissionStatus("submitting");
 
-    const payload = buildSubmissionPayload({
-      summary,
-      state,
-      eventLogs: loadEvents({ inMemory: state.isTestMode }),
-    });
+    async function submitUntilSuccess() {
+      let hasFailed = false;
 
-    submitExperimentData(payload).then((result) => {
-      if (!ignore) {
-        setSubmissionStatus(result.status);
+      while (!ignore) {
+        setSubmissionStatus(hasFailed ? "retrying" : "submitting");
+
+        const payload = buildSubmissionPayload({
+          summary,
+          state,
+          eventLogs: loadEvents({ inMemory: state.isTestMode }),
+        });
+        const result = await submitExperimentData(payload);
+
+        if (ignore) return;
+
+        if (result.status === "success") {
+          setSubmissionStatus("success");
+          return;
+        }
+
+        if (result.status === "missing_endpoint") {
+          setSubmissionStatus("missing_endpoint");
+          return;
+        }
+
+        hasFailed = true;
+        setSubmissionStatus("retrying");
+        await wait(SUBMISSION_RETRY_DELAY_MS);
       }
-    });
+    }
+
+    submitUntilSuccess();
 
     return () => {
       ignore = true;
@@ -411,6 +494,24 @@ export default function CompletePage() {
   }, [state, summary, shouldAutoSubmitExperimentData, shouldShowTaskSurvey]);
 
   const statusForDisplay = surveySubmissionStatus !== "idle" ? surveySubmissionStatus : submissionStatus;
+  const isSubmissionBlockingUnload = isBlockingSubmissionStatus(statusForDisplay) || isSubmittingOnClick;
+
+  useEffect(() => {
+    if (!isSubmissionBlockingUnload) return undefined;
+
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = "";
+      return "";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isSubmissionBlockingUnload]);
+
   const submissionStatusText = getSubmissionStatusText(statusForDisplay);
   const isSubmissionComplete = submissionStatus === "success" || submissionStatus === "test_mode";
   const canOpenSurvey = shouldShowTaskSurvey && !isSurveyOpen && isSubmissionComplete;
@@ -469,41 +570,57 @@ export default function CompletePage() {
         surveyResponses: surveySubmissionData.taskSurveyResponses,
       });
 
-      const submitPromise = isFinalTest && surveyStep === "final"
-        ? submitSurveyData(payload).then((taskSurveyResult) => {
-          if (taskSurveyResult.status !== "success") return taskSurveyResult;
+      async function submitSurveyUntilSuccess() {
+        let hasFailed = false;
 
-          const finalPayload = buildSurveySubmissionPayload({
-            summary,
-            state,
-            surveyAnswers: surveySubmissionData.surveyAnswers,
-            surveyResponses: surveySubmissionData.finalSurveyResponses,
-            identity: {
-              variant: "FINAL",
-              taskId: "final",
-              keySuffix: "final-survey",
-            },
-          });
+        while (true) {
+          setSurveySubmissionStatus(hasFailed ? "survey_retrying" : "survey_submitting");
 
-          return submitSurveyData(finalPayload);
-        })
-        : submitSurveyData(payload);
+          const result = isFinalTest && surveyStep === "final"
+            ? await submitSurveyData(payload).then((taskSurveyResult) => {
+              if (taskSurveyResult.status !== "success") return taskSurveyResult;
 
-      submitPromise.then((result) => {
-        setSurveySubmissionStatus(result.status === "success" ? "survey_success" : result.status === "failed" ? "survey_failed" : result.status);
+              const finalPayload = buildSurveySubmissionPayload({
+                summary,
+                state,
+                surveyAnswers: surveySubmissionData.surveyAnswers,
+                surveyResponses: surveySubmissionData.finalSurveyResponses,
+                identity: {
+                  variant: "FINAL",
+                  taskId: "final",
+                  keySuffix: "final-survey",
+                },
+              });
 
-        if (result.status === "success") {
-          markConditionComplete(state.taskId, state.variant);
-          if (nextCondition) {
-            window.location.assign(buildConditionUrl(nextCondition, state.participantId, { mode: state.mode }));
+              return submitSurveyData(finalPayload);
+            })
+            : await submitSurveyData(payload);
+
+          if (result.status === "success") {
+            setSurveySubmissionStatus("survey_success");
+            removeSurveyDraft(surveyDraftKey);
+            markConditionComplete(state.taskId, state.variant);
+            if (nextCondition) {
+              window.location.assign(buildConditionUrl(nextCondition, state.participantId, { mode: state.mode }));
+              return;
+            }
+            navigate(buildRouteUrl("/thanks", state));
             return;
           }
-          navigate(buildRouteUrl("/thanks", state));
-          return;
-        }
 
-        setIsSubmittingOnClick(false);
-      });
+          if (result.status === "missing_endpoint") {
+            setSurveySubmissionStatus("missing_endpoint");
+            setIsSubmittingOnClick(false);
+            return;
+          }
+
+          hasFailed = true;
+          setSurveySubmissionStatus("survey_retrying");
+          await wait(SUBMISSION_RETRY_DELAY_MS);
+        }
+      }
+
+      submitSurveyUntilSuccess();
       return;
     }
 
@@ -667,6 +784,11 @@ export default function CompletePage() {
         {submissionStatusText ? (
           <p className={`submission-status submission-status-${statusForDisplay}`} aria-live="polite">
             {submissionStatusText}
+          </p>
+        ) : null}
+        {isSubmissionBlockingUnload ? (
+          <p className="submission-retry-notice" aria-live="polite">
+            데이터 저장을 확인하는 중입니다. 저장이 완료될 때까지 새로고침하거나 화면을 닫지 말아주세요.
           </p>
         ) : null}
 

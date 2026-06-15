@@ -20,7 +20,7 @@ function getInAppBrowserInfo() {
   if (typeof navigator === "undefined") return { isKakao: false, isInApp: false };
   const { userAgent } = navigator;
   const isKakao = /KAKAOTALK|KakaoTalk/i.test(userAgent);
-  const isKnownInApp = /FBAN|FBAV|Instagram|Line\/|NAVER|DaumApps|Twitter|XWEB|Whale\/inapp|Pinterest|LinkedInApp|Snapchat|TikTok|Everytime|EveApp|ssodam|sodam/i.test(userAgent);
+  const isKnownInApp = /FBAN|FBAV|Instagram|Line\/|NAVER|DaumApps|Twitter|XWEB|Whale\/inapp|Pinterest|LinkedInApp|Snapchat|TikTok|Everytime|EveApp|ssodam|sodam|seodam|sogang|sogangtalk|SogangUniv|서담/i.test(userAgent);
   const isAndroidWebView = /; wv\)|; wv;|Version\/[\d.]+.*Chrome\/[\d.]+.*Mobile Safari/i.test(userAgent);
   const isIosWebView = /(?:iPhone|iPad|iPod).*AppleWebKit/i.test(userAgent) && !/Safari|CriOS|FxiOS|EdgiOS/i.test(userAgent);
   const isOtherInApp = isKnownInApp || isAndroidWebView || isIosWebView;

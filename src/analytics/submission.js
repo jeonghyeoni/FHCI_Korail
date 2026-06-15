@@ -31,13 +31,13 @@ function getSubmittedKey(payload) {
 }
 
 function isSubmitted(payload) {
-  if (isSurveyPayload(payload)) return false;
-  return localStorage.getItem(getSubmittedKey(payload)) === "true";
+  return false;
 }
 
 function markSubmitted(payload) {
-  if (isSurveyPayload(payload)) return;
-  localStorage.setItem(getSubmittedKey(payload), "true");
+  // Google Apps Script performs the authoritative duplicate check.
+  // With no-cors requests the client cannot know whether the row was actually written,
+  // so local "already submitted" flags can permanently hide missing rows.
 }
 
 function loadPendingSubmissions() {
@@ -171,6 +171,15 @@ export function buildSubmissionPayload({ summary, state, eventLogs, surveyAnswer
   };
 }
 
+function buildTaskSummaryBackupPayload(payload) {
+  return {
+    ...payload,
+    submissionType: "task_backup",
+    eventLogs: [],
+    backupOnly: true,
+  };
+}
+
 export function buildSurveySubmissionPayload({ summary, state, surveyAnswers = {}, surveyResponses = [], identity = null }) {
   const participantId = summary?.participantId ?? state.participantId;
   const variant = identity?.variant ?? summary?.variant ?? state.variant;
@@ -206,7 +215,20 @@ export async function submitExperimentData(payload) {
     return { status: "success", message: "already_submitted" };
   }
 
-  return postPayload(payload, { savePendingOnFailure: true });
+  const result = await postPayload(payload, { savePendingOnFailure: true });
+
+  if (result.status === "success" || result.status === "failed") {
+    const backupResult = await postPayload(buildTaskSummaryBackupPayload(payload), {
+      savePendingOnFailure: true,
+      keepalive: true,
+    });
+
+    if (result.status === "failed" && backupResult.status === "success") {
+      return { status: "success", message: "summary_backup_submitted" };
+    }
+  }
+
+  return result;
 }
 
 export async function submitSurveyData(payload) {

@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef } from "react";
+import { buildSubmissionPayload, queueTaskSummaryBackup } from "../analytics/submission.js";
 import { appendEvent, buildSummary, loadEvents, saveSession, saveSummary } from "../analytics/storage.js";
 import { setClarityExperimentContext } from "../analytics/clarity.js";
 import { CARRIAGES, getSeatsForCarriage, TRAIN } from "../data/experiment.js";
@@ -329,7 +330,16 @@ export function ExperimentProvider({ children }) {
       metadata: { success },
     });
 
-    saveSummary(buildSummary(completedSession, loadEvents({ inMemory: current.isTestMode })), { inMemory: current.isTestMode });
+    const completedEvents = loadEvents({ inMemory: current.isTestMode });
+    const completedSummary = buildSummary(completedSession, completedEvents);
+    saveSummary(completedSummary, { inMemory: current.isTestMode });
+    if (!current.isTestMode) {
+      queueTaskSummaryBackup(buildSubmissionPayload({
+        summary: completedSummary,
+        state: current,
+        eventLogs: completedEvents,
+      }));
+    }
     saveSession(completedSession, { inMemory: current.isTestMode });
     return success;
   }, [logEvent]);

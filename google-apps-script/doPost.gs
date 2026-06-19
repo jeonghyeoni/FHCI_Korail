@@ -2,7 +2,7 @@ const SPREADSHEET_ID = "1NyXaqg6f94t8DClS15Z9u1sDrFluS5csosNxX7sjFK4";
 const SUMMARY_SHEET_NAME = "TaskSummary";
 const EVENT_LOG_SHEET_NAME = "EventLogs";
 const SURVEY_RESPONSE_SHEET_NAME = "SurveyResponses";
-const SCRIPT_VERSION = "2026-06-13-client-kst-received-at-v4";
+const SCRIPT_VERSION = "2026-06-20-summary-backup-event-recovery-v1";
 
 const SUMMARY_HEADERS = [
   "submissionKey",
@@ -84,6 +84,11 @@ function doPost(e) {
     }
 
     if (hasSubmission_(summarySheet, submissionKey)) {
+      if (!payload.backupOnly && Array.isArray(payload.eventLogs) && payload.eventLogs.length > 0 && !hasSubmission_(eventLogSheet, submissionKey)) {
+        appendEventLogs_(eventLogSheet, submissionKey, payload.eventLogs || []);
+        return jsonResponse_({ ok: true, duplicate: true, eventLogsAppended: true, submissionKey, version: SCRIPT_VERSION });
+      }
+
       return jsonResponse_({ ok: true, duplicate: true, submissionKey, version: SCRIPT_VERSION });
     }
 

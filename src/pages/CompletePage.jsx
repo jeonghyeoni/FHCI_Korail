@@ -1,4 +1,4 @@
-import { Component, useEffect, useRef, useState } from "react";
+import { Component, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loadEvents, loadSummary } from "../analytics/storage.js";
 import { buildSubmissionPayload, buildSurveySubmissionPayload, submitExperimentData, submitSurveyData } from "../analytics/submission.js";
@@ -385,12 +385,18 @@ class CompletePageErrorBoundary extends Component {
 export default function CompletePage() {
   const navigate = useNavigate();
   const { state } = useExperiment();
-  const nextCondition = getNextCondition(state.taskId, state.variant);
-  const isFinalTest = !nextCondition;
   const requestedSurveyStep = state.isTestMode ? new URLSearchParams(window.location.search).get("survey") : null;
-  const surveyDraftKey = getSurveyDraftKey(state);
-  const [initialSurveyDraft] = useState(() => state.isTestMode ? null : loadSurveyDraft(surveyDraftKey));
   const [summary] = useState(() => loadSummary({ inMemory: state.isTestMode }));
+  const completedTaskId = summary?.taskId ?? state.taskId;
+  const completedVariant = summary?.variant ?? state.variant;
+  const completedState = useMemo(
+    () => ({ ...state, taskId: completedTaskId, variant: completedVariant }),
+    [state, completedTaskId, completedVariant]
+  );
+  const nextCondition = getNextCondition(completedTaskId, completedVariant);
+  const isFinalTest = !nextCondition;
+  const surveyDraftKey = getSurveyDraftKey(completedState);
+  const [initialSurveyDraft] = useState(() => state.isTestMode ? null : loadSurveyDraft(surveyDraftKey));
   const [submissionStatus, setSubmissionStatus] = useState("idle");
   const [surveyAnswers, setSurveyAnswers] = useState(() => initialSurveyDraft?.answers || {});
   const [isSubmittingOnClick, setIsSubmittingOnClick] = useState(false);
@@ -405,14 +411,14 @@ export default function CompletePage() {
     (state.isTestMode && ["task", "final"].includes(requestedSurveyStep)) || Boolean(initialSurveyDraft?.isOpen)
   );
   const shouldShowTaskSurvey = true;
-  const taskSurveyQuestions = getTaskSurveyQuestions(state.taskId);
+  const taskSurveyQuestions = getTaskSurveyQuestions(completedTaskId);
   const activeSurveyQuestions = shouldShowTaskSurvey
     ? surveyStep === "final"
       ? FINAL_SURVEY_QUESTIONS
       : taskSurveyQuestions
     : [];
   const numberedSurveyQuestions = getNumberedSurveyQuestions(activeSurveyQuestions, surveyAnswers);
-  const task = TASKS[state.taskId];
+  const task = TASKS[completedTaskId];
   const activeSurveyComplete = !shouldShowTaskSurvey || isSurveyComplete(activeSurveyQuestions, surveyAnswers);
   const shouldAutoSubmitExperimentData = Boolean(summary);
 
@@ -463,7 +469,7 @@ export default function CompletePage() {
 
         const payload = buildSubmissionPayload({
           summary,
-          state,
+          state: completedState,
           eventLogs: loadEvents({ inMemory: state.isTestMode }),
         });
         const result = await submitExperimentData(payload);
@@ -491,7 +497,7 @@ export default function CompletePage() {
     return () => {
       ignore = true;
     };
-  }, [state, summary, shouldAutoSubmitExperimentData, shouldShowTaskSurvey]);
+  }, [completedState, state.isTestMode, summary, shouldAutoSubmitExperimentData, shouldShowTaskSurvey]);
 
   const statusForDisplay = surveySubmissionStatus !== "idle" ? surveySubmissionStatus : submissionStatus;
   const isSubmissionBlockingUnload = isBlockingSubmissionStatus(statusForDisplay) || isSubmittingOnClick;
@@ -565,7 +571,7 @@ export default function CompletePage() {
       const surveySubmissionData = getSurveySubmissionData();
       const payload = buildSurveySubmissionPayload({
         summary,
-        state,
+        state: completedState,
         surveyAnswers: surveySubmissionData.surveyAnswers,
         surveyResponses: surveySubmissionData.taskSurveyResponses,
       });
@@ -582,7 +588,7 @@ export default function CompletePage() {
 
               const finalPayload = buildSurveySubmissionPayload({
                 summary,
-                state,
+                state: completedState,
                 surveyAnswers: surveySubmissionData.surveyAnswers,
                 surveyResponses: surveySubmissionData.finalSurveyResponses,
                 identity: {
@@ -599,7 +605,7 @@ export default function CompletePage() {
           if (result.status === "success") {
             setSurveySubmissionStatus("survey_success");
             removeSurveyDraft(surveyDraftKey);
-            markConditionComplete(state.taskId, state.variant);
+            markConditionComplete(completedTaskId, completedVariant);
             if (nextCondition) {
               window.location.assign(buildConditionUrl(nextCondition, state.participantId, { mode: state.mode }));
               return;
@@ -770,7 +776,7 @@ export default function CompletePage() {
       <main className="phone-frame" data-clarity-unmask="true">
       <section className="screen complete-screen complete-survey-screen">
         <p className="eyebrow">테스트 완료</p>
-        <h1>{task?.title} - {state.variant}</h1>
+        <h1>{task?.title} - {completedVariant}</h1>
         <div className="pid-display">{state.participantId}</div>
         <p>
           {shouldShowTaskSurvey

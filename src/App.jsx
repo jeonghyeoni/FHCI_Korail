@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { flushQueuedTaskSummaryBackups, sendQueuedTaskSummaryBackupsBeacon } from "./analytics/submission.js";
 import { ExperimentProvider, useExperiment } from "./context/ExperimentContext.jsx";
 import { useGlobalAnalytics } from "./hooks/useGlobalAnalytics.js";
 import { usePageTracking } from "./hooks/usePageTracking.js";
@@ -20,6 +21,36 @@ import VariantBSeatPage from "./pages/VariantBSeatPage.jsx";
 function AnalyticsRuntime() {
   usePageTracking();
   useGlobalAnalytics();
+  return null;
+}
+
+function SubmissionRecoveryRuntime() {
+  const { state } = useExperiment();
+
+  useEffect(() => {
+    if (!state.isValid || state.isTestMode) return undefined;
+
+    flushQueuedTaskSummaryBackups();
+
+    const sendQueuedBackups = () => {
+      sendQueuedTaskSummaryBackupsBeacon();
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        sendQueuedBackups();
+      }
+    };
+
+    window.addEventListener("pagehide", sendQueuedBackups);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener("pagehide", sendQueuedBackups);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [state.isValid, state.isTestMode]);
+
   return null;
 }
 
@@ -93,6 +124,7 @@ function AppRoutes() {
     <>
       <ReloadReset />
       <AnalyticsRuntime />
+      <SubmissionRecoveryRuntime />
       <DesktopTaskRail />
       <Routes>
         <Route path="/invalid" element={<ErrorPage />} />

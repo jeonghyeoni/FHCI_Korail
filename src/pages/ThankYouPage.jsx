@@ -1,4 +1,15 @@
+import { useEffect } from "react";
+import { flushQueuedTaskSummaryBackups } from "../analytics/submission.js";
+import { useExperiment } from "../context/ExperimentContext.jsx";
+
 export default function ThankYouPage() {
+  const { state } = useExperiment();
+
+  useEffect(() => {
+    if (state.isTestMode) return;
+    flushQueuedTaskSummaryBackups({ force: true });
+  }, [state.isTestMode]);
+
   return (
     <main className="phone-frame" data-clarity-unmask="true">
       <section className="screen centered-screen thank-you-screen">

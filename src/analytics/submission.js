@@ -2,8 +2,12 @@ import { formatKstTimestampText, toKstISOString, toKstTimestampText } from "../u
 
 const PENDING_SUBMISSIONS_KEY = "pendingSubmission";
 const SUBMITTED_PREFIX = "fhci_submitted";
+const TASK_SUMMARY_BACKUP_QUEUE_KEY = "fhci_task_summary_backup_queue";
+const TASK_SUMMARY_BACKUP_RETRY_INTERVAL_MS = 15000;
+const TASK_SUMMARY_BACKUP_MAX_ITEMS = 24;
 
 const inFlightSubmissions = new Map();
+let summaryBackupFlushPromise = null;
 
 function safeParse(raw, fallback) {
   try {
@@ -14,12 +18,49 @@ function safeParse(raw, fallback) {
 }
 
 function getEndpoint() {
-  return (import.meta.env.VITE_GOOGLE_SHEET_WEBAPP_URL || "").trim();
+  const explicitEndpoint = (import.meta.env.VITE_SUBMISSION_ENDPOINT || "").trim();
+
+  if (typeof window !== "undefined") {
+    const hostname = window.location.hostname;
+    const isLocalhost = hostname === "localhost" || hostname === "127.0.0.1" || hostname === "";
+    if (!isLocalhost) {
+      if (explicitEndpoint && canReadSubmissionResponse(explicitEndpoint)) {
+        return explicitEndpoint;
+      }
+
+      if (explicitEndpoint) {
+        console.warn("Ignoring cross-origin VITE_SUBMISSION_ENDPOINT in production. Using /api/submit to verify writes.");
+      }
+
+      return "/api/submit";
+    }
+  }
+
+  return explicitEndpoint || (import.meta.env.VITE_GOOGLE_SHEET_WEBAPP_URL || "").trim();
+}
+
+function canReadSubmissionResponse(endpoint) {
+  if (typeof window === "undefined") return false;
+
+  try {
+    return new URL(endpoint, window.location.origin).origin === window.location.origin;
+  } catch {
+    return false;
+  }
 }
 
 function getSubmissionId(payload) {
   const submissionType = payload.submissionType || "task";
   return [submissionType, payload.participantId, payload.variant, payload.taskId].join(":");
+}
+
+function getTaskSubmissionKey(payload) {
+  return payload.submissionKey || [payload.participantId, payload.variant, payload.taskId].join(":");
+}
+
+function isTaskLikePayload(payload) {
+  const submissionType = payload.submissionType || "task";
+  return submissionType === "task" || submissionType === "task_backup";
 }
 
 function isSurveyPayload(payload) {
@@ -67,9 +108,71 @@ function removePendingSubmission(payload) {
   savePendingSubmissions(pending);
 }
 
+function loadTaskSummaryBackupQueue() {
+  const queue = safeParse(localStorage.getItem(TASK_SUMMARY_BACKUP_QUEUE_KEY), []);
+  return Array.isArray(queue) ? queue.filter((entry) => entry?.payload) : [];
+}
+
+function saveTaskSummaryBackupQueue(items) {
+  const compacted = items.slice(-TASK_SUMMARY_BACKUP_MAX_ITEMS);
+
+  if (!compacted.length) {
+    localStorage.removeItem(TASK_SUMMARY_BACKUP_QUEUE_KEY);
+    return;
+  }
+
+  localStorage.setItem(TASK_SUMMARY_BACKUP_QUEUE_KEY, JSON.stringify(compacted));
+}
+
+function buildQueueEntry(payload, existingEntry = null) {
+  const now = toKstISOString();
+
+  return {
+    id: getTaskSubmissionKey(payload),
+    queuedAt: existingEntry?.queuedAt || now,
+    lastAttemptedAt: existingEntry?.lastAttemptedAt || null,
+    attemptCount: existingEntry?.attemptCount || 0,
+    payload,
+  };
+}
+
+function upsertTaskSummaryBackup(payload) {
+  if (!payload?.participantId || !payload?.variant || !payload?.taskId) return;
+
+  const backupPayload = buildTaskSummaryBackupPayload(payload);
+  const backupId = getTaskSubmissionKey(backupPayload);
+  const queue = loadTaskSummaryBackupQueue();
+  const existingEntry = queue.find((entry) => entry.id === backupId);
+  const nextEntry = buildQueueEntry(backupPayload, existingEntry);
+  const nextQueue = queue.filter((entry) => entry.id !== backupId);
+  nextQueue.push(nextEntry);
+  saveTaskSummaryBackupQueue(nextQueue);
+}
+
+function markTaskSummaryBackupAttempt(id) {
+  const now = toKstISOString();
+  const queue = loadTaskSummaryBackupQueue().map((entry) => (
+    entry.id === id
+      ? {
+        ...entry,
+        lastAttemptedAt: now,
+        attemptCount: (entry.attemptCount || 0) + 1,
+      }
+      : entry
+  ));
+  saveTaskSummaryBackupQueue(queue);
+}
+
+function removeTaskSummaryBackup(payload) {
+  const backupId = getTaskSubmissionKey(payload);
+  const queue = loadTaskSummaryBackupQueue().filter((entry) => entry.id !== backupId);
+  saveTaskSummaryBackupQueue(queue);
+}
+
 async function postPayload(payload, { savePendingOnFailure = false, keepalive = false } = {}) {
   const endpoint = getEndpoint();
   const submissionId = getSubmissionId(payload);
+  const canReadResponse = canReadSubmissionResponse(endpoint);
 
   if (isSubmitted(payload)) {
     removePendingSubmission(payload);
@@ -87,19 +190,29 @@ async function postPayload(payload, { savePendingOnFailure = false, keepalive = 
 
   const submissionPromise = (async () => {
     try {
-      await fetch(endpoint, {
+      const response = await fetch(endpoint, {
         method: "POST",
-        mode: "no-cors",
+        mode: canReadResponse ? "same-origin" : "no-cors",
         keepalive,
         headers: {
-          "Content-Type": "text/plain;charset=utf-8",
+          "Content-Type": canReadResponse ? "application/json" : "text/plain;charset=utf-8",
         },
         body: JSON.stringify(payload),
       });
 
+      if (canReadResponse) {
+        const responseData = await response.json().catch(() => null);
+        if (!response.ok || responseData?.ok === false) {
+          throw new Error(responseData?.error || `Submission failed with HTTP ${response.status}`);
+        }
+      }
+
       markSubmitted(payload);
       removePendingSubmission(payload);
-      return { status: "success" };
+      if (canReadResponse && isTaskLikePayload(payload)) {
+        removeTaskSummaryBackup(payload);
+      }
+      return { status: "success", confirmed: canReadResponse };
     } catch (error) {
       if (savePendingOnFailure) {
         savePendingSubmission(payload);
@@ -171,13 +284,82 @@ export function buildSubmissionPayload({ summary, state, eventLogs, surveyAnswer
   };
 }
 
+export function queueTaskSummaryBackup(payload) {
+  upsertTaskSummaryBackup(payload);
+}
+
 function buildTaskSummaryBackupPayload(payload) {
   return {
     ...payload,
     submissionType: "task_backup",
+    submissionKey: getTaskSubmissionKey(payload),
     eventLogs: [],
     backupOnly: true,
   };
+}
+
+export async function flushQueuedTaskSummaryBackups({ force = false, skipIds = [] } = {}) {
+  const endpoint = getEndpoint();
+  const skipIdSet = new Set(skipIds);
+
+  if (!endpoint) {
+    if (loadTaskSummaryBackupQueue().length) {
+      console.warn("VITE_GOOGLE_SHEET_WEBAPP_URL is empty. Queued task summary backups were not submitted.");
+    }
+    return { status: "missing_endpoint" };
+  }
+
+  if (summaryBackupFlushPromise) {
+    return summaryBackupFlushPromise;
+  }
+
+  summaryBackupFlushPromise = (async () => {
+    const queue = loadTaskSummaryBackupQueue();
+    let hadFailure = false;
+
+    for (const entry of queue) {
+      if (!entry?.payload || skipIdSet.has(entry.id)) continue;
+
+      const lastAttemptTime = entry.lastAttemptedAt ? Date.parse(entry.lastAttemptedAt) : 0;
+      if (!force && lastAttemptTime && Date.now() - lastAttemptTime < TASK_SUMMARY_BACKUP_RETRY_INTERVAL_MS) {
+        continue;
+      }
+
+      markTaskSummaryBackupAttempt(entry.id);
+      const result = await postPayload(entry.payload, { savePendingOnFailure: true, keepalive: true });
+
+      if (result.status === "missing_endpoint") return result;
+      if (result.status === "failed") hadFailure = true;
+    }
+
+    return hadFailure ? { status: "failed" } : { status: "success" };
+  })();
+
+  try {
+    return await summaryBackupFlushPromise;
+  } finally {
+    summaryBackupFlushPromise = null;
+  }
+}
+
+export function sendQueuedTaskSummaryBackupsBeacon() {
+  const endpoint = getEndpoint();
+
+  if (!endpoint || typeof navigator === "undefined" || typeof navigator.sendBeacon !== "function") {
+    return false;
+  }
+
+  const queue = loadTaskSummaryBackupQueue();
+  if (!queue.length) return false;
+
+  queue.forEach((entry) => {
+    if (!entry?.payload) return;
+    const body = new Blob([JSON.stringify(entry.payload)], { type: "text/plain;charset=utf-8" });
+    navigator.sendBeacon(endpoint, body);
+    markTaskSummaryBackupAttempt(entry.id);
+  });
+
+  return true;
 }
 
 export function buildSurveySubmissionPayload({ summary, state, surveyAnswers = {}, surveyResponses = [], identity = null }) {
@@ -201,6 +383,10 @@ export function buildSurveySubmissionPayload({ summary, state, surveyAnswers = {
 }
 
 export async function submitExperimentData(payload) {
+  queueTaskSummaryBackup(payload);
+  const currentBackupId = getTaskSubmissionKey(payload);
+  await flushQueuedTaskSummaryBackups({ skipIds: [currentBackupId] });
+
   const pendingResult = await retryPendingSubmissions();
 
   if (pendingResult.status === "missing_endpoint") {
@@ -217,8 +403,13 @@ export async function submitExperimentData(payload) {
 
   const result = await postPayload(payload, { savePendingOnFailure: true });
 
+  if (result.status === "success" && result.confirmed) {
+    return result;
+  }
+
   if (result.status === "success" || result.status === "failed") {
-    const backupResult = await postPayload(buildTaskSummaryBackupPayload(payload), {
+    const backupPayload = buildTaskSummaryBackupPayload(payload);
+    const backupResult = await postPayload(backupPayload, {
       savePendingOnFailure: true,
       keepalive: true,
     });

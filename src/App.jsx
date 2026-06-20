@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { flushQueuedTaskSummaryBackups, sendQueuedTaskSummaryBackupsBeacon } from "./analytics/submission.js";
-import { loadSummary } from "./analytics/storage.js";
+import { loadSession, loadSummary } from "./analytics/storage.js";
 import { ExperimentProvider, useExperiment } from "./context/ExperimentContext.jsx";
 import { useGlobalAnalytics } from "./hooks/useGlobalAnalytics.js";
 import { usePageTracking } from "./hooks/usePageTracking.js";
@@ -95,7 +95,6 @@ function TaskNavigationGuard() {
   const { state, actions } = useExperiment();
   const reloadHandledRef = useRef(false);
   const isTaskPath = isTaskExecutionPath(location.pathname);
-  const hasTaskStartIntent = Boolean(location.state?.taskStarted);
   const shouldWarnBeforeUnload = isTaskPath && state.taskStarted && !state.taskEndTime;
 
   useEffect(() => {
@@ -107,11 +106,19 @@ function TaskNavigationGuard() {
       reloadHandledRef.current = true;
     }
 
+    const session = loadSession({ inMemory: state.isTestMode });
     const summary = loadSummary({ inMemory: state.isTestMode });
     const routeCondition = location.state?.condition;
+    const isRouteConditionMatch = Boolean(
+      routeCondition &&
+        String(routeCondition.taskId) === String(state.taskId) &&
+        routeCondition.variant === state.variant
+    );
+    const hasStartedSession = isSameCondition(session, state) && session?.taskStarted && !session?.taskEndTime;
+    const hasTaskStartIntent = location.pathname === "/train" && Boolean(location.state?.taskStarted) && isRouteConditionMatch && hasStartedSession;
     const isRouteConditionMismatch = Boolean(
       routeCondition &&
-        (String(routeCondition.taskId) !== String(state.taskId) || routeCondition.variant !== state.variant)
+        !isRouteConditionMatch
     );
 
     if (location.pathname === "/complete") {
@@ -146,7 +153,7 @@ function TaskNavigationGuard() {
       actions.resetTask();
       navigate(buildRouteUrl("/intro", state), { replace: true });
     }
-  }, [actions, hasTaskStartIntent, isTaskPath, location.pathname, location.state, navigate, state]);
+  }, [actions, isTaskPath, location.pathname, location.state, navigate, state]);
 
   useEffect(() => {
     if (!shouldWarnBeforeUnload) return undefined;

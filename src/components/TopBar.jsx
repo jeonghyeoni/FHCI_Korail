@@ -9,7 +9,7 @@ const TASK_GOAL_LABELS = {
   "3": "창가 좌석",
 };
 
-export default function TopBar({ title, showRefresh = false, backTo = "" }) {
+export default function TopBar({ title, showRefresh = false, backTo = "", confirmOnBack = false }) {
   const navigate = useNavigate();
   const { state } = useExperiment();
   const [isGoalHighlighted, setIsGoalHighlighted] = useState(false);
@@ -31,8 +31,12 @@ export default function TopBar({ title, showRefresh = false, backTo = "" }) {
   }, []);
 
   function handleBack() {
+    if (confirmOnBack && !window.confirm("페이지를 나가시겠습니까? 현재 Task를 처음부터 다시 시작해야 할 수 있습니다.")) {
+      return;
+    }
+
     if (backTo) {
-      navigate(buildRouteUrl(backTo, state), { state: buildNavigationState(state) });
+      navigate(buildRouteUrl(backTo, state), { replace: confirmOnBack, state: buildNavigationState(state) });
       return;
     }
 

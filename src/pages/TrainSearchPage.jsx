@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AppShell from "../components/AppShell.jsx";
 import { useExperiment } from "../context/ExperimentContext.jsx";
@@ -19,12 +20,37 @@ export default function TrainSearchPage() {
   const navigate = useNavigate();
   const { state } = useExperiment();
 
+  useEffect(() => {
+    if (!state.taskStarted || state.taskEndTime) return undefined;
+
+    const guardState = { ...(window.history.state || {}), fhciTrainBackGuard: true };
+    window.history.pushState(guardState, "", window.location.href);
+
+    function handlePopState() {
+      const shouldLeave = window.confirm("페이지를 나가시겠습니까? 현재 Task를 처음부터 다시 시작해야 할 수 있습니다.");
+
+      if (shouldLeave) {
+        window.removeEventListener("popstate", handlePopState);
+        navigate(buildRouteUrl("/intro", state), { replace: true });
+        return;
+      }
+
+      window.history.pushState(guardState, "", window.location.href);
+    }
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [navigate, state]);
+
   function handleGeneralFare() {
     navigate(buildRouteUrl(state.variant === "A" ? "/variant-a/3" : "/variant-b/3", state), { state: buildNavigationState(state) });
   }
 
   return (
-    <AppShell title="열차 조회" showRefresh withBottomNav={SHOW_TRAIN_SEARCH_BOTTOM_NAV} backTo="/">
+    <AppShell title="열차 조회" showRefresh withBottomNav={SHOW_TRAIN_SEARCH_BOTTOM_NAV} backTo="/intro" confirmOnBack>
       <div className="route-band">{TRAIN.origin} <span>→</span> {TRAIN.destination}</div>
       <section className="search-controls">
         <div className="date-row">

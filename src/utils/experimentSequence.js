@@ -146,6 +146,7 @@ export function buildConditionUrl(condition, participantId, options = {}) {
 
 export function buildNavigationState(state, extra = {}) {
   return {
+    taskStarted: true,
     ...extra,
     condition: {
       taskId: String(state.taskId),

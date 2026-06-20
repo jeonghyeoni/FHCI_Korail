@@ -24,7 +24,7 @@ export function usePageTracking() {
     const pageName = PAGE_NAMES[location.pathname] || "unknown";
     document.body.dataset.pageName = pageName;
 
-    if (TASK_EXECUTION_PATHS.has(location.pathname) && (!state.taskStarted || state.taskEndTime)) {
+    if (TASK_EXECUTION_PATHS.has(location.pathname) && ((!state.taskStarted && !location.state?.taskStarted) || state.taskEndTime)) {
       return;
     }
 
@@ -37,5 +37,5 @@ export function usePageTracking() {
         search: location.search,
       },
     });
-  }, [logEvent, location.pathname, location.search, state.taskEndTime, state.taskStarted]);
+  }, [logEvent, location.pathname, location.search, location.state, state.taskEndTime, state.taskStarted]);
 }

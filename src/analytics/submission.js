@@ -17,6 +17,31 @@ function safeParse(raw, fallback) {
   }
 }
 
+function parseTimeMs(value) {
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (value === null || value === undefined || value === "") return null;
+
+  const parsed = Date.parse(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function resolveCompletionTimeMs({ summary, state, startedAt, completedAt }) {
+  const explicitRaw = summary?.completionTimeMs;
+  const explicit = Number(explicitRaw);
+  if (explicitRaw !== null && explicitRaw !== undefined && explicitRaw !== "" && Number.isFinite(explicit)) {
+    return explicit;
+  }
+
+  const start = parseTimeMs(summary?.taskStartEpochMs)
+    ?? parseTimeMs(state.taskStartEpochMs)
+    ?? parseTimeMs(startedAt);
+  const end = parseTimeMs(summary?.taskEndEpochMs)
+    ?? parseTimeMs(state.taskEndEpochMs)
+    ?? parseTimeMs(completedAt);
+
+  return start !== null && end !== null ? Math.max(0, end - start) : null;
+}
+
 function getEndpoint() {
   const explicitEndpoint = (import.meta.env.VITE_SUBMISSION_ENDPOINT || "").trim();
 
@@ -249,6 +274,7 @@ export function buildSubmissionPayload({ summary, state, eventLogs, surveyAnswer
   const selectedSeat = summary?.selectedSeat ?? state.selectedSeat ?? null;
   const startedAt = summary?.startedAt ?? summary?.taskStartTime ?? state.taskStartTime ?? null;
   const completedAt = summary?.completedAt ?? summary?.taskEndTime ?? state.taskEndTime ?? null;
+  const completionTimeMs = resolveCompletionTimeMs({ summary, state, startedAt, completedAt });
   const identityLogs = eventLogs
     .filter((event) =>
       event.participantId === participantId &&
@@ -268,7 +294,7 @@ export function buildSubmissionPayload({ summary, state, eventLogs, surveyAnswer
     taskSuccess: Boolean(summary?.taskSuccess ?? summary?.success ?? state.success),
     selectedSeat,
     selectedCar: summary?.selectedCar ?? selectedSeat?.carriageNo ?? state.currentCarriage ?? null,
-    completionTimeMs: summary?.completionTimeMs ?? null,
+    completionTimeMs,
     clickCount: summary?.clickCount ?? 0,
     misclickCount: summary?.misclickCount ?? 0,
     roughTapCount: summary?.roughTapCount ?? 0,

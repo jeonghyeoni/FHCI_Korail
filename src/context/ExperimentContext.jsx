@@ -63,7 +63,9 @@ function initialState() {
     train: TRAIN,
     taskStarted: false,
     taskStartTime: null,
+    taskStartEpochMs: null,
     taskEndTime: null,
+    taskEndEpochMs: null,
     currentCarriage: 9,
     selectedSeat: null,
     success: false,
@@ -77,7 +79,9 @@ function reducer(state, action) {
         ...state,
         taskStarted: true,
         taskStartTime: action.timestamp,
+        taskStartEpochMs: action.epochMs,
         taskEndTime: null,
+        taskEndEpochMs: null,
         currentCarriage: 9,
         selectedSeat: null,
         success: false,
@@ -89,16 +93,18 @@ function reducer(state, action) {
     case "UNSELECT_SEAT":
       return { ...state, selectedSeat: null };
     case "COMPLETE_TASK":
-      return { ...state, taskEndTime: action.timestamp, success: action.success };
+      return { ...state, taskEndTime: action.timestamp, taskEndEpochMs: action.epochMs, success: action.success };
     case "RESET_TASK":
-      if (!state.taskStarted && !state.taskStartTime && !state.taskEndTime && !state.selectedSeat && !state.success && state.currentCarriage === 9) {
+      if (!state.taskStarted && !state.taskStartTime && !state.taskStartEpochMs && !state.taskEndTime && !state.taskEndEpochMs && !state.selectedSeat && !state.success && state.currentCarriage === 9) {
         return state;
       }
       return {
         ...state,
         taskStarted: false,
         taskStartTime: null,
+        taskStartEpochMs: null,
         taskEndTime: null,
+        taskEndEpochMs: null,
         currentCarriage: 9,
         selectedSeat: null,
         success: false,
@@ -115,7 +121,9 @@ function publicSession(state) {
     taskId: state.taskId,
     taskStarted: state.taskStarted,
     taskStartTime: state.taskStartTime,
+    taskStartEpochMs: state.taskStartEpochMs,
     taskEndTime: state.taskEndTime,
+    taskEndEpochMs: state.taskEndEpochMs,
     currentCarriage: state.currentCarriage,
     selectedSeat: state.selectedSeat,
     success: state.success,
@@ -161,20 +169,23 @@ export function ExperimentProvider({ children }) {
   }, []);
 
   const startTask = useCallback(() => {
-    const timestamp = toKstISOString();
+    const epochMs = Date.now();
+    const timestamp = toKstISOString(new Date(epochMs));
     const current = stateRef.current;
     const nextState = {
       ...current,
       taskStarted: true,
       taskStartTime: timestamp,
+      taskStartEpochMs: epochMs,
       taskEndTime: null,
+      taskEndEpochMs: null,
       currentCarriage: 9,
       selectedSeat: null,
       success: false,
     };
     stateRef.current = nextState;
     saveSession(publicSession(nextState), { inMemory: current.isTestMode });
-    dispatch({ type: "START_TASK", timestamp });
+    dispatch({ type: "START_TASK", timestamp, epochMs });
   }, []);
 
   const resetTask = useCallback(() => {
@@ -339,13 +350,24 @@ export function ExperimentProvider({ children }) {
   const completeTask = useCallback((pointer = {}) => {
     const currentState = stateRef.current;
     const storedSession = loadSession({ inMemory: currentState.isTestMode });
-    const current = !currentState.taskStartTime && storedSession?.taskStartTime &&
+    const storedStartEpochMs = Number.isFinite(storedSession?.taskStartEpochMs)
+      ? storedSession.taskStartEpochMs
+      : Date.parse(storedSession?.taskStartTime || "");
+    const current = (!currentState.taskStartTime || !Number.isFinite(currentState.taskStartEpochMs)) && storedSession?.taskStartTime &&
       storedSession.participantId === currentState.participantId &&
       String(storedSession.taskId) === String(currentState.taskId) &&
       storedSession.variant === currentState.variant
-      ? { ...currentState, taskStarted: true, taskStartTime: storedSession.taskStartTime }
+      ? {
+        ...currentState,
+        taskStarted: true,
+        taskStartTime: currentState.taskStartTime || storedSession.taskStartTime,
+        taskStartEpochMs: Number.isFinite(currentState.taskStartEpochMs)
+          ? currentState.taskStartEpochMs
+          : (Number.isFinite(storedStartEpochMs) ? storedStartEpochMs : null),
+      }
       : currentState;
-    const timestamp = toKstISOString();
+    const endEpochMs = Date.now();
+    const timestamp = toKstISOString(new Date(endEpochMs));
     const success = isTargetSeat(current.taskId, current.selectedSeat);
 
     if (!success) {
@@ -361,10 +383,10 @@ export function ExperimentProvider({ children }) {
       return false;
     }
 
-    const completedSession = { ...publicSession(current), taskEndTime: timestamp, success };
-    stateRef.current = { ...current, taskEndTime: timestamp, success };
+    const completedSession = { ...publicSession(current), taskEndTime: timestamp, taskEndEpochMs: endEpochMs, success };
+    stateRef.current = { ...current, taskEndTime: timestamp, taskEndEpochMs: endEpochMs, success };
 
-    dispatch({ type: "COMPLETE_TASK", timestamp, success });
+    dispatch({ type: "COMPLETE_TASK", timestamp, epochMs: endEpochMs, success });
 
     logEvent({
       eventType: "task_success",

@@ -43,6 +43,7 @@ export function loadSession(options = {}) {
 
   return safeParse(localStorage.getItem(SESSION_KEY), null);
 }
+
 export function saveSession(session, options = {}) {
   if (options.inMemory) {
     memoryStorage.session = session;
@@ -82,6 +83,14 @@ function isCompletedRecord(record) {
   return Boolean(record?.taskEndTime || record?.completedAt || record?.success || record?.taskSuccess);
 }
 
+function parseTimeMs(value) {
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (value === null || value === undefined || value === "") return null;
+
+  const parsed = Date.parse(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
 export function resetConditionRuntime(condition, options = {}) {
   if (options.inMemory) {
     memoryStorage.events = memoryStorage.events.filter((event) => !matchesCondition(event, condition));
@@ -107,11 +116,15 @@ export function resetConditionRuntime(condition, options = {}) {
     localStorage.removeItem(SUMMARY_KEY);
   }
 }
+
 export function buildSummary(session, events = loadEvents()) {
-  const taskStart = session.taskStartTime ? Date.parse(session.taskStartTime) : null;
-  const taskEnd = session.taskEndTime ? Date.parse(session.taskEndTime) : null;
-  const taskEvents = taskStart
-    ? events.filter((event) => Date.parse(event.timestamp) >= taskStart)
+  const taskStart = parseTimeMs(session.taskStartEpochMs) ?? parseTimeMs(session.taskStartTime);
+  const taskEnd = parseTimeMs(session.taskEndEpochMs) ?? parseTimeMs(session.taskEndTime);
+  const taskEvents = taskStart !== null
+    ? events.filter((event) => {
+      const eventTime = parseTimeMs(event.timestamp);
+      return eventTime !== null && eventTime >= taskStart;
+    })
     : events;
 
   return {
@@ -125,8 +138,10 @@ export function buildSummary(session, events = loadEvents()) {
     startedAt: session.taskStartTime,
     completedAt: session.taskEndTime,
     taskStartTime: session.taskStartTime,
+    taskStartEpochMs: taskStart,
     taskEndTime: session.taskEndTime,
-    completionTimeMs: taskStart && taskEnd ? taskEnd - taskStart : null,
+    taskEndEpochMs: taskEnd,
+    completionTimeMs: taskStart !== null && taskEnd !== null ? Math.max(0, taskEnd - taskStart) : null,
     clickCount: taskEvents.filter((event) => event.eventType === "click").length,
     misclickCount: taskEvents.filter((event) => event.eventType === "misclick").length,
     seatSelectionCount: taskEvents.filter((event) => event.eventType === "seat_select").length,

@@ -841,10 +841,10 @@ export default function CompletePage() {
         </button>
         {summary ? (
           <section className="summary-panel">
-            <span>성공: {summary.success ? "성공" : "실패"}</span>
             <span>Time: {formatCompletionTimeMs(summary.completionTimeMs)}</span>
             <span>Click: {summary.clickCount}</span>
             <span>Misclick: {summary.misclickCount}</span>
+            <span>RoughTap: {summary.roughTapCount}</span>
             <span>Page: {summary.pageTransitionCount}</span>
             <span>Car: {summary.carriageChangeCount}</span>
             <span>Seat: {summary.seatSelectionCount}</span>

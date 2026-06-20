@@ -10,6 +10,22 @@ export default function ThankYouPage() {
     flushQueuedTaskSummaryBackups({ force: true });
   }, [state.isTestMode]);
 
+  useEffect(() => {
+    const currentUrl = window.location.href;
+    window.history.replaceState({ ...(window.history.state || {}), fhciFinalThanks: true }, "", currentUrl);
+    window.history.pushState({ fhciFinalThanksGuard: true }, "", currentUrl);
+
+    function handlePopState() {
+      window.history.pushState({ fhciFinalThanksGuard: true }, "", currentUrl);
+    }
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
+
   return (
     <main className="phone-frame" data-clarity-unmask="true">
       <section className="screen centered-screen thank-you-screen">

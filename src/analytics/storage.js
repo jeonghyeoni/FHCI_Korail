@@ -118,14 +118,24 @@ export function resetConditionRuntime(condition, options = {}) {
 }
 
 export function buildSummary(session, events = loadEvents()) {
-  const taskStart = parseTimeMs(session.taskStartEpochMs) ?? parseTimeMs(session.taskStartTime);
+  const identityEvents = events.filter((event) => matchesCondition(event, session));
+  const firstTaskEvent = identityEvents.reduce((earliest, event) => {
+    const eventTime = parseTimeMs(event.timestamp);
+    if (eventTime === null) return earliest;
+    if (!earliest || eventTime < earliest.time) {
+      return { event, time: eventTime };
+    }
+    return earliest;
+  }, null);
+  const startedAt = session.taskStartTime || firstTaskEvent?.event?.timestamp || null;
+  const taskStart = parseTimeMs(session.taskStartEpochMs) ?? parseTimeMs(startedAt);
   const taskEnd = parseTimeMs(session.taskEndEpochMs) ?? parseTimeMs(session.taskEndTime);
   const taskEvents = taskStart !== null
-    ? events.filter((event) => {
+    ? identityEvents.filter((event) => {
       const eventTime = parseTimeMs(event.timestamp);
       return eventTime !== null && eventTime >= taskStart;
     })
-    : events;
+    : identityEvents;
 
   return {
     participantId: session.participantId,
@@ -135,9 +145,9 @@ export function buildSummary(session, events = loadEvents()) {
     selectedCar: session.selectedSeat?.carriageNo ?? session.currentCarriage ?? null,
     taskSuccess: Boolean(session.success),
     success: Boolean(session.success),
-    startedAt: session.taskStartTime,
+    startedAt,
     completedAt: session.taskEndTime,
-    taskStartTime: session.taskStartTime,
+    taskStartTime: startedAt,
     taskStartEpochMs: taskStart,
     taskEndTime: session.taskEndTime,
     taskEndEpochMs: taskEnd,

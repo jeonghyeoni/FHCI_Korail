@@ -806,7 +806,7 @@ export default function CompletePage() {
         {summary ? (
           <section className="summary-panel">
             <span>성공 여부: {summary.success ? "성공" : "실패"}</span>
-            <span>Completion Time: {summary.completionTimeMs ? `${(summary.completionTimeMs / 1000).toFixed(1)}초` : "-"}</span>
+            <span>Completion Time: {Number.isFinite(summary.completionTimeMs) ? `${(summary.completionTimeMs / 1000).toFixed(1)}초` : "-"}</span>
             <span>Click Count: {summary.clickCount}</span>
             <span>Misclick Count: {summary.misclickCount}</span>
           </section>

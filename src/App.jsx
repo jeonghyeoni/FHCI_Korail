@@ -95,6 +95,7 @@ function TaskNavigationGuard() {
   const { state, actions } = useExperiment();
   const reloadHandledRef = useRef(false);
   const isTaskPath = isTaskExecutionPath(location.pathname);
+  const hasTaskStartIntent = Boolean(location.state?.taskStarted);
   const shouldWarnBeforeUnload = isTaskPath && state.taskStarted && !state.taskEndTime;
 
   useEffect(() => {
@@ -141,10 +142,11 @@ function TaskNavigationGuard() {
     }
 
     if (!state.taskStarted) {
+      if (hasTaskStartIntent) return;
       actions.resetTask();
       navigate(buildRouteUrl("/intro", state), { replace: true });
     }
-  }, [actions, isTaskPath, location.pathname, location.state, navigate, state]);
+  }, [actions, hasTaskStartIntent, isTaskPath, location.pathname, location.state, navigate, state]);
 
   useEffect(() => {
     if (!shouldWarnBeforeUnload) return undefined;

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useExperiment } from "../context/ExperimentContext.jsx";
-import { buildRouteUrl } from "../utils/experimentSequence.js";
+import { buildNavigationState, buildRouteUrl } from "../utils/experimentSequence.js";
 
 const TASK_GOAL_LABELS = {
   "1": "5호차 4B",
@@ -32,7 +32,7 @@ export default function TopBar({ title, showRefresh = false, backTo = "" }) {
 
   function handleBack() {
     if (backTo) {
-      navigate(buildRouteUrl(backTo, state));
+      navigate(buildRouteUrl(backTo, state), { state: buildNavigationState(state) });
       return;
     }
 

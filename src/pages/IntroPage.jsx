@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 import { TASKS, TRAIN } from "../data/experiment.js";
-import { buildRouteUrl } from "../utils/experimentSequence.js";
+import { buildNavigationState, buildRouteUrl } from "../utils/experimentSequence.js";
 
 export default function IntroPage() {
   const navigate = useNavigate();
@@ -10,10 +10,17 @@ export default function IntroPage() {
   const [hasConfirmedTask, setHasConfirmedTask] = useState(false);
   const task = TASKS[state.taskId];
 
+  useEffect(() => {
+    if (state.taskStarted && !state.taskEndTime) {
+      actions.resetTask();
+      setHasConfirmedTask(false);
+    }
+  }, [actions, state.taskEndTime, state.taskStarted]);
+
   function handleStart() {
     if (!hasConfirmedTask) return;
     actions.startTask();
-    navigate(buildRouteUrl("/train", state));
+    navigate(buildRouteUrl("/train", state), { state: buildNavigationState(state, { taskStarted: true }) });
   }
 
   return (

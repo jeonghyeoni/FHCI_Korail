@@ -4,7 +4,7 @@ import AppShell from "../components/AppShell.jsx";
 import SeatMap from "../components/SeatMap.jsx";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 import { CARRIAGES, getCarriage, TRAIN } from "../data/experiment.js";
-import { buildRouteUrl } from "../utils/experimentSequence.js";
+import { buildNavigationState, buildRouteUrl } from "../utils/experimentSequence.js";
 import seatIconSvg from "../assets/icons/seat.svg?raw";
 
 const A_CARRIAGE_NUMBERS = CARRIAGES.filter((item) => [1, 5, 6, 7, 8, 9].includes(item.no)).map((item) => item.no);
@@ -26,7 +26,7 @@ export default function VariantASeatPage({ mode }) {
 
   useEffect(() => {
     if (mode === "selected" && !state.selectedSeat) {
-      navigate(buildRouteUrl("/variant-a/3-1", state), { replace: true });
+      navigate(buildRouteUrl("/variant-a/3-1", state), { replace: true, state: buildNavigationState(state) });
     }
   }, [mode, navigate, state, state.selectedSeat]);
 
@@ -37,7 +37,7 @@ export default function VariantASeatPage({ mode }) {
   }, [state.currentCarriage]);
 
   function handleToggleDropdown() {
-    navigate(buildRouteUrl(showDropdown ? "/variant-a/3-1" : "/variant-a/3-2", state));
+    navigate(buildRouteUrl(showDropdown ? "/variant-a/3-1" : "/variant-a/3-2", state), { state: buildNavigationState(state) });
   }
 
   function handleDropdownHeaderClick(event) {
@@ -51,15 +51,15 @@ export default function VariantASeatPage({ mode }) {
 
   function handleCarriageChange(event, carriageNo) {
     actions.selectCarriage(carriageNo, { x: event.clientX, y: event.clientY }, { clearSelectedSeat: true });
-    navigate(buildRouteUrl("/variant-a/3-1", state));
+    navigate(buildRouteUrl("/variant-a/3-1", state), { state: buildNavigationState(state) });
   }
 
   function handleSeatSelected() {
-    navigate(buildRouteUrl("/variant-a/3-3", state));
+    navigate(buildRouteUrl("/variant-a/3-3", state), { state: buildNavigationState(state) });
   }
 
   function handleDone() {
-    navigate(buildRouteUrl("/variant-a/3-4", state));
+    navigate(buildRouteUrl("/variant-a/3-4", state), { state: buildNavigationState(state) });
   }
 
   function renderDirectionIcon(direction) {

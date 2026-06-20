@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef } from "react";
 import { buildSubmissionPayload, queueTaskSummaryBackup } from "../analytics/submission.js";
-import { appendEvent, buildSummary, loadEvents, saveSession, saveSummary } from "../analytics/storage.js";
+import { appendEvent, buildSummary, loadEvents, resetConditionRuntime, saveSession, saveSummary } from "../analytics/storage.js";
 import { setClarityExperimentContext } from "../analytics/clarity.js";
 import { CARRIAGES, getSeatsForCarriage, TRAIN } from "../data/experiment.js";
 import { TASK1_TARGET, isSameSeatTarget } from "../data/taskTargets.js";
@@ -90,6 +90,19 @@ function reducer(state, action) {
       return { ...state, selectedSeat: null };
     case "COMPLETE_TASK":
       return { ...state, taskEndTime: action.timestamp, success: action.success };
+    case "RESET_TASK":
+      if (!state.taskStarted && !state.taskStartTime && !state.taskEndTime && !state.selectedSeat && !state.success && state.currentCarriage === 9) {
+        return state;
+      }
+      return {
+        ...state,
+        taskStarted: false,
+        taskStartTime: null,
+        taskEndTime: null,
+        currentCarriage: 9,
+        selectedSeat: null,
+        success: false,
+      };
     default:
       return state;
   }
@@ -150,6 +163,16 @@ export function ExperimentProvider({ children }) {
   const startTask = useCallback(() => {
     const timestamp = toKstISOString();
     dispatch({ type: "START_TASK", timestamp });
+  }, []);
+
+  const resetTask = useCallback(() => {
+    const current = stateRef.current;
+    resetConditionRuntime({
+      participantId: current.participantId,
+      variant: current.variant,
+      taskId: current.taskId,
+    }, { inMemory: current.isTestMode });
+    dispatch({ type: "RESET_TASK" });
   }, []);
 
   const selectCarriage = useCallback((carriageNo, pointer = {}, options = {}) => {
@@ -355,8 +378,9 @@ export function ExperimentProvider({ children }) {
       selectCarriage,
       selectSeat,
       startTask,
+      resetTask,
     },
-  }), [autoSelectRandomSeat, autoSelectSeat, clearSelectedSeat, completeTask, logEvent, selectCarriage, selectSeat, startTask, state]);
+  }), [autoSelectRandomSeat, autoSelectSeat, clearSelectedSeat, completeTask, logEvent, resetTask, selectCarriage, selectSeat, startTask, state]);
 
   return <ExperimentContext.Provider value={value}>{children}</ExperimentContext.Provider>;
 }

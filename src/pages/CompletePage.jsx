@@ -500,23 +500,8 @@ export default function CompletePage() {
   }, [completedState, state.isTestMode, summary, shouldAutoSubmitExperimentData, shouldShowTaskSurvey]);
 
   const statusForDisplay = surveySubmissionStatus !== "idle" ? surveySubmissionStatus : submissionStatus;
-  const isSubmissionBlockingUnload = isBlockingSubmissionStatus(statusForDisplay) || isSubmittingOnClick;
+  const isSubmissionInProgress = isBlockingSubmissionStatus(statusForDisplay) || isSubmittingOnClick;
 
-  useEffect(() => {
-    if (!isSubmissionBlockingUnload) return undefined;
-
-    const handleBeforeUnload = (event) => {
-      event.preventDefault();
-      event.returnValue = "";
-      return "";
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [isSubmissionBlockingUnload]);
 
   const submissionStatusText = getSubmissionStatusText(statusForDisplay);
   const isSubmissionComplete = submissionStatus === "success" || submissionStatus === "test_mode";
@@ -557,10 +542,10 @@ export default function CompletePage() {
     if (shouldShowTaskSurvey) {
       if (state.isTestMode) {
         if (nextCondition) {
-          window.location.assign(buildConditionUrl(nextCondition, state.participantId, { mode: state.mode }));
+          window.location.replace(buildConditionUrl(nextCondition, state.participantId, { mode: state.mode }));
           return;
         }
-        navigate(buildRouteUrl("/thanks", state));
+        navigate(buildRouteUrl("/thanks", state), { replace: true });
         return;
       }
 
@@ -607,10 +592,10 @@ export default function CompletePage() {
             removeSurveyDraft(surveyDraftKey);
             markConditionComplete(completedTaskId, completedVariant);
             if (nextCondition) {
-              window.location.assign(buildConditionUrl(nextCondition, state.participantId, { mode: state.mode }));
+              window.location.replace(buildConditionUrl(nextCondition, state.participantId, { mode: state.mode }));
               return;
             }
-            navigate(buildRouteUrl("/thanks", state));
+            navigate(buildRouteUrl("/thanks", state), { replace: true });
             return;
           }
 
@@ -631,10 +616,10 @@ export default function CompletePage() {
     }
 
     if (nextCondition) {
-      window.location.assign(buildConditionUrl(nextCondition, state.participantId, { mode: state.mode }));
+      window.location.replace(buildConditionUrl(nextCondition, state.participantId, { mode: state.mode }));
       return;
     }
-    navigate(buildRouteUrl("/thanks", state));
+    navigate(buildRouteUrl("/thanks", state), { replace: true });
   };
 
   function renderSurveyQuestion(question) {
@@ -792,7 +777,7 @@ export default function CompletePage() {
             {submissionStatusText}
           </p>
         ) : null}
-        {isSubmissionBlockingUnload ? (
+        {isSubmissionInProgress ? (
           <p className="submission-retry-notice" aria-live="polite">
             데이터 저장을 확인하는 중입니다. 저장이 완료될 때까지 새로고침하거나 화면을 닫지 말아주세요.
           </p>

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import AppShell from "../components/AppShell.jsx";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 import { TRAIN } from "../data/experiment.js";
-import { buildRouteUrl } from "../utils/experimentSequence.js";
+import { buildNavigationState, buildRouteUrl } from "../utils/experimentSequence.js";
 
 export default function TicketConfirmPage() {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ export default function TicketConfirmPage() {
       window.dispatchEvent(new CustomEvent("fhci:highlight-goal"));
       return;
     }
-    navigate(buildRouteUrl("/complete", state));
+    navigate(buildRouteUrl("/complete", state), { replace: true, state: buildNavigationState(state) });
   }
 
   return (

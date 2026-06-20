@@ -4,7 +4,7 @@ import AppShell from "../components/AppShell.jsx";
 import SeatMap from "../components/SeatMap.jsx";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 import { CARRIAGES, formatWon, getCarriage, TRAIN } from "../data/experiment.js";
-import { buildRouteUrl } from "../utils/experimentSequence.js";
+import { buildNavigationState, buildRouteUrl } from "../utils/experimentSequence.js";
 import seatIconSvg from "../assets/icons/seat.svg?raw";
 import babyIconSvg from "../assets/icons/baby.svg?raw";
 
@@ -27,16 +27,16 @@ export default function VariantBSeatPage() {
   }
 
   function handleSeatSelected() {
-    navigate(buildRouteUrl("/variant-b/3-2", state));
+    navigate(buildRouteUrl("/variant-b/3-2", state), { state: buildNavigationState(state) });
   }
 
   function handleAutoSelect(event) {
     const result = actions.autoSelectSeat({ x: event.clientX, y: event.clientY });
-    if (result.selected) navigate(buildRouteUrl("/confirm", state));
+    if (result.selected) navigate(buildRouteUrl("/confirm", state), { state: buildNavigationState(state) });
   }
 
   function handlePay() {
-    navigate(buildRouteUrl("/confirm", state));
+    navigate(buildRouteUrl("/confirm", state), { state: buildNavigationState(state) });
   }
 
   function renderDirectionIcon(direction) {

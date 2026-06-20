@@ -62,6 +62,44 @@ export function saveSummary(summary, options = {}) {
   localStorage.setItem(SUMMARY_KEY, JSON.stringify(summary));
 }
 
+function matchesCondition(record, condition) {
+  return Boolean(
+    record &&
+      record.participantId === condition.participantId &&
+      String(record.taskId) === String(condition.taskId) &&
+      record.variant === condition.variant
+  );
+}
+
+function isCompletedRecord(record) {
+  return Boolean(record?.taskEndTime || record?.completedAt || record?.success || record?.taskSuccess);
+}
+
+export function resetConditionRuntime(condition, options = {}) {
+  if (options.inMemory) {
+    memoryStorage.events = memoryStorage.events.filter((event) => !matchesCondition(event, condition));
+    if (matchesCondition(memoryStorage.session, condition) && !isCompletedRecord(memoryStorage.session)) {
+      memoryStorage.session = null;
+    }
+    if (matchesCondition(memoryStorage.summary, condition) && !isCompletedRecord(memoryStorage.summary)) {
+      memoryStorage.summary = null;
+    }
+    return;
+  }
+
+  const events = loadEvents().filter((event) => !matchesCondition(event, condition));
+  localStorage.setItem(EVENTS_KEY, JSON.stringify(events));
+
+  const session = safeParse(localStorage.getItem(SESSION_KEY), null);
+  if (matchesCondition(session, condition) && !isCompletedRecord(session)) {
+    localStorage.removeItem(SESSION_KEY);
+  }
+
+  const summary = safeParse(localStorage.getItem(SUMMARY_KEY), null);
+  if (matchesCondition(summary, condition) && !isCompletedRecord(summary)) {
+    localStorage.removeItem(SUMMARY_KEY);
+  }
+}
 export function buildSummary(session, events = loadEvents()) {
   const taskStart = session.taskStartTime ? Date.parse(session.taskStartTime) : null;
   const taskEnd = session.taskEndTime ? Date.parse(session.taskEndTime) : null;

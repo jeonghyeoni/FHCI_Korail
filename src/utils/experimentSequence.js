@@ -144,6 +144,16 @@ export function buildConditionUrl(condition, participantId, options = {}) {
   return `/intro?${params.toString()}`;
 }
 
+export function buildNavigationState(state, extra = {}) {
+  return {
+    ...extra,
+    condition: {
+      taskId: String(state.taskId),
+      variant: state.variant,
+    },
+  };
+}
+
 export function buildRouteUrl(path, state) {
   if (!state?.isTestMode && state?.mode !== TEST_MODE) {
     return path;

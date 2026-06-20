@@ -1,11 +1,12 @@
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import { flushQueuedTaskSummaryBackups, sendQueuedTaskSummaryBackupsBeacon } from "./analytics/submission.js";
+import { loadSummary } from "./analytics/storage.js";
 import { ExperimentProvider, useExperiment } from "./context/ExperimentContext.jsx";
 import { useGlobalAnalytics } from "./hooks/useGlobalAnalytics.js";
 import { usePageTracking } from "./hooks/usePageTracking.js";
 import { TASKS } from "./data/experiment.js";
-import { buildConditionUrl, hasAcceptedConsent, isTestMode } from "./utils/experimentSequence.js";
+import { buildConditionUrl, buildRouteUrl, hasAcceptedConsent } from "./utils/experimentSequence.js";
 import ConsentPage from "./pages/ConsentPage.jsx";
 import CompletePage from "./pages/CompletePage.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
@@ -54,13 +55,112 @@ function SubmissionRecoveryRuntime() {
   return null;
 }
 
-function ReloadReset() {
+const TASK_EXECUTION_PATHS = new Set([
+  "/train",
+  "/confirm",
+  "/variant-a/3",
+  "/variant-a/3-1",
+  "/variant-a/3-2",
+  "/variant-a/3-3",
+  "/variant-a/3-4",
+  "/variant-b/3",
+  "/variant-b/3-1",
+  "/variant-b/3-2",
+]);
+
+function isTaskExecutionPath(pathname) {
+  return TASK_EXECUTION_PATHS.has(pathname);
+}
+
+function isSameCondition(record, state) {
+  return Boolean(
+    record &&
+      record.participantId === state.participantId &&
+      String(record.taskId) === String(state.taskId) &&
+      record.variant === state.variant
+  );
+}
+
+function isCompletedSummary(summary) {
+  return Boolean(summary?.completedAt || summary?.taskEndTime || summary?.success || summary?.taskSuccess);
+}
+
+function currentConditionUrl(state) {
+  return buildConditionUrl({ taskId: state.taskId, variant: state.variant }, state.participantId, { mode: state.mode });
+}
+
+function TaskNavigationGuard() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { state, actions } = useExperiment();
+  const reloadHandledRef = useRef(false);
+  const isTaskPath = isTaskExecutionPath(location.pathname);
+  const shouldWarnBeforeUnload = isTaskPath && state.taskStarted && !state.taskEndTime;
+
   useEffect(() => {
+    if (!state.isValid) return;
+
     const navigationEntry = performance.getEntriesByType("navigation")[0];
-    if (navigationEntry?.type === "reload" && isTestMode(window.location.search, window.location.pathname) && window.location.pathname !== "/test") {
-      window.location.replace("/test");
+    const isUnhandledReload = navigationEntry?.type === "reload" && !reloadHandledRef.current;
+    if (isUnhandledReload && !isTaskPath) {
+      reloadHandledRef.current = true;
     }
-  }, []);
+
+    const summary = loadSummary({ inMemory: state.isTestMode });
+    const routeCondition = location.state?.condition;
+    const isRouteConditionMismatch = Boolean(
+      routeCondition &&
+        (String(routeCondition.taskId) !== String(state.taskId) || routeCondition.variant !== state.variant)
+    );
+
+    if (location.pathname === "/complete") {
+      if (state.isTestMode && !summary) return;
+      if (!summary || !isSameCondition(summary, state)) {
+        navigate(state.sequenceComplete ? buildRouteUrl("/thanks", state) : currentConditionUrl(state), { replace: true });
+      }
+      return;
+    }
+
+    if (!isTaskPath) return;
+
+    if (isRouteConditionMismatch) {
+      navigate(currentConditionUrl(state), { replace: true });
+      return;
+    }
+
+    if (isSameCondition(summary, state) && isCompletedSummary(summary)) {
+      navigate(buildRouteUrl("/complete", state), { replace: true });
+      return;
+    }
+
+    if (isUnhandledReload) {
+      reloadHandledRef.current = true;
+      actions.resetTask();
+      navigate(buildRouteUrl("/intro", state), { replace: true });
+      return;
+    }
+
+    if (!state.taskStarted) {
+      actions.resetTask();
+      navigate(buildRouteUrl("/intro", state), { replace: true });
+    }
+  }, [actions, isTaskPath, location.pathname, location.state, navigate, state]);
+
+  useEffect(() => {
+    if (!shouldWarnBeforeUnload) return undefined;
+
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = "";
+      return "";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [shouldWarnBeforeUnload]);
 
   return null;
 }
@@ -122,7 +222,7 @@ function IntroRoute() {
 function AppRoutes() {
   return (
     <>
-      <ReloadReset />
+      <TaskNavigationGuard />
       <AnalyticsRuntime />
       <SubmissionRecoveryRuntime />
       <DesktopTaskRail />

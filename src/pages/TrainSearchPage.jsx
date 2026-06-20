@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import AppShell from "../components/AppShell.jsx";
 import { useExperiment } from "../context/ExperimentContext.jsx";
 import { formatWon, TRAIN } from "../data/experiment.js";
-import { buildRouteUrl } from "../utils/experimentSequence.js";
+import { buildNavigationState, buildRouteUrl } from "../utils/experimentSequence.js";
 
 export const trainRows = [
   { train: "KTX\n001", depart: "05:13\n서울", arrive: "07:50\n부산", general: "target", premium: "매진", enabled: true },
@@ -20,7 +20,7 @@ export default function TrainSearchPage() {
   const { state } = useExperiment();
 
   function handleGeneralFare() {
-    navigate(buildRouteUrl(state.variant === "A" ? "/variant-a/3" : "/variant-b/3", state));
+    navigate(buildRouteUrl(state.variant === "A" ? "/variant-a/3" : "/variant-b/3", state), { state: buildNavigationState(state) });
   }
 
   return (

@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef } from "react";
 import { buildSubmissionPayload, queueTaskSummaryBackup } from "../analytics/submission.js";
-import { appendEvent, buildSummary, loadEvents, resetConditionRuntime, saveSession, saveSummary } from "../analytics/storage.js";
+import { appendEvent, buildSummary, loadEvents, loadSession, resetConditionRuntime, saveSession, saveSummary } from "../analytics/storage.js";
 import { setClarityExperimentContext } from "../analytics/clarity.js";
 import { CARRIAGES, getSeatsForCarriage, TRAIN } from "../data/experiment.js";
 import { TASK1_TARGET, isSameSeatTarget } from "../data/taskTargets.js";
@@ -162,6 +162,18 @@ export function ExperimentProvider({ children }) {
 
   const startTask = useCallback(() => {
     const timestamp = toKstISOString();
+    const current = stateRef.current;
+    const nextState = {
+      ...current,
+      taskStarted: true,
+      taskStartTime: timestamp,
+      taskEndTime: null,
+      currentCarriage: 9,
+      selectedSeat: null,
+      success: false,
+    };
+    stateRef.current = nextState;
+    saveSession(publicSession(nextState), { inMemory: current.isTestMode });
     dispatch({ type: "START_TASK", timestamp });
   }, []);
 
@@ -177,6 +189,8 @@ export function ExperimentProvider({ children }) {
 
   const selectCarriage = useCallback((carriageNo, pointer = {}, options = {}) => {
     const normalizedCarriageNo = Number(carriageNo);
+    stateRef.current = { ...stateRef.current, currentCarriage: normalizedCarriageNo, selectedSeat: options.clearSelectedSeat ? null : stateRef.current.selectedSeat };
+    saveSession(publicSession(stateRef.current), { inMemory: stateRef.current.isTestMode });
     dispatch({ type: "SET_CARRIAGE", carriageNo: normalizedCarriageNo, clearSelectedSeat: Boolean(options.clearSelectedSeat) });
     logEvent({
       eventType: "car_change",
@@ -206,6 +220,8 @@ export function ExperimentProvider({ children }) {
     }
 
     if (current.selectedSeat?.id === seat.id) {
+      stateRef.current = { ...current, selectedSeat: null };
+      saveSession(publicSession(stateRef.current), { inMemory: current.isTestMode });
       dispatch({ type: "UNSELECT_SEAT" });
       logEvent({
         eventType: "seat_unselect",
@@ -218,6 +234,8 @@ export function ExperimentProvider({ children }) {
       return { selected: false, unselected: true };
     }
 
+    stateRef.current = { ...current, selectedSeat: seat, currentCarriage: seat.carriageNo };
+    saveSession(publicSession(stateRef.current), { inMemory: current.isTestMode });
     dispatch({ type: "SELECT_SEAT", seat });
     logEvent({
       eventType: "seat_select",
@@ -257,6 +275,8 @@ export function ExperimentProvider({ children }) {
       : getAutoSeat(current.taskId, pool);
     if (!seat) return { selected: false, reason: "no_available_seat" };
     if (seat.carriageNo !== current.currentCarriage) {
+      stateRef.current = { ...stateRef.current, currentCarriage: seat.carriageNo };
+      saveSession(publicSession(stateRef.current), { inMemory: current.isTestMode });
       dispatch({ type: "SET_CARRIAGE", carriageNo: seat.carriageNo });
       logEvent({
         eventType: "car_change",
@@ -280,6 +300,8 @@ export function ExperimentProvider({ children }) {
     if (!seat) return { selected: false, reason: "no_available_seat" };
 
     if (seat.carriageNo !== current.currentCarriage) {
+      stateRef.current = { ...stateRef.current, currentCarriage: seat.carriageNo };
+      saveSession(publicSession(stateRef.current), { inMemory: current.isTestMode });
       dispatch({ type: "SET_CARRIAGE", carriageNo: seat.carriageNo });
       logEvent({
         eventType: "car_change",
@@ -298,6 +320,8 @@ export function ExperimentProvider({ children }) {
     const current = stateRef.current;
     if (!current.selectedSeat) return { unselected: false };
 
+    stateRef.current = { ...current, selectedSeat: null };
+    saveSession(publicSession(stateRef.current), { inMemory: current.isTestMode });
     dispatch({ type: "UNSELECT_SEAT" });
     logEvent({
       eventType: "seat_unselect",
@@ -313,7 +337,14 @@ export function ExperimentProvider({ children }) {
   }, [logEvent]);
 
   const completeTask = useCallback((pointer = {}) => {
-    const current = stateRef.current;
+    const currentState = stateRef.current;
+    const storedSession = loadSession({ inMemory: currentState.isTestMode });
+    const current = !currentState.taskStartTime && storedSession?.taskStartTime &&
+      storedSession.participantId === currentState.participantId &&
+      String(storedSession.taskId) === String(currentState.taskId) &&
+      storedSession.variant === currentState.variant
+      ? { ...currentState, taskStarted: true, taskStartTime: storedSession.taskStartTime }
+      : currentState;
     const timestamp = toKstISOString();
     const success = isTargetSeat(current.taskId, current.selectedSeat);
 
@@ -331,6 +362,7 @@ export function ExperimentProvider({ children }) {
     }
 
     const completedSession = { ...publicSession(current), taskEndTime: timestamp, success };
+    stateRef.current = { ...current, taskEndTime: timestamp, success };
 
     dispatch({ type: "COMPLETE_TASK", timestamp, success });
 

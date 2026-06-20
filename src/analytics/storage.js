@@ -36,6 +36,13 @@ export function appendEvent(event, options = {}) {
   return event;
 }
 
+export function loadSession(options = {}) {
+  if (options.inMemory) {
+    return memoryStorage.session;
+  }
+
+  return safeParse(localStorage.getItem(SESSION_KEY), null);
+}
 export function saveSession(session, options = {}) {
   if (options.inMemory) {
     memoryStorage.session = session;

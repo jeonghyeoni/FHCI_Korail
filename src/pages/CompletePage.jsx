@@ -48,6 +48,7 @@ function getSubmissionStatusText(status) {
 
 const SUBMISSION_RETRY_DELAY_MS = 3000;
 const SURVEY_DRAFT_PREFIX = "fhci_survey_draft";
+const TASK_SUBMISSION_COMPLETE_PREFIX = "fhci_task_submission_complete";
 
 function wait(ms) {
   return new Promise((resolve) => {
@@ -57,6 +58,26 @@ function wait(ms) {
 
 function getSurveyDraftKey(state) {
   return `${SURVEY_DRAFT_PREFIX}:${state.participantId}:${state.variant}:${state.taskId}`;
+}
+
+function getTaskSubmissionCompleteKey(state) {
+  return `${TASK_SUBMISSION_COMPLETE_PREFIX}:${state.participantId}:${state.variant}:${state.taskId}`;
+}
+
+function loadTaskSubmissionComplete(key) {
+  try {
+    return localStorage.getItem(key) === "true";
+  } catch {
+    return false;
+  }
+}
+
+function saveTaskSubmissionComplete(key) {
+  try {
+    localStorage.setItem(key, "true");
+  } catch {
+    // Submission status persistence is a convenience only.
+  }
 }
 
 function loadSurveyDraft(key) {
@@ -85,6 +106,10 @@ function removeSurveyDraft(key) {
 
 function isBlockingSubmissionStatus(status) {
   return ["submitting", "retrying", "survey_submitting", "survey_retrying"].includes(status);
+}
+
+function formatCompletionTimeMs(value) {
+  return Number.isFinite(value) ? `${(value / 1000).toFixed(3)}초` : "-";
 }
 
 const LIKERT_AGREE = ["매우 그렇지 않다", "그렇지 않다", "약간 그렇지 않다", "약간 그렇다", "그렇다", "매우 그렇다"];
@@ -396,8 +421,12 @@ export default function CompletePage() {
   const nextCondition = getNextCondition(completedTaskId, completedVariant);
   const isFinalTest = !nextCondition;
   const surveyDraftKey = getSurveyDraftKey(completedState);
+  const taskSubmissionCompleteKey = getTaskSubmissionCompleteKey(completedState);
   const [initialSurveyDraft] = useState(() => state.isTestMode ? null : loadSurveyDraft(surveyDraftKey));
-  const [submissionStatus, setSubmissionStatus] = useState("idle");
+  const hasStoredTaskSubmissionComplete = state.isTestMode || loadTaskSubmissionComplete(taskSubmissionCompleteKey) || Boolean(initialSurveyDraft?.isOpen);
+  const [submissionStatus, setSubmissionStatus] = useState(() => (
+    state.isTestMode ? "test_mode" : hasStoredTaskSubmissionComplete ? "success" : "idle"
+  ));
   const [surveyAnswers, setSurveyAnswers] = useState(() => initialSurveyDraft?.answers || {});
   const [isSubmittingOnClick, setIsSubmittingOnClick] = useState(false);
   const [surveySubmissionStatus, setSurveySubmissionStatus] = useState("idle");
@@ -456,6 +485,12 @@ export default function CompletePage() {
     }
 
     if (!shouldAutoSubmitExperimentData || submitAttemptedRef.current) return undefined;
+    if (loadTaskSubmissionComplete(taskSubmissionCompleteKey) || initialSurveyDraft?.isOpen) {
+      submitAttemptedRef.current = true;
+      saveTaskSubmissionComplete(taskSubmissionCompleteKey);
+      setSubmissionStatus("success");
+      return undefined;
+    }
 
     let ignore = false;
     submitAttemptedRef.current = true;
@@ -477,6 +512,7 @@ export default function CompletePage() {
         if (ignore) return;
 
         if (result.status === "success") {
+          saveTaskSubmissionComplete(taskSubmissionCompleteKey);
           setSubmissionStatus("success");
           return;
         }
@@ -497,7 +533,7 @@ export default function CompletePage() {
     return () => {
       ignore = true;
     };
-  }, [completedState, state.isTestMode, summary, shouldAutoSubmitExperimentData, shouldShowTaskSurvey]);
+  }, [completedState, initialSurveyDraft?.isOpen, state.isTestMode, summary, shouldAutoSubmitExperimentData, shouldShowTaskSurvey, taskSubmissionCompleteKey]);
 
   const statusForDisplay = surveySubmissionStatus !== "idle" ? surveySubmissionStatus : submissionStatus;
   const isSubmissionInProgress = isBlockingSubmissionStatus(statusForDisplay) || isSubmittingOnClick;
@@ -805,10 +841,13 @@ export default function CompletePage() {
         </button>
         {summary ? (
           <section className="summary-panel">
-            <span>성공 여부: {summary.success ? "성공" : "실패"}</span>
-            <span>Completion Time: {Number.isFinite(summary.completionTimeMs) ? `${(summary.completionTimeMs / 1000).toFixed(1)}초` : "-"}</span>
-            <span>Click Count: {summary.clickCount}</span>
-            <span>Misclick Count: {summary.misclickCount}</span>
+            <span>성공: {summary.success ? "성공" : "실패"}</span>
+            <span>Time: {formatCompletionTimeMs(summary.completionTimeMs)}</span>
+            <span>Click: {summary.clickCount}</span>
+            <span>Misclick: {summary.misclickCount}</span>
+            <span>Page: {summary.pageTransitionCount}</span>
+            <span>Car: {summary.carriageChangeCount}</span>
+            <span>Seat: {summary.seatSelectionCount}</span>
           </section>
         ) : null}
       </section>

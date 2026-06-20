@@ -564,6 +564,31 @@ button {
   background: #f7f7f7;
 }
 
+/* Compact task metrics shown at the bottom of completion/survey screens. */
+.summary-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px 6px;
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #d9e2ea;
+  background: #f8fbfd;
+}
+
+.summary-panel span {
+  min-width: 0;
+  padding: 4px 6px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #385066;
+  font-size: clamp(10px, 2.65cqw, 12px);
+  line-height: 1.15;
+  text-align: center;
+  white-space: nowrap;
+}
+
 .fare-secondary {
   border-color: var(--korail-blue);
   color: var(--korail-blue);
@@ -2584,4 +2609,28 @@ button {
     line-height: 1.35;
     word-break: keep-all;
   }
+}
+/* Final override: compact task metrics shown at the bottom of completion/survey screens. */
+.summary-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px 6px;
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #d9e2ea;
+  background: #f8fbfd;
+}
+
+.summary-panel span {
+  min-width: 0;
+  padding: 4px 6px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #385066;
+  font-size: clamp(10px, 2.65cqw, 12px);
+  line-height: 1.15;
+  text-align: center;
+  white-space: nowrap;
 }

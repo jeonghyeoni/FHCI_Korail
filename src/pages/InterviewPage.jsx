@@ -362,7 +362,7 @@ export default function InterviewPage() {
         {interview.clarityUrl ? (
           <section className="interview-clarity-card">
             <span>Clarity 녹화본</span>
-            <p>아래 녹화본을 보면서 당시 상황을 떠올린 뒤 답변해주세요. 화면에서 어떤 점을 보고 판단했는지 최대한 구체적으로 적어주시면 좋습니다.</p>
+            <p>아래 녹화본을 보면서 당시 상황을 떠올린 뒤 답변해주세요.</p>
             <a href={interview.clarityUrl} target="_blank" rel="noreferrer">녹화본 새 탭에서 보기</a>
           </section>
         ) : null}

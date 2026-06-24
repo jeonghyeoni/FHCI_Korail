@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { setClarityInterviewContext } from "../analytics/clarity.js";
 import { buildInterviewSubmissionPayload, submitInterviewData } from "../analytics/submission.js";
 
 function formatCompletionTime(value) {
@@ -304,6 +305,17 @@ export default function InterviewPage() {
   const hasAllAnswers = requiredQuestions.length > 0 && requiredQuestions.every((question) => (answers[question.id] || "").trim());
   const isSubmitted = submitStatus === "success";
   const isSubmitting = submitStatus === "submitting";
+
+  useEffect(() => {
+    if (!interview) return;
+
+    setClarityInterviewContext({
+      participantId: interview.participantId,
+      interviewCode: interview.interviewCode,
+      intervieweeLabel: interview.intervieweeLabel,
+      isCompletePage,
+    });
+  }, [interview, isCompletePage]);
 
   function updateAnswer(key, value) {
     setAnswers((current) => ({ ...current, [key]: value }));

@@ -720,13 +720,28 @@ button {
   font-size: 11px;
 }
 
-.interview-survey-details {
-  margin-top: 12px;
-}
+  .interview-survey-details {
+    margin-top: 12px;
+  }
 
-.interview-survey-details summary {
-  cursor: pointer;
-  color: var(--korail-blue);
+  .interview-inline-question-section {
+    display: grid;
+    gap: 10px;
+    margin-top: 14px;
+    padding-top: 13px;
+    border-top: 1px solid #e7edf2;
+  }
+
+  .interview-inline-question-section h3 {
+    margin: 0;
+    color: #152536;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+  
+  .interview-survey-details summary {
+    cursor: pointer;
+    color: var(--korail-blue);
   font-size: 14px;
 }
 

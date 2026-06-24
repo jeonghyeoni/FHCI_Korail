@@ -20,6 +20,19 @@ function getQuestionKey(question, index, prefix) {
   return question.id || `${prefix}:${question.group || "group"}:${question.number || index + 1}:${question.label || "question"}`;
 }
 
+const CONDITION_ORDER = ["1-A", "1-B", "2-A", "2-B", "3-A", "3-B"];
+
+function getQuestionCondition(question) {
+  const haystack = [
+    question.group,
+    question.label,
+    ...(question.prompts || []),
+  ].filter(Boolean).join(" ");
+  const matches = CONDITION_ORDER.filter((condition) => haystack.includes(`Task ${condition}`));
+
+  return matches.length ? matches[matches.length - 1] : null;
+}
+
 function useInterviewData(code) {
   const [state, setState] = useState({ status: "loading", interview: null, error: "" });
 
@@ -63,10 +76,7 @@ function MetricGrid({ task }) {
     ["Time", formatCompletionTime(task.completionTimeMs)],
     ["Click", metricValue(task.clickCount)],
     ["Misclick", metricValue(task.misclickCount)],
-    ["RoughTap", metricValue(task.roughTapCount)],
     ["Page", metricValue(task.pageTransitionCount)],
-    ["Car", metricValue(task.carriageChangeCount)],
-    ["Seat", metricValue(task.seatSelectionCount)],
     ["Selected", task.selectedSeatLabel || "-"],
   ];
 
@@ -109,31 +119,6 @@ function ReadOnlySurveyResponse({ response }) {
   );
 }
 
-function TaskSection({ task, surveyResponses }) {
-  return (
-    <section className="interview-card">
-      <div className="interview-card-heading">
-        <div>
-          <p>{task.taskDescription}</p>
-          <h2>{task.label}</h2>
-        </div>
-        <span>{task.taskSuccess ? "성공" : "실패"}</span>
-      </div>
-      <MetricGrid task={task} />
-      {surveyResponses?.length ? (
-        <details className="interview-survey-details">
-          <summary>기존 설문 응답 보기</summary>
-          <div className="interview-survey-list">
-            {surveyResponses.map((response) => (
-              <ReadOnlySurveyResponse key={`${response.questionName}-${response.questionNumber}`} response={response} />
-            ))}
-          </div>
-        </details>
-      ) : null}
-    </section>
-  );
-}
-
 function QuestionTextarea({ question, index, prefix, value, onChange }) {
   const key = getQuestionKey(question, index, prefix);
 
@@ -156,6 +141,59 @@ function QuestionTextarea({ question, index, prefix, value, onChange }) {
   );
 }
 
+function InterviewQuestionList({ questions, prefix, answers, onChange }) {
+  if (!questions.length) return null;
+
+  return (
+    <div className="interview-inline-question-section">
+      <h3>추가 인터뷰 질문</h3>
+      <div className="interview-question-list">
+        {questions.map((question, index) => (
+          <QuestionTextarea
+            key={getQuestionKey(question, index, prefix)}
+            question={question}
+            index={index}
+            prefix={prefix}
+            value={answers[getQuestionKey(question, index, prefix)]}
+            onChange={onChange}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function TaskSection({ task, surveyResponses, interviewQuestions, answers, onAnswerChange }) {
+  return (
+    <section className="interview-card">
+      <div className="interview-card-heading">
+        <div>
+          <p>{task.taskDescription}</p>
+          <h2>{task.label}</h2>
+        </div>
+        <span>{task.taskSuccess ? "성공" : "실패"}</span>
+      </div>
+      <MetricGrid task={task} />
+      {surveyResponses?.length ? (
+        <details className="interview-survey-details">
+          <summary>기존 설문 응답 보기</summary>
+          <div className="interview-survey-list">
+            {surveyResponses.map((response) => (
+              <ReadOnlySurveyResponse key={`${response.questionName}-${response.questionNumber}`} response={response} />
+            ))}
+          </div>
+        </details>
+      ) : null}
+      <InterviewQuestionList
+        questions={interviewQuestions}
+        prefix="custom"
+        answers={answers}
+        onChange={onAnswerChange}
+      />
+    </section>
+  );
+}
+
 export default function InterviewPage() {
   const { interviewCode = "" } = useParams();
   const { status, interview, error } = useInterviewData(interviewCode);
@@ -163,14 +201,46 @@ export default function InterviewPage() {
   const [submitStatus, setSubmitStatus] = useState("idle");
   const [submitError, setSubmitError] = useState("");
 
-  const allQuestions = useMemo(() => {
-    if (!interview) return [];
-    return [
-      ...(interview.commonQuestions || []).map((question, index) => ({ ...question, id: getQuestionKey(question, index, "common") })),
-      ...(interview.customQuestions || []).map((question, index) => ({ ...question, id: getQuestionKey(question, index, "custom") })),
-    ];
+  const interviewQuestionLayout = useMemo(() => {
+    const emptyLayout = {
+      commonQuestions: [],
+      customQuestions: [],
+      questionsByCondition: {},
+      finalQuestions: [],
+      allQuestions: [],
+    };
+    if (!interview) return emptyLayout;
+
+    const commonQuestions = (interview.commonQuestions || []).map((question, index) => ({
+      ...question,
+      id: getQuestionKey(question, index, "common"),
+    }));
+    const customQuestions = (interview.customQuestions || []).map((question, index) => ({
+      ...question,
+      id: getQuestionKey(question, index, "custom"),
+    }));
+    const questionsByCondition = Object.fromEntries(CONDITION_ORDER.map((condition) => [condition, []]));
+    const finalCustomQuestions = [];
+
+    customQuestions.forEach((question) => {
+      const condition = getQuestionCondition(question);
+      if (condition) {
+        questionsByCondition[condition].push(question);
+      } else {
+        finalCustomQuestions.push(question);
+      }
+    });
+
+    return {
+      commonQuestions,
+      customQuestions,
+      questionsByCondition,
+      finalQuestions: [...commonQuestions, ...finalCustomQuestions],
+      allQuestions: [...commonQuestions, ...customQuestions],
+    };
   }, [interview]);
 
+  const { allQuestions, questionsByCondition, finalQuestions, commonQuestions, customQuestions } = interviewQuestionLayout;
   const hasAllAnswers = allQuestions.length > 0 && allQuestions.every((question) => (answers[question.id] || "").trim());
   const isSubmitted = submitStatus === "success";
   const isSubmitting = submitStatus === "submitting";
@@ -187,14 +257,8 @@ export default function InterviewPage() {
 
     const interviewWithQuestionIds = {
       ...interview,
-      commonQuestions: (interview.commonQuestions || []).map((question, index) => ({
-        ...question,
-        id: getQuestionKey(question, index, "common"),
-      })),
-      customQuestions: (interview.customQuestions || []).map((question, index) => ({
-        ...question,
-        id: getQuestionKey(question, index, "custom"),
-      })),
+      commonQuestions,
+      customQuestions,
     };
     const payload = buildInterviewSubmissionPayload({ interview: interviewWithQuestionIds, answers });
     const result = await submitInterviewData(payload);
@@ -257,6 +321,9 @@ export default function InterviewPage() {
               key={task.condition}
               task={task}
               surveyResponses={interview.surveyResponses?.[task.condition] || []}
+              interviewQuestions={questionsByCondition[task.condition] || []}
+              answers={answers}
+              onAnswerChange={updateAnswer}
             />
           ))}
         </div>
@@ -274,36 +341,14 @@ export default function InterviewPage() {
                 <ReadOnlySurveyResponse key={`${response.questionName}-${response.questionNumber}`} response={response} />
               ))}
             </div>
+            <InterviewQuestionList
+              questions={finalQuestions}
+              prefix="final"
+              answers={answers}
+              onChange={updateAnswer}
+            />
           </section>
         ) : null}
-
-        <section className="interview-section-heading">
-          <h2>인터뷰 질문</h2>
-          <p>정답은 없습니다. 기억나는 만큼 편하게 작성해주세요.</p>
-        </section>
-
-        <div className="interview-question-list">
-          {(interview.commonQuestions || []).map((question, index) => (
-            <QuestionTextarea
-              key={getQuestionKey(question, index, "common")}
-              question={question}
-              index={index}
-              prefix="common"
-              value={answers[getQuestionKey(question, index, "common")]}
-              onChange={updateAnswer}
-            />
-          ))}
-          {(interview.customQuestions || []).map((question, index) => (
-            <QuestionTextarea
-              key={getQuestionKey(question, index, "custom")}
-              question={question}
-              index={index}
-              prefix="custom"
-              value={answers[getQuestionKey(question, index, "custom")]}
-              onChange={updateAnswer}
-            />
-          ))}
-        </div>
 
         {submitError ? <p className="interview-submit-status interview-submit-status-error">{submitError}</p> : null}
         {isSubmitted ? <p className="interview-submit-status">응답이 저장되었습니다. 참여해주셔서 감사합니다.</p> : null}

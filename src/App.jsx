@@ -11,6 +11,7 @@ import ConsentPage from "./pages/ConsentPage.jsx";
 import CompletePage from "./pages/CompletePage.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import IntroPage from "./pages/IntroPage.jsx";
+import InterviewPage from "./pages/InterviewPage.jsx";
 import ThankYouPage from "./pages/ThankYouPage.jsx";
 import TicketConfirmPage from "./pages/TicketConfirmPage.jsx";
 import TrainSearchPage from "./pages/TrainSearchPage.jsx";
@@ -188,7 +189,7 @@ function DesktopTaskRail() {
   const task = TASKS[state.taskId];
   const hiddenPaths = new Set(["/", "/test", "/invalid", "/thanks"]);
 
-  if (!task || hiddenPaths.has(location.pathname)) return null;
+  if (!task || hiddenPaths.has(location.pathname) || location.pathname.startsWith("/interview")) return null;
 
   return (
     <aside className="desktop-task-rail" aria-label="현재 Task 목표">
@@ -258,12 +259,34 @@ function AppRoutes() {
   );
 }
 
-export default function App() {
+function InterviewRoutes() {
+  return (
+    <Routes>
+      <Route path="/interview/:interviewCode" element={<InterviewPage />} />
+      <Route path="/interview" element={<InterviewPage />} />
+      <Route path="*" element={<InterviewPage />} />
+    </Routes>
+  );
+}
+
+function AppShell() {
+  const location = useLocation();
+
+  if (location.pathname.startsWith("/interview")) {
+    return <InterviewRoutes />;
+  }
+
   return (
     <ExperimentProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      <AppRoutes />
     </ExperimentProvider>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppShell />
+    </BrowserRouter>
   );
 }

@@ -1,0 +1,324 @@
+import { useEffect, useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
+import { buildInterviewSubmissionPayload, submitInterviewData } from "../analytics/submission.js";
+
+function formatCompletionTime(value) {
+  return Number.isFinite(Number(value)) ? `${(Number(value) / 1000).toFixed(3)}초` : "-";
+}
+
+function metricValue(value) {
+  return value === null || value === undefined || value === "" ? "-" : value;
+}
+
+function getConditionTitle(condition) {
+  if (condition === "final") return "종합 설문";
+  const [taskId, variant] = String(condition).split("-");
+  return `Task ${taskId} - ${variant}`;
+}
+
+function getQuestionKey(question, index, prefix) {
+  return question.id || `${prefix}:${question.group || "group"}:${question.number || index + 1}:${question.label || "question"}`;
+}
+
+function useInterviewData(code) {
+  const [state, setState] = useState({ status: "loading", interview: null, error: "" });
+
+  useEffect(() => {
+    let ignore = false;
+
+    if (!code) {
+      setState({ status: "error", interview: null, error: "invalid_interview_code" });
+      return () => {
+        ignore = true;
+      };
+    }
+
+    setState({ status: "loading", interview: null, error: "" });
+
+    fetch(`/api/interview/${encodeURIComponent(code)}`, { cache: "no-store" })
+      .then(async (response) => {
+        const data = await response.json().catch(() => null);
+        if (!response.ok || data?.ok === false) {
+          throw new Error(data?.error || "invalid_interview_code");
+        }
+        return data.interview;
+      })
+      .then((interview) => {
+        if (!ignore) setState({ status: "success", interview, error: "" });
+      })
+      .catch((error) => {
+        if (!ignore) setState({ status: "error", interview: null, error: String(error.message || error) });
+      });
+
+    return () => {
+      ignore = true;
+    };
+  }, [code]);
+
+  return state;
+}
+
+function MetricGrid({ task }) {
+  const metrics = [
+    ["Time", formatCompletionTime(task.completionTimeMs)],
+    ["Click", metricValue(task.clickCount)],
+    ["Misclick", metricValue(task.misclickCount)],
+    ["RoughTap", metricValue(task.roughTapCount)],
+    ["Page", metricValue(task.pageTransitionCount)],
+    ["Car", metricValue(task.carriageChangeCount)],
+    ["Seat", metricValue(task.seatSelectionCount)],
+    ["Selected", task.selectedSeatLabel || "-"],
+  ];
+
+  return (
+    <div className="interview-metric-grid">
+      {metrics.map(([label, value]) => (
+        <span key={label}><b>{label}</b>{value}</span>
+      ))}
+    </div>
+  );
+}
+
+function ReadOnlyScale({ response }) {
+  const score = Number(response.score);
+  const options = [1, 2, 3, 4, 5, 6];
+
+  return (
+    <div className="interview-scale-readonly" aria-label={`기존 응답 ${response.answer}`}>
+      {options.map((option) => (
+        <span key={option} className={score === option ? "is-selected" : ""}>{option}</span>
+      ))}
+    </div>
+  );
+}
+
+function ReadOnlySurveyResponse({ response }) {
+  return (
+    <article className="interview-survey-response">
+      <div className="interview-survey-question">
+        <span>{response.questionNumber}.</span>
+        <p>{response.questionLabel}</p>
+      </div>
+      {response.questionType === "scale" ? <ReadOnlyScale response={response} /> : null}
+      <div className="interview-answer-box">
+        <span>기존 응답</span>
+        <strong>{response.answer || "-"}</strong>
+        {response.reason ? <p>{response.reason}</p> : null}
+      </div>
+    </article>
+  );
+}
+
+function TaskSection({ task, surveyResponses }) {
+  return (
+    <section className="interview-card">
+      <div className="interview-card-heading">
+        <div>
+          <p>{task.taskDescription}</p>
+          <h2>{task.label}</h2>
+        </div>
+        <span>{task.taskSuccess ? "성공" : "실패"}</span>
+      </div>
+      <MetricGrid task={task} />
+      {surveyResponses?.length ? (
+        <details className="interview-survey-details">
+          <summary>기존 설문 응답 보기</summary>
+          <div className="interview-survey-list">
+            {surveyResponses.map((response) => (
+              <ReadOnlySurveyResponse key={`${response.questionName}-${response.questionNumber}`} response={response} />
+            ))}
+          </div>
+        </details>
+      ) : null}
+    </section>
+  );
+}
+
+function QuestionTextarea({ question, index, prefix, value, onChange }) {
+  const key = getQuestionKey(question, index, prefix);
+
+  return (
+    <label className="interview-question">
+      <span className="interview-question-group">{question.group}</span>
+      <strong>{question.number}. {question.label}</strong>
+      {question.prompts?.length ? (
+        <ul>
+          {question.prompts.map((prompt) => <li key={prompt}>{prompt}</li>)}
+        </ul>
+      ) : null}
+      <textarea
+        rows={4}
+        value={value || ""}
+        onChange={(event) => onChange(key, event.currentTarget.value)}
+        placeholder="답변을 입력해주세요."
+      />
+    </label>
+  );
+}
+
+export default function InterviewPage() {
+  const { interviewCode = "" } = useParams();
+  const { status, interview, error } = useInterviewData(interviewCode);
+  const [answers, setAnswers] = useState({});
+  const [submitStatus, setSubmitStatus] = useState("idle");
+  const [submitError, setSubmitError] = useState("");
+
+  const allQuestions = useMemo(() => {
+    if (!interview) return [];
+    return [
+      ...(interview.commonQuestions || []).map((question, index) => ({ ...question, id: getQuestionKey(question, index, "common") })),
+      ...(interview.customQuestions || []).map((question, index) => ({ ...question, id: getQuestionKey(question, index, "custom") })),
+    ];
+  }, [interview]);
+
+  const hasAllAnswers = allQuestions.length > 0 && allQuestions.every((question) => (answers[question.id] || "").trim());
+  const isSubmitted = submitStatus === "success";
+  const isSubmitting = submitStatus === "submitting";
+
+  function updateAnswer(key, value) {
+    setAnswers((current) => ({ ...current, [key]: value }));
+  }
+
+  async function handleSubmit() {
+    if (!interview || !hasAllAnswers || isSubmitting || isSubmitted) return;
+
+    setSubmitStatus("submitting");
+    setSubmitError("");
+
+    const interviewWithQuestionIds = {
+      ...interview,
+      commonQuestions: (interview.commonQuestions || []).map((question, index) => ({
+        ...question,
+        id: getQuestionKey(question, index, "common"),
+      })),
+      customQuestions: (interview.customQuestions || []).map((question, index) => ({
+        ...question,
+        id: getQuestionKey(question, index, "custom"),
+      })),
+    };
+    const payload = buildInterviewSubmissionPayload({ interview: interviewWithQuestionIds, answers });
+    const result = await submitInterviewData(payload);
+
+    if (result.status === "success") {
+      setSubmitStatus("success");
+      return;
+    }
+
+    setSubmitStatus("failed");
+    setSubmitError(result.status === "missing_endpoint" ? "저장 URL이 설정되어 있지 않습니다." : "응답 저장에 실패했습니다. 관리자에게 알려주세요.");
+  }
+
+  if (status === "loading") {
+    return (
+      <main className="phone-frame" data-clarity-unmask="true">
+        <section className="screen centered-screen interview-screen">
+          <p className="eyebrow">인터뷰 설문</p>
+          <h1>인터뷰 페이지를 불러오는 중입니다</h1>
+        </section>
+      </main>
+    );
+  }
+
+  if (status === "error" || !interview) {
+    return (
+      <main className="phone-frame" data-clarity-unmask="true">
+        <section className="screen centered-screen interview-screen">
+          <p className="eyebrow">인터뷰 설문</p>
+          <h1>유효하지 않은 인터뷰 링크입니다</h1>
+          <p>{error || "링크를 다시 확인해주세요."}</p>
+        </section>
+      </main>
+    );
+  }
+
+  return (
+    <main className="phone-frame" data-clarity-unmask="true">
+      <section className="screen interview-screen">
+        <p className="eyebrow">FHCI 후속 인터뷰</p>
+        <h1>{interview.intervieweeLabel} 인터뷰 설문</h1>
+        <p className="interview-subtitle">지난 실험 기록과 본인의 기존 설문 응답을 확인한 뒤, 아래 주관식 질문에 답변해주세요.</p>
+
+        {interview.clarityUrl ? (
+          <section className="interview-clarity-card">
+            <span>Clarity 녹화본</span>
+            <p>아래 녹화본을 보면서 당시 상황을 떠올린 뒤 답변해주세요. 화면에서 어떤 점을 보고 판단했는지 최대한 구체적으로 적어주시면 좋습니다.</p>
+            <a href={interview.clarityUrl} target="_blank" rel="noreferrer">녹화본 새 탭에서 보기</a>
+          </section>
+        ) : null}
+
+        <section className="interview-section-heading">
+          <h2>Task별 수행 기록과 기존 설문</h2>
+          <p>각 Task 카드를 펼치면 기존 설문 응답을 볼 수 있습니다.</p>
+        </section>
+
+        <div className="interview-task-list">
+          {(interview.tasks || []).map((task) => (
+            <TaskSection
+              key={task.condition}
+              task={task}
+              surveyResponses={interview.surveyResponses?.[task.condition] || []}
+            />
+          ))}
+        </div>
+
+        {interview.surveyResponses?.final?.length ? (
+          <section className="interview-card">
+            <div className="interview-card-heading">
+              <div>
+                <p>최종 선호도 및 배경 질문</p>
+                <h2>종합 설문</h2>
+              </div>
+            </div>
+            <div className="interview-survey-list">
+              {interview.surveyResponses.final.map((response) => (
+                <ReadOnlySurveyResponse key={`${response.questionName}-${response.questionNumber}`} response={response} />
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        <section className="interview-section-heading">
+          <h2>인터뷰 질문</h2>
+          <p>정답은 없습니다. 기억나는 만큼 편하게 작성해주세요.</p>
+        </section>
+
+        <div className="interview-question-list">
+          {(interview.commonQuestions || []).map((question, index) => (
+            <QuestionTextarea
+              key={getQuestionKey(question, index, "common")}
+              question={question}
+              index={index}
+              prefix="common"
+              value={answers[getQuestionKey(question, index, "common")]}
+              onChange={updateAnswer}
+            />
+          ))}
+          {(interview.customQuestions || []).map((question, index) => (
+            <QuestionTextarea
+              key={getQuestionKey(question, index, "custom")}
+              question={question}
+              index={index}
+              prefix="custom"
+              value={answers[getQuestionKey(question, index, "custom")]}
+              onChange={updateAnswer}
+            />
+          ))}
+        </div>
+
+        {submitError ? <p className="interview-submit-status interview-submit-status-error">{submitError}</p> : null}
+        {isSubmitted ? <p className="interview-submit-status">응답이 저장되었습니다. 참여해주셔서 감사합니다.</p> : null}
+
+        <button
+          className="primary-button interview-submit-button"
+          type="button"
+          disabled={!hasAllAnswers || isSubmitting || isSubmitted}
+          data-disabled={!hasAllAnswers || isSubmitting || isSubmitted ? "true" : "false"}
+          data-clickable="true"
+          onClick={handleSubmit}
+        >
+          {isSubmitting ? "저장 중..." : isSubmitted ? "저장 완료" : "인터뷰 응답 제출"}
+        </button>
+      </section>
+    </main>
+  );
+}

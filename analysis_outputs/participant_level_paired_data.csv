@@ -1,0 +1,641 @@
+participantId,taskId,measure_type,metric,construct,A_value,B_value,improvement,improvement_direction
+P028CWG0W,1,behavioral,completionTimeSec,,20.181,13.423,6.758,A - B; positive values favor Variant B
+P02MVX12U,1,behavioral,completionTimeSec,,22.284,13.813,8.471,A - B; positive values favor Variant B
+P1AJ983YU,1,behavioral,completionTimeSec,,8.115,8.143,-0.028,A - B; positive values favor Variant B
+P1FCXJG5G,1,behavioral,completionTimeSec,,32.233,7.709,24.524,A - B; positive values favor Variant B
+P30GF9DCE,1,behavioral,completionTimeSec,,50.485,11.035,39.45,A - B; positive values favor Variant B
+P3GT3SJCJ,1,behavioral,completionTimeSec,,17.553,8.117,9.436,A - B; positive values favor Variant B
+P6OM5XQ9D,1,behavioral,completionTimeSec,,85.608,18.93,66.678,A - B; positive values favor Variant B
+P7SSRCDH3,1,behavioral,completionTimeSec,,47.779,10.632,37.147,A - B; positive values favor Variant B
+P8J79DAMX,1,behavioral,completionTimeSec,,29.878,9.474,20.404,A - B; positive values favor Variant B
+P8P27NREY,1,behavioral,completionTimeSec,,40.327,17.801,22.526,A - B; positive values favor Variant B
+P8R7D3U4Y,1,behavioral,completionTimeSec,,10.473,5.456,5.017,A - B; positive values favor Variant B
+P99LEMZ3N,1,behavioral,completionTimeSec,,31.282,13.355,17.927,A - B; positive values favor Variant B
+P9KSFLSKT,1,behavioral,completionTimeSec,,39.103,32.088,7.015,A - B; positive values favor Variant B
+PBWP8UE0A,1,behavioral,completionTimeSec,,9.517,18.075,-8.558,A - B; positive values favor Variant B
+PCFQE8NID,1,behavioral,completionTimeSec,,16.067,8.297,7.77,A - B; positive values favor Variant B
+PE7C6H021,1,behavioral,completionTimeSec,,38.5,20.549,17.951,A - B; positive values favor Variant B
+PE9W58M1S,1,behavioral,completionTimeSec,,14.255,8.109,6.146,A - B; positive values favor Variant B
+PFWMMXIWA,1,behavioral,completionTimeSec,,10.845,7.511,3.334,A - B; positive values favor Variant B
+PGH86PBFM,1,behavioral,completionTimeSec,,20.069,12.307,7.762,A - B; positive values favor Variant B
+PH81DPP1K,1,behavioral,completionTimeSec,,11.978,6.958,5.02,A - B; positive values favor Variant B
+PK0Y2I1M9,1,behavioral,completionTimeSec,,17.349,10.832,6.517,A - B; positive values favor Variant B
+PK30UIESJ,1,behavioral,completionTimeSec,,13.388,9.964,3.424,A - B; positive values favor Variant B
+PLEWQ562J,1,behavioral,completionTimeSec,,25.577,8.676,16.901,A - B; positive values favor Variant B
+PLZ9FQ9H6,1,behavioral,completionTimeSec,,15.183,9.857,5.326,A - B; positive values favor Variant B
+PMDGQF6V3,1,behavioral,completionTimeSec,,80.913,29.832,51.081,A - B; positive values favor Variant B
+PMY9EY80T,1,behavioral,completionTimeSec,,33.276,7.828,25.448,A - B; positive values favor Variant B
+PO0YWX23G,1,behavioral,completionTimeSec,,7.961,6.142,1.819,A - B; positive values favor Variant B
+POMEU60X3,1,behavioral,completionTimeSec,,11.489,8.617,2.872,A - B; positive values favor Variant B
+PQ3KZGKWP,1,behavioral,completionTimeSec,,20.81,9.677,11.133,A - B; positive values favor Variant B
+PR8OY8GUT,1,behavioral,completionTimeSec,,21.216,11.274,9.942,A - B; positive values favor Variant B
+PRL17E7I2,1,behavioral,completionTimeSec,,17.56,9.043,8.517,A - B; positive values favor Variant B
+PS8SF0PF2,1,behavioral,completionTimeSec,,22.035,10.701,11.334,A - B; positive values favor Variant B
+PSWWIV0XB,1,behavioral,completionTimeSec,,14.819,9.439,5.38,A - B; positive values favor Variant B
+PTA7OSL0B,1,behavioral,completionTimeSec,,15.162,7.165,7.997,A - B; positive values favor Variant B
+PTJGE7EXG,1,behavioral,completionTimeSec,,29.171,12.206,16.965,A - B; positive values favor Variant B
+PVD54NPZC,1,behavioral,completionTimeSec,,28.019,42.579,-14.56,A - B; positive values favor Variant B
+PWV2MFTIM,1,behavioral,completionTimeSec,,9.91,5.942,3.968,A - B; positive values favor Variant B
+PX47H0075,1,behavioral,completionTimeSec,,32.354,11.379,20.975,A - B; positive values favor Variant B
+PYLDRR3RU,1,behavioral,completionTimeSec,,37.872,9.746,28.126,A - B; positive values favor Variant B
+PYVFGA3G2,1,behavioral,completionTimeSec,,29.983,11.718,18.265,A - B; positive values favor Variant B
+P028CWG0W,1,behavioral,clickCount,,16,5,11,A - B; positive values favor Variant B
+P02MVX12U,1,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+P1AJ983YU,1,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+P1FCXJG5G,1,behavioral,clickCount,,13,5,8,A - B; positive values favor Variant B
+P30GF9DCE,1,behavioral,clickCount,,17,5,12,A - B; positive values favor Variant B
+P3GT3SJCJ,1,behavioral,clickCount,,16,5,11,A - B; positive values favor Variant B
+P6OM5XQ9D,1,behavioral,clickCount,,23,5,18,A - B; positive values favor Variant B
+P7SSRCDH3,1,behavioral,clickCount,,24,5,19,A - B; positive values favor Variant B
+P8J79DAMX,1,behavioral,clickCount,,13,5,8,A - B; positive values favor Variant B
+P8P27NREY,1,behavioral,clickCount,,64,10,54,A - B; positive values favor Variant B
+P8R7D3U4Y,1,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+P99LEMZ3N,1,behavioral,clickCount,,12,5,7,A - B; positive values favor Variant B
+P9KSFLSKT,1,behavioral,clickCount,,8,7,1,A - B; positive values favor Variant B
+PBWP8UE0A,1,behavioral,clickCount,,8,13,-5,A - B; positive values favor Variant B
+PCFQE8NID,1,behavioral,clickCount,,10,5,5,A - B; positive values favor Variant B
+PE7C6H021,1,behavioral,clickCount,,10,5,5,A - B; positive values favor Variant B
+PE9W58M1S,1,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+PFWMMXIWA,1,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+PGH86PBFM,1,behavioral,clickCount,,9,5,4,A - B; positive values favor Variant B
+PH81DPP1K,1,behavioral,clickCount,,10,5,5,A - B; positive values favor Variant B
+PK0Y2I1M9,1,behavioral,clickCount,,10,5,5,A - B; positive values favor Variant B
+PK30UIESJ,1,behavioral,clickCount,,9,5,4,A - B; positive values favor Variant B
+PLEWQ562J,1,behavioral,clickCount,,18,5,13,A - B; positive values favor Variant B
+PLZ9FQ9H6,1,behavioral,clickCount,,11,5,6,A - B; positive values favor Variant B
+PMDGQF6V3,1,behavioral,clickCount,,75,7,68,A - B; positive values favor Variant B
+PMY9EY80T,1,behavioral,clickCount,,13,5,8,A - B; positive values favor Variant B
+PO0YWX23G,1,behavioral,clickCount,,9,7,2,A - B; positive values favor Variant B
+POMEU60X3,1,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+PQ3KZGKWP,1,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+PR8OY8GUT,1,behavioral,clickCount,,10,5,5,A - B; positive values favor Variant B
+PRL17E7I2,1,behavioral,clickCount,,16,5,11,A - B; positive values favor Variant B
+PS8SF0PF2,1,behavioral,clickCount,,15,5,10,A - B; positive values favor Variant B
+PSWWIV0XB,1,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+PTA7OSL0B,1,behavioral,clickCount,,11,5,6,A - B; positive values favor Variant B
+PTJGE7EXG,1,behavioral,clickCount,,19,6,13,A - B; positive values favor Variant B
+PVD54NPZC,1,behavioral,clickCount,,10,45,-35,A - B; positive values favor Variant B
+PWV2MFTIM,1,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+PX47H0075,1,behavioral,clickCount,,10,5,5,A - B; positive values favor Variant B
+PYLDRR3RU,1,behavioral,clickCount,,13,6,7,A - B; positive values favor Variant B
+PYVFGA3G2,1,behavioral,clickCount,,11,5,6,A - B; positive values favor Variant B
+P028CWG0W,1,behavioral,misclickCount,,2,0,2,A - B; positive values favor Variant B
+P02MVX12U,1,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P1AJ983YU,1,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P1FCXJG5G,1,behavioral,misclickCount,,4,0,4,A - B; positive values favor Variant B
+P30GF9DCE,1,behavioral,misclickCount,,3,0,3,A - B; positive values favor Variant B
+P3GT3SJCJ,1,behavioral,misclickCount,,8,0,8,A - B; positive values favor Variant B
+P6OM5XQ9D,1,behavioral,misclickCount,,6,0,6,A - B; positive values favor Variant B
+P7SSRCDH3,1,behavioral,misclickCount,,6,0,6,A - B; positive values favor Variant B
+P8J79DAMX,1,behavioral,misclickCount,,6,0,6,A - B; positive values favor Variant B
+P8P27NREY,1,behavioral,misclickCount,,17,0,17,A - B; positive values favor Variant B
+P8R7D3U4Y,1,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P99LEMZ3N,1,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+P9KSFLSKT,1,behavioral,misclickCount,,0,1,-1,A - B; positive values favor Variant B
+PBWP8UE0A,1,behavioral,misclickCount,,0,1,-1,A - B; positive values favor Variant B
+PCFQE8NID,1,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+PE7C6H021,1,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+PE9W58M1S,1,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PFWMMXIWA,1,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PGH86PBFM,1,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PH81DPP1K,1,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+PK0Y2I1M9,1,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PK30UIESJ,1,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PLEWQ562J,1,behavioral,misclickCount,,6,0,6,A - B; positive values favor Variant B
+PLZ9FQ9H6,1,behavioral,misclickCount,,2,0,2,A - B; positive values favor Variant B
+PMDGQF6V3,1,behavioral,misclickCount,,36,0,36,A - B; positive values favor Variant B
+PMY9EY80T,1,behavioral,misclickCount,,4,0,4,A - B; positive values favor Variant B
+PO0YWX23G,1,behavioral,misclickCount,,1,1,0,A - B; positive values favor Variant B
+POMEU60X3,1,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PQ3KZGKWP,1,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PR8OY8GUT,1,behavioral,misclickCount,,3,0,3,A - B; positive values favor Variant B
+PRL17E7I2,1,behavioral,misclickCount,,7,0,7,A - B; positive values favor Variant B
+PS8SF0PF2,1,behavioral,misclickCount,,5,0,5,A - B; positive values favor Variant B
+PSWWIV0XB,1,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PTA7OSL0B,1,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+PTJGE7EXG,1,behavioral,misclickCount,,8,0,8,A - B; positive values favor Variant B
+PVD54NPZC,1,behavioral,misclickCount,,2,39,-37,A - B; positive values favor Variant B
+PWV2MFTIM,1,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PX47H0075,1,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+PYLDRR3RU,1,behavioral,misclickCount,,7,1,6,A - B; positive values favor Variant B
+PYVFGA3G2,1,behavioral,misclickCount,,2,0,2,A - B; positive values favor Variant B
+P028CWG0W,1,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+P02MVX12U,1,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+P1AJ983YU,1,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+P1FCXJG5G,1,behavioral,pageTransitionCount,,11,6,5,A - B; positive values favor Variant B
+P30GF9DCE,1,behavioral,pageTransitionCount,,12,5,7,A - B; positive values favor Variant B
+P3GT3SJCJ,1,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+P6OM5XQ9D,1,behavioral,pageTransitionCount,,9,5,4,A - B; positive values favor Variant B
+P7SSRCDH3,1,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+P8J79DAMX,1,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+P8P27NREY,1,behavioral,pageTransitionCount,,10,6,4,A - B; positive values favor Variant B
+P8R7D3U4Y,1,behavioral,pageTransitionCount,,9,6,3,A - B; positive values favor Variant B
+P99LEMZ3N,1,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+P9KSFLSKT,1,behavioral,pageTransitionCount,,8,7,1,A - B; positive values favor Variant B
+PBWP8UE0A,1,behavioral,pageTransitionCount,,9,8,1,A - B; positive values favor Variant B
+PCFQE8NID,1,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+PE7C6H021,1,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+PE9W58M1S,1,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+PFWMMXIWA,1,behavioral,pageTransitionCount,,9,6,3,A - B; positive values favor Variant B
+PGH86PBFM,1,behavioral,pageTransitionCount,,9,6,3,A - B; positive values favor Variant B
+PH81DPP1K,1,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+PK0Y2I1M9,1,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+PK30UIESJ,1,behavioral,pageTransitionCount,,9,6,3,A - B; positive values favor Variant B
+PLEWQ562J,1,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+PLZ9FQ9H6,1,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+PMDGQF6V3,1,behavioral,pageTransitionCount,,22,7,15,A - B; positive values favor Variant B
+PMY9EY80T,1,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+PO0YWX23G,1,behavioral,pageTransitionCount,,9,6,3,A - B; positive values favor Variant B
+POMEU60X3,1,behavioral,pageTransitionCount,,9,6,3,A - B; positive values favor Variant B
+PQ3KZGKWP,1,behavioral,pageTransitionCount,,9,6,3,A - B; positive values favor Variant B
+PR8OY8GUT,1,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+PRL17E7I2,1,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+PS8SF0PF2,1,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+PSWWIV0XB,1,behavioral,pageTransitionCount,,9,6,3,A - B; positive values favor Variant B
+PTA7OSL0B,1,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+PTJGE7EXG,1,behavioral,pageTransitionCount,,11,5,6,A - B; positive values favor Variant B
+PVD54NPZC,1,behavioral,pageTransitionCount,,8,7,1,A - B; positive values favor Variant B
+PWV2MFTIM,1,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+PX47H0075,1,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+PYLDRR3RU,1,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+PYVFGA3G2,1,behavioral,pageTransitionCount,,9,5,4,A - B; positive values favor Variant B
+P028CWG0W,2,behavioral,completionTimeSec,,2.891,6.027,-3.136,A - B; positive values favor Variant B
+P02MVX12U,2,behavioral,completionTimeSec,,13.365,8.039,5.326,A - B; positive values favor Variant B
+P1AJ983YU,2,behavioral,completionTimeSec,,10.586,7.504,3.082,A - B; positive values favor Variant B
+P1FCXJG5G,2,behavioral,completionTimeSec,,27.222,7.97,19.252,A - B; positive values favor Variant B
+P30GF9DCE,2,behavioral,completionTimeSec,,5.145,3.518,1.627,A - B; positive values favor Variant B
+P3GT3SJCJ,2,behavioral,completionTimeSec,,3.266,2.615,0.651,A - B; positive values favor Variant B
+P6OM5XQ9D,2,behavioral,completionTimeSec,,13.933,6.49,7.443,A - B; positive values favor Variant B
+P7SSRCDH3,2,behavioral,completionTimeSec,,8.547,11.178,-2.631,A - B; positive values favor Variant B
+P8J79DAMX,2,behavioral,completionTimeSec,,4.359,2.064,2.295,A - B; positive values favor Variant B
+P8P27NREY,2,behavioral,completionTimeSec,,2.543,2.664,-0.121,A - B; positive values favor Variant B
+P8R7D3U4Y,2,behavioral,completionTimeSec,,3.218,2.75,0.468,A - B; positive values favor Variant B
+P99LEMZ3N,2,behavioral,completionTimeSec,,7.923,5.761,2.162,A - B; positive values favor Variant B
+P9KSFLSKT,2,behavioral,completionTimeSec,,4.862,5.411,-0.549,A - B; positive values favor Variant B
+PBWP8UE0A,2,behavioral,completionTimeSec,,3.858,2.363,1.495,A - B; positive values favor Variant B
+PCFQE8NID,2,behavioral,completionTimeSec,,19.256,4.496,14.76,A - B; positive values favor Variant B
+PE7C6H021,2,behavioral,completionTimeSec,,7.383,8.982,-1.599,A - B; positive values favor Variant B
+PE9W58M1S,2,behavioral,completionTimeSec,,7.684,6.281,1.403,A - B; positive values favor Variant B
+PFWMMXIWA,2,behavioral,completionTimeSec,,4.966,3.149,1.817,A - B; positive values favor Variant B
+PGH86PBFM,2,behavioral,completionTimeSec,,3.888,2.535,1.353,A - B; positive values favor Variant B
+PH81DPP1K,2,behavioral,completionTimeSec,,2.872,3.086,-0.214,A - B; positive values favor Variant B
+PK0Y2I1M9,2,behavioral,completionTimeSec,,3.834,6.349,-2.515,A - B; positive values favor Variant B
+PK30UIESJ,2,behavioral,completionTimeSec,,4.652,6.248,-1.596,A - B; positive values favor Variant B
+PLEWQ562J,2,behavioral,completionTimeSec,,3.234,2.916,0.318,A - B; positive values favor Variant B
+PLZ9FQ9H6,2,behavioral,completionTimeSec,,3.088,2.648,0.44,A - B; positive values favor Variant B
+PMDGQF6V3,2,behavioral,completionTimeSec,,3.831,6.04,-2.209,A - B; positive values favor Variant B
+PMY9EY80T,2,behavioral,completionTimeSec,,15.372,6.775,8.597,A - B; positive values favor Variant B
+PO0YWX23G,2,behavioral,completionTimeSec,,2.229,1.611,0.618,A - B; positive values favor Variant B
+POMEU60X3,2,behavioral,completionTimeSec,,9.63,3.405,6.225,A - B; positive values favor Variant B
+PQ3KZGKWP,2,behavioral,completionTimeSec,,5.995,2.943,3.052,A - B; positive values favor Variant B
+PR8OY8GUT,2,behavioral,completionTimeSec,,3.269,15.216,-11.947,A - B; positive values favor Variant B
+PRL17E7I2,2,behavioral,completionTimeSec,,2.569,19.297,-16.728,A - B; positive values favor Variant B
+PS8SF0PF2,2,behavioral,completionTimeSec,,10.351,7.706,2.645,A - B; positive values favor Variant B
+PSWWIV0XB,2,behavioral,completionTimeSec,,7.793,4.317,3.476,A - B; positive values favor Variant B
+PTA7OSL0B,2,behavioral,completionTimeSec,,2.402,2.368,0.034,A - B; positive values favor Variant B
+PTJGE7EXG,2,behavioral,completionTimeSec,,5.271,3.112,2.159,A - B; positive values favor Variant B
+PVD54NPZC,2,behavioral,completionTimeSec,,14.593,9,5.593,A - B; positive values favor Variant B
+PWV2MFTIM,2,behavioral,completionTimeSec,,8.868,1.738,7.13,A - B; positive values favor Variant B
+PX47H0075,2,behavioral,completionTimeSec,,10.659,5.399,5.26,A - B; positive values favor Variant B
+PYLDRR3RU,2,behavioral,completionTimeSec,,4.574,7.936,-3.362,A - B; positive values favor Variant B
+PYVFGA3G2,2,behavioral,completionTimeSec,,5.619,7.303,-1.684,A - B; positive values favor Variant B
+P028CWG0W,2,behavioral,clickCount,,3,5,-2,A - B; positive values favor Variant B
+P02MVX12U,2,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+P1AJ983YU,2,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+P1FCXJG5G,2,behavioral,clickCount,,9,5,4,A - B; positive values favor Variant B
+P30GF9DCE,2,behavioral,clickCount,,3,4,-1,A - B; positive values favor Variant B
+P3GT3SJCJ,2,behavioral,clickCount,,3,3,0,A - B; positive values favor Variant B
+P6OM5XQ9D,2,behavioral,clickCount,,11,5,6,A - B; positive values favor Variant B
+P7SSRCDH3,2,behavioral,clickCount,,4,5,-1,A - B; positive values favor Variant B
+P8J79DAMX,2,behavioral,clickCount,,3,3,0,A - B; positive values favor Variant B
+P8P27NREY,2,behavioral,clickCount,,3,3,0,A - B; positive values favor Variant B
+P8R7D3U4Y,2,behavioral,clickCount,,3,3,0,A - B; positive values favor Variant B
+P99LEMZ3N,2,behavioral,clickCount,,3,3,0,A - B; positive values favor Variant B
+P9KSFLSKT,2,behavioral,clickCount,,3,3,0,A - B; positive values favor Variant B
+PBWP8UE0A,2,behavioral,clickCount,,4,4,0,A - B; positive values favor Variant B
+PCFQE8NID,2,behavioral,clickCount,,12,3,9,A - B; positive values favor Variant B
+PE7C6H021,2,behavioral,clickCount,,3,5,-2,A - B; positive values favor Variant B
+PE9W58M1S,2,behavioral,clickCount,,8,6,2,A - B; positive values favor Variant B
+PFWMMXIWA,2,behavioral,clickCount,,4,3,1,A - B; positive values favor Variant B
+PGH86PBFM,2,behavioral,clickCount,,4,3,1,A - B; positive values favor Variant B
+PH81DPP1K,2,behavioral,clickCount,,3,3,0,A - B; positive values favor Variant B
+PK0Y2I1M9,2,behavioral,clickCount,,3,5,-2,A - B; positive values favor Variant B
+PK30UIESJ,2,behavioral,clickCount,,3,5,-2,A - B; positive values favor Variant B
+PLEWQ562J,2,behavioral,clickCount,,4,3,1,A - B; positive values favor Variant B
+PLZ9FQ9H6,2,behavioral,clickCount,,4,3,1,A - B; positive values favor Variant B
+PMDGQF6V3,2,behavioral,clickCount,,3,5,-2,A - B; positive values favor Variant B
+PMY9EY80T,2,behavioral,clickCount,,13,5,8,A - B; positive values favor Variant B
+PO0YWX23G,2,behavioral,clickCount,,3,4,-1,A - B; positive values favor Variant B
+POMEU60X3,2,behavioral,clickCount,,10,3,7,A - B; positive values favor Variant B
+PQ3KZGKWP,2,behavioral,clickCount,,3,3,0,A - B; positive values favor Variant B
+PR8OY8GUT,2,behavioral,clickCount,,3,7,-4,A - B; positive values favor Variant B
+PRL17E7I2,2,behavioral,clickCount,,4,11,-7,A - B; positive values favor Variant B
+PS8SF0PF2,2,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+PSWWIV0XB,2,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+PTA7OSL0B,2,behavioral,clickCount,,3,3,0,A - B; positive values favor Variant B
+PTJGE7EXG,2,behavioral,clickCount,,4,4,0,A - B; positive values favor Variant B
+PVD54NPZC,2,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+PWV2MFTIM,2,behavioral,clickCount,,8,3,5,A - B; positive values favor Variant B
+PX47H0075,2,behavioral,clickCount,,9,5,4,A - B; positive values favor Variant B
+PYLDRR3RU,2,behavioral,clickCount,,3,4,-1,A - B; positive values favor Variant B
+PYVFGA3G2,2,behavioral,clickCount,,3,5,-2,A - B; positive values favor Variant B
+P028CWG0W,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P02MVX12U,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P1AJ983YU,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P1FCXJG5G,2,behavioral,misclickCount,,2,0,2,A - B; positive values favor Variant B
+P30GF9DCE,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P3GT3SJCJ,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P6OM5XQ9D,2,behavioral,misclickCount,,3,0,3,A - B; positive values favor Variant B
+P7SSRCDH3,2,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+P8J79DAMX,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P8P27NREY,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P8R7D3U4Y,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P99LEMZ3N,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P9KSFLSKT,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PBWP8UE0A,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PCFQE8NID,2,behavioral,misclickCount,,2,0,2,A - B; positive values favor Variant B
+PE7C6H021,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PE9W58M1S,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PFWMMXIWA,2,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+PGH86PBFM,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PH81DPP1K,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PK0Y2I1M9,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PK30UIESJ,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PLEWQ562J,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PLZ9FQ9H6,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PMDGQF6V3,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PMY9EY80T,2,behavioral,misclickCount,,2,0,2,A - B; positive values favor Variant B
+PO0YWX23G,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+POMEU60X3,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PQ3KZGKWP,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PR8OY8GUT,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PRL17E7I2,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PS8SF0PF2,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PSWWIV0XB,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PTA7OSL0B,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PTJGE7EXG,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PVD54NPZC,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PWV2MFTIM,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PX47H0075,2,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+PYLDRR3RU,2,behavioral,misclickCount,,0,1,-1,A - B; positive values favor Variant B
+PYVFGA3G2,2,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P028CWG0W,2,behavioral,pageTransitionCount,,3,5,-2,A - B; positive values favor Variant B
+P02MVX12U,2,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+P1AJ983YU,2,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+P1FCXJG5G,2,behavioral,pageTransitionCount,,7,6,1,A - B; positive values favor Variant B
+P30GF9DCE,2,behavioral,pageTransitionCount,,3,3,0,A - B; positive values favor Variant B
+P3GT3SJCJ,2,behavioral,pageTransitionCount,,3,3,0,A - B; positive values favor Variant B
+P6OM5XQ9D,2,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+P7SSRCDH3,2,behavioral,pageTransitionCount,,3,5,-2,A - B; positive values favor Variant B
+P8J79DAMX,2,behavioral,pageTransitionCount,,3,3,0,A - B; positive values favor Variant B
+P8P27NREY,2,behavioral,pageTransitionCount,,4,4,0,A - B; positive values favor Variant B
+P8R7D3U4Y,2,behavioral,pageTransitionCount,,4,4,0,A - B; positive values favor Variant B
+P99LEMZ3N,2,behavioral,pageTransitionCount,,3,3,0,A - B; positive values favor Variant B
+P9KSFLSKT,2,behavioral,pageTransitionCount,,3,3,0,A - B; positive values favor Variant B
+PBWP8UE0A,2,behavioral,pageTransitionCount,,4,4,0,A - B; positive values favor Variant B
+PCFQE8NID,2,behavioral,pageTransitionCount,,10,3,7,A - B; positive values favor Variant B
+PE7C6H021,2,behavioral,pageTransitionCount,,3,5,-2,A - B; positive values favor Variant B
+PE9W58M1S,2,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+PFWMMXIWA,2,behavioral,pageTransitionCount,,4,4,0,A - B; positive values favor Variant B
+PGH86PBFM,2,behavioral,pageTransitionCount,,4,4,0,A - B; positive values favor Variant B
+PH81DPP1K,2,behavioral,pageTransitionCount,,3,3,0,A - B; positive values favor Variant B
+PK0Y2I1M9,2,behavioral,pageTransitionCount,,3,5,-2,A - B; positive values favor Variant B
+PK30UIESJ,2,behavioral,pageTransitionCount,,4,6,-2,A - B; positive values favor Variant B
+PLEWQ562J,2,behavioral,pageTransitionCount,,3,3,0,A - B; positive values favor Variant B
+PLZ9FQ9H6,2,behavioral,pageTransitionCount,,3,3,0,A - B; positive values favor Variant B
+PMDGQF6V3,2,behavioral,pageTransitionCount,,4,6,-2,A - B; positive values favor Variant B
+PMY9EY80T,2,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+PO0YWX23G,2,behavioral,pageTransitionCount,,4,4,0,A - B; positive values favor Variant B
+POMEU60X3,2,behavioral,pageTransitionCount,,11,4,7,A - B; positive values favor Variant B
+PQ3KZGKWP,2,behavioral,pageTransitionCount,,4,4,0,A - B; positive values favor Variant B
+PR8OY8GUT,2,behavioral,pageTransitionCount,,3,7,-4,A - B; positive values favor Variant B
+PRL17E7I2,2,behavioral,pageTransitionCount,,3,10,-7,A - B; positive values favor Variant B
+PS8SF0PF2,2,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+PSWWIV0XB,2,behavioral,pageTransitionCount,,9,6,3,A - B; positive values favor Variant B
+PTA7OSL0B,2,behavioral,pageTransitionCount,,3,3,0,A - B; positive values favor Variant B
+PTJGE7EXG,2,behavioral,pageTransitionCount,,3,3,0,A - B; positive values favor Variant B
+PVD54NPZC,2,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+PWV2MFTIM,2,behavioral,pageTransitionCount,,8,3,5,A - B; positive values favor Variant B
+PX47H0075,2,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+PYLDRR3RU,2,behavioral,pageTransitionCount,,3,3,0,A - B; positive values favor Variant B
+PYVFGA3G2,2,behavioral,pageTransitionCount,,3,5,-2,A - B; positive values favor Variant B
+P028CWG0W,3,behavioral,completionTimeSec,,12.242,11.561,0.681,A - B; positive values favor Variant B
+P02MVX12U,3,behavioral,completionTimeSec,,18.738,7.216,11.522,A - B; positive values favor Variant B
+P1AJ983YU,3,behavioral,completionTimeSec,,11.483,4.36,7.123,A - B; positive values favor Variant B
+P1FCXJG5G,3,behavioral,completionTimeSec,,10.039,4.173,5.866,A - B; positive values favor Variant B
+P30GF9DCE,3,behavioral,completionTimeSec,,4.956,11.3,-6.344,A - B; positive values favor Variant B
+P3GT3SJCJ,3,behavioral,completionTimeSec,,13.986,5.3,8.686,A - B; positive values favor Variant B
+P6OM5XQ9D,3,behavioral,completionTimeSec,,27.779,10.527,17.252,A - B; positive values favor Variant B
+P7SSRCDH3,3,behavioral,completionTimeSec,,24.562,15.676,8.886,A - B; positive values favor Variant B
+P8J79DAMX,3,behavioral,completionTimeSec,,8.09,10.452,-2.362,A - B; positive values favor Variant B
+P8P27NREY,3,behavioral,completionTimeSec,,11.113,9.521,1.592,A - B; positive values favor Variant B
+P8R7D3U4Y,3,behavioral,completionTimeSec,,9.84,5.826,4.014,A - B; positive values favor Variant B
+P99LEMZ3N,3,behavioral,completionTimeSec,,19.039,9.156,9.883,A - B; positive values favor Variant B
+P9KSFLSKT,3,behavioral,completionTimeSec,,41.815,14.922,26.893,A - B; positive values favor Variant B
+PBWP8UE0A,3,behavioral,completionTimeSec,,13.148,12.886,0.262,A - B; positive values favor Variant B
+PCFQE8NID,3,behavioral,completionTimeSec,,10.144,8.367,1.777,A - B; positive values favor Variant B
+PE7C6H021,3,behavioral,completionTimeSec,,12.218,11.394,0.824,A - B; positive values favor Variant B
+PE9W58M1S,3,behavioral,completionTimeSec,,13.23,6.248,6.982,A - B; positive values favor Variant B
+PFWMMXIWA,3,behavioral,completionTimeSec,,10.81,6.621,4.189,A - B; positive values favor Variant B
+PGH86PBFM,3,behavioral,completionTimeSec,,18.461,4.822,13.639,A - B; positive values favor Variant B
+PH81DPP1K,3,behavioral,completionTimeSec,,11.082,4.421,6.661,A - B; positive values favor Variant B
+PK0Y2I1M9,3,behavioral,completionTimeSec,,18.131,6.361,11.77,A - B; positive values favor Variant B
+PK30UIESJ,3,behavioral,completionTimeSec,,13.784,12.329,1.455,A - B; positive values favor Variant B
+PLEWQ562J,3,behavioral,completionTimeSec,,4.763,5.608,-0.845,A - B; positive values favor Variant B
+PLZ9FQ9H6,3,behavioral,completionTimeSec,,11.263,15.212,-3.949,A - B; positive values favor Variant B
+PMDGQF6V3,3,behavioral,completionTimeSec,,12.048,8.857,3.191,A - B; positive values favor Variant B
+PMY9EY80T,3,behavioral,completionTimeSec,,20.543,6.44,14.103,A - B; positive values favor Variant B
+PO0YWX23G,3,behavioral,completionTimeSec,,11.055,5.849,5.206,A - B; positive values favor Variant B
+POMEU60X3,3,behavioral,completionTimeSec,,10.095,6.652,3.443,A - B; positive values favor Variant B
+PQ3KZGKWP,3,behavioral,completionTimeSec,,16.221,7,9.221,A - B; positive values favor Variant B
+PR8OY8GUT,3,behavioral,completionTimeSec,,9.891,14.117,-4.226,A - B; positive values favor Variant B
+PRL17E7I2,3,behavioral,completionTimeSec,,7.303,7.205,0.098,A - B; positive values favor Variant B
+PS8SF0PF2,3,behavioral,completionTimeSec,,13.497,7.366,6.131,A - B; positive values favor Variant B
+PSWWIV0XB,3,behavioral,completionTimeSec,,16.488,6.936,9.552,A - B; positive values favor Variant B
+PTA7OSL0B,3,behavioral,completionTimeSec,,13.523,3.608,9.915,A - B; positive values favor Variant B
+PTJGE7EXG,3,behavioral,completionTimeSec,,15.436,8.324,7.112,A - B; positive values favor Variant B
+PVD54NPZC,3,behavioral,completionTimeSec,,28.104,11.961,16.143,A - B; positive values favor Variant B
+PWV2MFTIM,3,behavioral,completionTimeSec,,12.051,6.305,5.746,A - B; positive values favor Variant B
+PX47H0075,3,behavioral,completionTimeSec,,7.9,10.9,-3,A - B; positive values favor Variant B
+PYLDRR3RU,3,behavioral,completionTimeSec,,16.508,14.442,2.066,A - B; positive values favor Variant B
+PYVFGA3G2,3,behavioral,completionTimeSec,,21.481,25.182,-3.701,A - B; positive values favor Variant B
+P028CWG0W,3,behavioral,clickCount,,9,7,2,A - B; positive values favor Variant B
+P02MVX12U,3,behavioral,clickCount,,10,5,5,A - B; positive values favor Variant B
+P1AJ983YU,3,behavioral,clickCount,,10,5,5,A - B; positive values favor Variant B
+P1FCXJG5G,3,behavioral,clickCount,,9,5,4,A - B; positive values favor Variant B
+P30GF9DCE,3,behavioral,clickCount,,3,7,-4,A - B; positive values favor Variant B
+P3GT3SJCJ,3,behavioral,clickCount,,10,5,5,A - B; positive values favor Variant B
+P6OM5XQ9D,3,behavioral,clickCount,,10,5,5,A - B; positive values favor Variant B
+P7SSRCDH3,3,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+P8J79DAMX,3,behavioral,clickCount,,9,9,0,A - B; positive values favor Variant B
+P8P27NREY,3,behavioral,clickCount,,9,5,4,A - B; positive values favor Variant B
+P8R7D3U4Y,3,behavioral,clickCount,,10,5,5,A - B; positive values favor Variant B
+P99LEMZ3N,3,behavioral,clickCount,,14,5,9,A - B; positive values favor Variant B
+P9KSFLSKT,3,behavioral,clickCount,,15,5,10,A - B; positive values favor Variant B
+PBWP8UE0A,3,behavioral,clickCount,,11,6,5,A - B; positive values favor Variant B
+PCFQE8NID,3,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+PE7C6H021,3,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+PE9W58M1S,3,behavioral,clickCount,,10,5,5,A - B; positive values favor Variant B
+PFWMMXIWA,3,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+PGH86PBFM,3,behavioral,clickCount,,13,5,8,A - B; positive values favor Variant B
+PH81DPP1K,3,behavioral,clickCount,,10,5,5,A - B; positive values favor Variant B
+PK0Y2I1M9,3,behavioral,clickCount,,11,5,6,A - B; positive values favor Variant B
+PK30UIESJ,3,behavioral,clickCount,,11,9,2,A - B; positive values favor Variant B
+PLEWQ562J,3,behavioral,clickCount,,5,5,0,A - B; positive values favor Variant B
+PLZ9FQ9H6,3,behavioral,clickCount,,9,8,1,A - B; positive values favor Variant B
+PMDGQF6V3,3,behavioral,clickCount,,12,5,7,A - B; positive values favor Variant B
+PMY9EY80T,3,behavioral,clickCount,,19,5,14,A - B; positive values favor Variant B
+PO0YWX23G,3,behavioral,clickCount,,12,5,7,A - B; positive values favor Variant B
+POMEU60X3,3,behavioral,clickCount,,10,5,5,A - B; positive values favor Variant B
+PQ3KZGKWP,3,behavioral,clickCount,,10,5,5,A - B; positive values favor Variant B
+PR8OY8GUT,3,behavioral,clickCount,,6,7,-1,A - B; positive values favor Variant B
+PRL17E7I2,3,behavioral,clickCount,,8,5,3,A - B; positive values favor Variant B
+PS8SF0PF2,3,behavioral,clickCount,,10,5,5,A - B; positive values favor Variant B
+PSWWIV0XB,3,behavioral,clickCount,,11,5,6,A - B; positive values favor Variant B
+PTA7OSL0B,3,behavioral,clickCount,,11,5,6,A - B; positive values favor Variant B
+PTJGE7EXG,3,behavioral,clickCount,,11,6,5,A - B; positive values favor Variant B
+PVD54NPZC,3,behavioral,clickCount,,17,5,12,A - B; positive values favor Variant B
+PWV2MFTIM,3,behavioral,clickCount,,10,5,5,A - B; positive values favor Variant B
+PX47H0075,3,behavioral,clickCount,,8,7,1,A - B; positive values favor Variant B
+PYLDRR3RU,3,behavioral,clickCount,,8,6,2,A - B; positive values favor Variant B
+PYVFGA3G2,3,behavioral,clickCount,,17,14,3,A - B; positive values favor Variant B
+P028CWG0W,3,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+P02MVX12U,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P1AJ983YU,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P1FCXJG5G,3,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+P30GF9DCE,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P3GT3SJCJ,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P6OM5XQ9D,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P7SSRCDH3,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P8J79DAMX,3,behavioral,misclickCount,,1,3,-2,A - B; positive values favor Variant B
+P8P27NREY,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P8R7D3U4Y,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+P99LEMZ3N,3,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+P9KSFLSKT,3,behavioral,misclickCount,,4,0,4,A - B; positive values favor Variant B
+PBWP8UE0A,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PCFQE8NID,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PE7C6H021,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PE9W58M1S,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PFWMMXIWA,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PGH86PBFM,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PH81DPP1K,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PK0Y2I1M9,3,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+PK30UIESJ,3,behavioral,misclickCount,,0,1,-1,A - B; positive values favor Variant B
+PLEWQ562J,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PLZ9FQ9H6,3,behavioral,misclickCount,,0,1,-1,A - B; positive values favor Variant B
+PMDGQF6V3,3,behavioral,misclickCount,,2,0,2,A - B; positive values favor Variant B
+PMY9EY80T,3,behavioral,misclickCount,,3,0,3,A - B; positive values favor Variant B
+PO0YWX23G,3,behavioral,misclickCount,,1,1,0,A - B; positive values favor Variant B
+POMEU60X3,3,behavioral,misclickCount,,2,0,2,A - B; positive values favor Variant B
+PQ3KZGKWP,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PR8OY8GUT,3,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+PRL17E7I2,3,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+PS8SF0PF2,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PSWWIV0XB,3,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+PTA7OSL0B,3,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+PTJGE7EXG,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PVD54NPZC,3,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+PWV2MFTIM,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PX47H0075,3,behavioral,misclickCount,,1,0,1,A - B; positive values favor Variant B
+PYLDRR3RU,3,behavioral,misclickCount,,0,0,0,A - B; positive values favor Variant B
+PYVFGA3G2,3,behavioral,misclickCount,,8,4,4,A - B; positive values favor Variant B
+P028CWG0W,3,behavioral,pageTransitionCount,,8,7,1,A - B; positive values favor Variant B
+P02MVX12U,3,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+P1AJ983YU,3,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+P1FCXJG5G,3,behavioral,pageTransitionCount,,9,6,3,A - B; positive values favor Variant B
+P30GF9DCE,3,behavioral,pageTransitionCount,,3,7,-4,A - B; positive values favor Variant B
+P3GT3SJCJ,3,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+P6OM5XQ9D,3,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+P7SSRCDH3,3,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+P8J79DAMX,3,behavioral,pageTransitionCount,,7,5,2,A - B; positive values favor Variant B
+P8P27NREY,3,behavioral,pageTransitionCount,,9,6,3,A - B; positive values favor Variant B
+P8R7D3U4Y,3,behavioral,pageTransitionCount,,11,6,5,A - B; positive values favor Variant B
+P99LEMZ3N,3,behavioral,pageTransitionCount,,12,5,7,A - B; positive values favor Variant B
+P9KSFLSKT,3,behavioral,pageTransitionCount,,12,5,7,A - B; positive values favor Variant B
+PBWP8UE0A,3,behavioral,pageTransitionCount,,11,6,5,A - B; positive values favor Variant B
+PCFQE8NID,3,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+PE7C6H021,3,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+PE9W58M1S,3,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+PFWMMXIWA,3,behavioral,pageTransitionCount,,9,6,3,A - B; positive values favor Variant B
+PGH86PBFM,3,behavioral,pageTransitionCount,,14,6,8,A - B; positive values favor Variant B
+PH81DPP1K,3,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+PK0Y2I1M9,3,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+PK30UIESJ,3,behavioral,pageTransitionCount,,12,8,4,A - B; positive values favor Variant B
+PLEWQ562J,3,behavioral,pageTransitionCount,,3,5,-2,A - B; positive values favor Variant B
+PLZ9FQ9H6,3,behavioral,pageTransitionCount,,8,7,1,A - B; positive values favor Variant B
+PMDGQF6V3,3,behavioral,pageTransitionCount,,11,6,5,A - B; positive values favor Variant B
+PMY9EY80T,3,behavioral,pageTransitionCount,,15,5,10,A - B; positive values favor Variant B
+PO0YWX23G,3,behavioral,pageTransitionCount,,11,5,6,A - B; positive values favor Variant B
+POMEU60X3,3,behavioral,pageTransitionCount,,9,6,3,A - B; positive values favor Variant B
+PQ3KZGKWP,3,behavioral,pageTransitionCount,,11,6,5,A - B; positive values favor Variant B
+PR8OY8GUT,3,behavioral,pageTransitionCount,,3,5,-2,A - B; positive values favor Variant B
+PRL17E7I2,3,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+PS8SF0PF2,3,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+PSWWIV0XB,3,behavioral,pageTransitionCount,,12,6,6,A - B; positive values favor Variant B
+PTA7OSL0B,3,behavioral,pageTransitionCount,,8,5,3,A - B; positive values favor Variant B
+PTJGE7EXG,3,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+PVD54NPZC,3,behavioral,pageTransitionCount,,16,5,11,A - B; positive values favor Variant B
+PWV2MFTIM,3,behavioral,pageTransitionCount,,10,5,5,A - B; positive values favor Variant B
+PX47H0075,3,behavioral,pageTransitionCount,,8,7,1,A - B; positive values favor Variant B
+PYLDRR3RU,3,behavioral,pageTransitionCount,,6,5,1,A - B; positive values favor Variant B
+PYVFGA3G2,3,behavioral,pageTransitionCount,,8,9,-1,A - B; positive values favor Variant B
+P028CWG0W,1,survey,surveyScore,Error Prevention,5.5,5.75,0.25,B - A; positive values favor Variant B
+P02MVX12U,1,survey,surveyScore,Error Prevention,3.5,5,1.5,B - A; positive values favor Variant B
+P1AJ983YU,1,survey,surveyScore,Error Prevention,4,3.5,-0.5,B - A; positive values favor Variant B
+P1FCXJG5G,1,survey,surveyScore,Error Prevention,2.5,5.25,2.75,B - A; positive values favor Variant B
+P30GF9DCE,1,survey,surveyScore,Error Prevention,6,6,0,B - A; positive values favor Variant B
+P3GT3SJCJ,1,survey,surveyScore,Error Prevention,2,5,3,B - A; positive values favor Variant B
+P6OM5XQ9D,1,survey,surveyScore,Error Prevention,2.5,5.5,3,B - A; positive values favor Variant B
+P7SSRCDH3,1,survey,surveyScore,Error Prevention,4,5.25,1.25,B - A; positive values favor Variant B
+P8J79DAMX,1,survey,surveyScore,Error Prevention,3.75,6,2.25,B - A; positive values favor Variant B
+P8P27NREY,1,survey,surveyScore,Error Prevention,2.25,3,0.75,B - A; positive values favor Variant B
+P8R7D3U4Y,1,survey,surveyScore,Error Prevention,4.5,6,1.5,B - A; positive values favor Variant B
+P99LEMZ3N,1,survey,surveyScore,Error Prevention,2,4.5,2.5,B - A; positive values favor Variant B
+P9KSFLSKT,1,survey,surveyScore,Error Prevention,3.25,3.25,0,B - A; positive values favor Variant B
+PBWP8UE0A,1,survey,surveyScore,Error Prevention,5.5,2.75,-2.75,B - A; positive values favor Variant B
+PCFQE8NID,1,survey,surveyScore,Error Prevention,1,5,4,B - A; positive values favor Variant B
+PE7C6H021,1,survey,surveyScore,Error Prevention,1.5,2.5,1,B - A; positive values favor Variant B
+PE9W58M1S,1,survey,surveyScore,Error Prevention,3.5,4.75,1.25,B - A; positive values favor Variant B
+PFWMMXIWA,1,survey,surveyScore,Error Prevention,3.75,4.75,1,B - A; positive values favor Variant B
+PGH86PBFM,1,survey,surveyScore,Error Prevention,2.75,4.25,1.5,B - A; positive values favor Variant B
+PH81DPP1K,1,survey,surveyScore,Error Prevention,4.75,5,0.25,B - A; positive values favor Variant B
+PK0Y2I1M9,1,survey,surveyScore,Error Prevention,3.25,5.25,2,B - A; positive values favor Variant B
+PK30UIESJ,1,survey,surveyScore,Error Prevention,5.25,2.25,-3,B - A; positive values favor Variant B
+PLEWQ562J,1,survey,surveyScore,Error Prevention,3,5,2,B - A; positive values favor Variant B
+PLZ9FQ9H6,1,survey,surveyScore,Error Prevention,4.25,4.75,0.5,B - A; positive values favor Variant B
+PMDGQF6V3,1,survey,surveyScore,Error Prevention,4.25,5,0.75,B - A; positive values favor Variant B
+PMY9EY80T,1,survey,surveyScore,Error Prevention,4.5,3.75,-0.75,B - A; positive values favor Variant B
+PO0YWX23G,1,survey,surveyScore,Error Prevention,4.5,2.75,-1.75,B - A; positive values favor Variant B
+POMEU60X3,1,survey,surveyScore,Error Prevention,4.25,5,0.75,B - A; positive values favor Variant B
+PQ3KZGKWP,1,survey,surveyScore,Error Prevention,3,4.75,1.75,B - A; positive values favor Variant B
+PR8OY8GUT,1,survey,surveyScore,Error Prevention,4.75,5.25,0.5,B - A; positive values favor Variant B
+PRL17E7I2,1,survey,surveyScore,Error Prevention,6,6,0,B - A; positive values favor Variant B
+PS8SF0PF2,1,survey,surveyScore,Error Prevention,2.25,4.25,2,B - A; positive values favor Variant B
+PSWWIV0XB,1,survey,surveyScore,Error Prevention,3.5,5,1.5,B - A; positive values favor Variant B
+PTA7OSL0B,1,survey,surveyScore,Error Prevention,3.5,4.75,1.25,B - A; positive values favor Variant B
+PTJGE7EXG,1,survey,surveyScore,Error Prevention,5,6,1,B - A; positive values favor Variant B
+PVD54NPZC,1,survey,surveyScore,Error Prevention,5.5,4.5,-1,B - A; positive values favor Variant B
+PWV2MFTIM,1,survey,surveyScore,Error Prevention,3.75,2.25,-1.5,B - A; positive values favor Variant B
+PX47H0075,1,survey,surveyScore,Error Prevention,3.25,5.25,2,B - A; positive values favor Variant B
+PYLDRR3RU,1,survey,surveyScore,Error Prevention,2.5,5.25,2.75,B - A; positive values favor Variant B
+PYVFGA3G2,1,survey,surveyScore,Error Prevention,5.5,6,0.5,B - A; positive values favor Variant B
+P028CWG0W,2,survey,surveyScore,Flexibility / Controllability,4.66667,4.66667,0,B - A; positive values favor Variant B
+P02MVX12U,2,survey,surveyScore,Flexibility / Controllability,4,6,2,B - A; positive values favor Variant B
+P1AJ983YU,2,survey,surveyScore,Flexibility / Controllability,2.66667,4.33333,1.66667,B - A; positive values favor Variant B
+P1FCXJG5G,2,survey,surveyScore,Flexibility / Controllability,2.33333,5.66667,3.33333,B - A; positive values favor Variant B
+P30GF9DCE,2,survey,surveyScore,Flexibility / Controllability,5.66667,6,0.333333,B - A; positive values favor Variant B
+P3GT3SJCJ,2,survey,surveyScore,Flexibility / Controllability,4,6,2,B - A; positive values favor Variant B
+P6OM5XQ9D,2,survey,surveyScore,Flexibility / Controllability,3.33333,5.33333,2,B - A; positive values favor Variant B
+P7SSRCDH3,2,survey,surveyScore,Flexibility / Controllability,6,6,0,B - A; positive values favor Variant B
+P8J79DAMX,2,survey,surveyScore,Flexibility / Controllability,4.66667,4,-0.666667,B - A; positive values favor Variant B
+P8P27NREY,2,survey,surveyScore,Flexibility / Controllability,5,5.66667,0.666667,B - A; positive values favor Variant B
+P8R7D3U4Y,2,survey,surveyScore,Flexibility / Controllability,4.66667,6,1.33333,B - A; positive values favor Variant B
+P99LEMZ3N,2,survey,surveyScore,Flexibility / Controllability,2.33333,5.33333,3,B - A; positive values favor Variant B
+P9KSFLSKT,2,survey,surveyScore,Flexibility / Controllability,5,5.33333,0.333333,B - A; positive values favor Variant B
+PBWP8UE0A,2,survey,surveyScore,Flexibility / Controllability,3.33333,4.66667,1.33333,B - A; positive values favor Variant B
+PCFQE8NID,2,survey,surveyScore,Flexibility / Controllability,1,5.66667,4.66667,B - A; positive values favor Variant B
+PE7C6H021,2,survey,surveyScore,Flexibility / Controllability,3.66667,5,1.33333,B - A; positive values favor Variant B
+PE9W58M1S,2,survey,surveyScore,Flexibility / Controllability,2.66667,4.66667,2,B - A; positive values favor Variant B
+PFWMMXIWA,2,survey,surveyScore,Flexibility / Controllability,2.33333,5,2.66667,B - A; positive values favor Variant B
+PGH86PBFM,2,survey,surveyScore,Flexibility / Controllability,4.66667,5,0.333333,B - A; positive values favor Variant B
+PH81DPP1K,2,survey,surveyScore,Flexibility / Controllability,5,4,-1,B - A; positive values favor Variant B
+PK0Y2I1M9,2,survey,surveyScore,Flexibility / Controllability,3.66667,5.66667,2,B - A; positive values favor Variant B
+PK30UIESJ,2,survey,surveyScore,Flexibility / Controllability,2.66667,5.33333,2.66667,B - A; positive values favor Variant B
+PLEWQ562J,2,survey,surveyScore,Flexibility / Controllability,4.33333,4.66667,0.333333,B - A; positive values favor Variant B
+PLZ9FQ9H6,2,survey,surveyScore,Flexibility / Controllability,3.33333,6,2.66667,B - A; positive values favor Variant B
+PMDGQF6V3,2,survey,surveyScore,Flexibility / Controllability,3.33333,5.66667,2.33333,B - A; positive values favor Variant B
+PMY9EY80T,2,survey,surveyScore,Flexibility / Controllability,2,5,3,B - A; positive values favor Variant B
+PO0YWX23G,2,survey,surveyScore,Flexibility / Controllability,4.66667,5.66667,1,B - A; positive values favor Variant B
+POMEU60X3,2,survey,surveyScore,Flexibility / Controllability,3,6,3,B - A; positive values favor Variant B
+PQ3KZGKWP,2,survey,surveyScore,Flexibility / Controllability,3,6,3,B - A; positive values favor Variant B
+PR8OY8GUT,2,survey,surveyScore,Flexibility / Controllability,5,4.33333,-0.666667,B - A; positive values favor Variant B
+PRL17E7I2,2,survey,surveyScore,Flexibility / Controllability,6,4.66667,-1.33333,B - A; positive values favor Variant B
+PS8SF0PF2,2,survey,surveyScore,Flexibility / Controllability,4.33333,5,0.666667,B - A; positive values favor Variant B
+PSWWIV0XB,2,survey,surveyScore,Flexibility / Controllability,4,5,1,B - A; positive values favor Variant B
+PTA7OSL0B,2,survey,surveyScore,Flexibility / Controllability,4.66667,5,0.333333,B - A; positive values favor Variant B
+PTJGE7EXG,2,survey,surveyScore,Flexibility / Controllability,4,6,2,B - A; positive values favor Variant B
+PVD54NPZC,2,survey,surveyScore,Flexibility / Controllability,5,4.33333,-0.666667,B - A; positive values favor Variant B
+PWV2MFTIM,2,survey,surveyScore,Flexibility / Controllability,2,5.33333,3.33333,B - A; positive values favor Variant B
+PX47H0075,2,survey,surveyScore,Flexibility / Controllability,3.66667,5.66667,2,B - A; positive values favor Variant B
+PYLDRR3RU,2,survey,surveyScore,Flexibility / Controllability,2.66667,4.33333,1.66667,B - A; positive values favor Variant B
+PYVFGA3G2,2,survey,surveyScore,Flexibility / Controllability,5,6,1,B - A; positive values favor Variant B
+P028CWG0W,3,survey,surveyScore,Recognition Rather Than Recall,4,5.66667,1.66667,B - A; positive values favor Variant B
+P02MVX12U,3,survey,surveyScore,Recognition Rather Than Recall,2.33333,6,3.66667,B - A; positive values favor Variant B
+P1AJ983YU,3,survey,surveyScore,Recognition Rather Than Recall,2,6,4,B - A; positive values favor Variant B
+P1FCXJG5G,3,survey,surveyScore,Recognition Rather Than Recall,3.33333,6,2.66667,B - A; positive values favor Variant B
+P30GF9DCE,3,survey,surveyScore,Recognition Rather Than Recall,4.66667,6,1.33333,B - A; positive values favor Variant B
+P3GT3SJCJ,3,survey,surveyScore,Recognition Rather Than Recall,3,6,3,B - A; positive values favor Variant B
+P6OM5XQ9D,3,survey,surveyScore,Recognition Rather Than Recall,4,6,2,B - A; positive values favor Variant B
+P7SSRCDH3,3,survey,surveyScore,Recognition Rather Than Recall,5,6,1,B - A; positive values favor Variant B
+P8J79DAMX,3,survey,surveyScore,Recognition Rather Than Recall,5,4.66667,-0.333333,B - A; positive values favor Variant B
+P8P27NREY,3,survey,surveyScore,Recognition Rather Than Recall,3,4,1,B - A; positive values favor Variant B
+P8R7D3U4Y,3,survey,surveyScore,Recognition Rather Than Recall,3.66667,6,2.33333,B - A; positive values favor Variant B
+P99LEMZ3N,3,survey,surveyScore,Recognition Rather Than Recall,2,5,3,B - A; positive values favor Variant B
+P9KSFLSKT,3,survey,surveyScore,Recognition Rather Than Recall,2.33333,6,3.66667,B - A; positive values favor Variant B
+PBWP8UE0A,3,survey,surveyScore,Recognition Rather Than Recall,3.66667,6,2.33333,B - A; positive values favor Variant B
+PCFQE8NID,3,survey,surveyScore,Recognition Rather Than Recall,3.33333,4.66667,1.33333,B - A; positive values favor Variant B
+PE7C6H021,3,survey,surveyScore,Recognition Rather Than Recall,5,5.66667,0.666667,B - A; positive values favor Variant B
+PE9W58M1S,3,survey,surveyScore,Recognition Rather Than Recall,1,6,5,B - A; positive values favor Variant B
+PFWMMXIWA,3,survey,surveyScore,Recognition Rather Than Recall,5,5.66667,0.666667,B - A; positive values favor Variant B
+PGH86PBFM,3,survey,surveyScore,Recognition Rather Than Recall,2,5,3,B - A; positive values favor Variant B
+PH81DPP1K,3,survey,surveyScore,Recognition Rather Than Recall,2.33333,4,1.66667,B - A; positive values favor Variant B
+PK0Y2I1M9,3,survey,surveyScore,Recognition Rather Than Recall,2.33333,6,3.66667,B - A; positive values favor Variant B
+PK30UIESJ,3,survey,surveyScore,Recognition Rather Than Recall,2.66667,5.33333,2.66667,B - A; positive values favor Variant B
+PLEWQ562J,3,survey,surveyScore,Recognition Rather Than Recall,3.33333,5.66667,2.33333,B - A; positive values favor Variant B
+PLZ9FQ9H6,3,survey,surveyScore,Recognition Rather Than Recall,1.33333,5.66667,4.33333,B - A; positive values favor Variant B
+PMDGQF6V3,3,survey,surveyScore,Recognition Rather Than Recall,4.66667,6,1.33333,B - A; positive values favor Variant B
+PMY9EY80T,3,survey,surveyScore,Recognition Rather Than Recall,2,5.66667,3.66667,B - A; positive values favor Variant B
+PO0YWX23G,3,survey,surveyScore,Recognition Rather Than Recall,2.66667,3,0.333333,B - A; positive values favor Variant B
+POMEU60X3,3,survey,surveyScore,Recognition Rather Than Recall,4.33333,6,1.66667,B - A; positive values favor Variant B
+PQ3KZGKWP,3,survey,surveyScore,Recognition Rather Than Recall,4.33333,6,1.66667,B - A; positive values favor Variant B
+PR8OY8GUT,3,survey,surveyScore,Recognition Rather Than Recall,4.66667,4.66667,0,B - A; positive values favor Variant B
+PRL17E7I2,3,survey,surveyScore,Recognition Rather Than Recall,5,5.66667,0.666667,B - A; positive values favor Variant B
+PS8SF0PF2,3,survey,surveyScore,Recognition Rather Than Recall,2.33333,4.33333,2,B - A; positive values favor Variant B
+PSWWIV0XB,3,survey,surveyScore,Recognition Rather Than Recall,4,5,1,B - A; positive values favor Variant B
+PTA7OSL0B,3,survey,surveyScore,Recognition Rather Than Recall,3,5.66667,2.66667,B - A; positive values favor Variant B
+PTJGE7EXG,3,survey,surveyScore,Recognition Rather Than Recall,4.66667,6,1.33333,B - A; positive values favor Variant B
+PVD54NPZC,3,survey,surveyScore,Recognition Rather Than Recall,2.66667,5,2.33333,B - A; positive values favor Variant B
+PWV2MFTIM,3,survey,surveyScore,Recognition Rather Than Recall,2,5,3,B - A; positive values favor Variant B
+PX47H0075,3,survey,surveyScore,Recognition Rather Than Recall,4,4.66667,0.666667,B - A; positive values favor Variant B
+PYLDRR3RU,3,survey,surveyScore,Recognition Rather Than Recall,2.66667,5.66667,3,B - A; positive values favor Variant B
+PYVFGA3G2,3,survey,surveyScore,Recognition Rather Than Recall,4.33333,5.66667,1.33333,B - A; positive values favor Variant B
+P028CWG0W,3,survey,surveyScore,Visibility of System Status,4,5.33333,1.33333,B - A; positive values favor Variant B
+P02MVX12U,3,survey,surveyScore,Visibility of System Status,3,6,3,B - A; positive values favor Variant B
+P1AJ983YU,3,survey,surveyScore,Visibility of System Status,3,4.66667,1.66667,B - A; positive values favor Variant B
+P1FCXJG5G,3,survey,surveyScore,Visibility of System Status,4,6,2,B - A; positive values favor Variant B
+P30GF9DCE,3,survey,surveyScore,Visibility of System Status,4,6,2,B - A; positive values favor Variant B
+P3GT3SJCJ,3,survey,surveyScore,Visibility of System Status,3,6,3,B - A; positive values favor Variant B
+P6OM5XQ9D,3,survey,surveyScore,Visibility of System Status,2.66667,6,3.33333,B - A; positive values favor Variant B
+P7SSRCDH3,3,survey,surveyScore,Visibility of System Status,5.66667,6,0.333333,B - A; positive values favor Variant B
+P8J79DAMX,3,survey,surveyScore,Visibility of System Status,4.33333,4,-0.333333,B - A; positive values favor Variant B
+P8P27NREY,3,survey,surveyScore,Visibility of System Status,3,4,1,B - A; positive values favor Variant B
+P8R7D3U4Y,3,survey,surveyScore,Visibility of System Status,3.66667,6,2.33333,B - A; positive values favor Variant B
+P99LEMZ3N,3,survey,surveyScore,Visibility of System Status,2,5,3,B - A; positive values favor Variant B
+P9KSFLSKT,3,survey,surveyScore,Visibility of System Status,2,6,4,B - A; positive values favor Variant B
+PBWP8UE0A,3,survey,surveyScore,Visibility of System Status,2.66667,5.33333,2.66667,B - A; positive values favor Variant B
+PCFQE8NID,3,survey,surveyScore,Visibility of System Status,2.33333,5.33333,3,B - A; positive values favor Variant B
+PE7C6H021,3,survey,surveyScore,Visibility of System Status,3,6,3,B - A; positive values favor Variant B
+PE9W58M1S,3,survey,surveyScore,Visibility of System Status,2,4.33333,2.33333,B - A; positive values favor Variant B
+PFWMMXIWA,3,survey,surveyScore,Visibility of System Status,4.66667,6,1.33333,B - A; positive values favor Variant B
+PGH86PBFM,3,survey,surveyScore,Visibility of System Status,3,6,3,B - A; positive values favor Variant B
+PH81DPP1K,3,survey,surveyScore,Visibility of System Status,2,4.33333,2.33333,B - A; positive values favor Variant B
+PK0Y2I1M9,3,survey,surveyScore,Visibility of System Status,3.33333,6,2.66667,B - A; positive values favor Variant B
+PK30UIESJ,3,survey,surveyScore,Visibility of System Status,2.33333,5.33333,3,B - A; positive values favor Variant B
+PLEWQ562J,3,survey,surveyScore,Visibility of System Status,1.66667,5.66667,4,B - A; positive values favor Variant B
+PLZ9FQ9H6,3,survey,surveyScore,Visibility of System Status,2.33333,6,3.66667,B - A; positive values favor Variant B
+PMDGQF6V3,3,survey,surveyScore,Visibility of System Status,4.33333,5.33333,1,B - A; positive values favor Variant B
+PMY9EY80T,3,survey,surveyScore,Visibility of System Status,1.66667,6,4.33333,B - A; positive values favor Variant B
+PO0YWX23G,3,survey,surveyScore,Visibility of System Status,3.33333,3.33333,0,B - A; positive values favor Variant B
+POMEU60X3,3,survey,surveyScore,Visibility of System Status,2.66667,6,3.33333,B - A; positive values favor Variant B
+PQ3KZGKWP,3,survey,surveyScore,Visibility of System Status,3.66667,6,2.33333,B - A; positive values favor Variant B
+PR8OY8GUT,3,survey,surveyScore,Visibility of System Status,5,4.33333,-0.666667,B - A; positive values favor Variant B
+PRL17E7I2,3,survey,surveyScore,Visibility of System Status,5.66667,6,0.333333,B - A; positive values favor Variant B
+PS8SF0PF2,3,survey,surveyScore,Visibility of System Status,2.33333,4.66667,2.33333,B - A; positive values favor Variant B
+PSWWIV0XB,3,survey,surveyScore,Visibility of System Status,4.33333,4.66667,0.333333,B - A; positive values favor Variant B
+PTA7OSL0B,3,survey,surveyScore,Visibility of System Status,2.66667,5.66667,3,B - A; positive values favor Variant B
+PTJGE7EXG,3,survey,surveyScore,Visibility of System Status,4.33333,6,1.66667,B - A; positive values favor Variant B
+PVD54NPZC,3,survey,surveyScore,Visibility of System Status,3.66667,6,2.33333,B - A; positive values favor Variant B
+PWV2MFTIM,3,survey,surveyScore,Visibility of System Status,2,5,3,B - A; positive values favor Variant B
+PX47H0075,3,survey,surveyScore,Visibility of System Status,5.33333,4.33333,-1,B - A; positive values favor Variant B
+PYLDRR3RU,3,survey,surveyScore,Visibility of System Status,1.66667,6,4.33333,B - A; positive values favor Variant B
+PYVFGA3G2,3,survey,surveyScore,Visibility of System Status,5.33333,6,0.666667,B - A; positive values favor Variant B

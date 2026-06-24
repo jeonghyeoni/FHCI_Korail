@@ -2,7 +2,8 @@ const SPREADSHEET_ID = "1NyXaqg6f94t8DClS15Z9u1sDrFluS5csosNxX7sjFK4";
 const SUMMARY_SHEET_NAME = "TaskSummary";
 const EVENT_LOG_SHEET_NAME = "EventLogs";
 const SURVEY_RESPONSE_SHEET_NAME = "SurveyResponses";
-const SCRIPT_VERSION = "2026-06-20-summary-backup-event-recovery-v1";
+const INTERVIEW_RESPONSE_SHEET_NAME = "InterviewResponses";
+const SCRIPT_VERSION = "2026-06-24-interview-responses-v1";
 
 const SUMMARY_HEADERS = [
   "submissionKey",
@@ -57,6 +58,19 @@ const SURVEY_RESPONSE_HEADERS = [
   "receivedAt",
 ];
 
+const INTERVIEW_RESPONSE_HEADERS = [
+  "submissionKey",
+  "intervieweeLabel",
+  "participantId",
+  "interviewCode",
+  "clarityUrl",
+  "questionGroup",
+  "questionNumber",
+  "questionLabel",
+  "answer",
+  "receivedAt",
+];
+
 function doPost(e) {
   const lock = LockService.getScriptLock();
   lock.waitLock(30000);
@@ -68,7 +82,21 @@ function doPost(e) {
     const summarySheet = ensureSheet_(spreadsheet, SUMMARY_SHEET_NAME, SUMMARY_HEADERS);
     const eventLogSheet = ensureSheet_(spreadsheet, EVENT_LOG_SHEET_NAME, EVENT_LOG_HEADERS);
     const surveyResponseSheet = ensureSheet_(spreadsheet, SURVEY_RESPONSE_SHEET_NAME, SURVEY_RESPONSE_HEADERS);
+    const interviewResponseSheet = ensureSheet_(spreadsheet, INTERVIEW_RESPONSE_SHEET_NAME, INTERVIEW_RESPONSE_HEADERS);
     const submissionType = getSubmissionType_(payload);
+
+    if (submissionType === "interview") {
+      if (!Array.isArray(payload.interviewResponses) || payload.interviewResponses.length === 0) {
+        return jsonResponse_({ ok: false, error: "interviewResponses is empty", submissionKey, version: SCRIPT_VERSION });
+      }
+
+      if (hasSubmission_(interviewResponseSheet, submissionKey)) {
+        return jsonResponse_({ ok: true, duplicate: true, submissionKey, version: SCRIPT_VERSION });
+      }
+
+      appendInterviewResponses_(interviewResponseSheet, submissionKey, payload, payload.interviewResponses || []);
+      return jsonResponse_({ ok: true, duplicate: false, submissionKey, version: SCRIPT_VERSION });
+    }
 
     if (submissionType === "survey") {
       if (!Array.isArray(payload.surveyResponses) || payload.surveyResponses.length === 0) {
@@ -195,9 +223,31 @@ function appendSurveyResponses_(sheet, submissionKey, payload, surveyResponses) 
   sheet.getRange(sheet.getLastRow() + 1, 1, rows.length, SURVEY_RESPONSE_HEADERS.length).setValues(rows);
 }
 
+function appendInterviewResponses_(sheet, submissionKey, payload, interviewResponses) {
+  if (!interviewResponses.length) return;
+
+  const receivedAt = payload.receivedAt || toKstTimestampText_(new Date());
+  const rows = interviewResponses.map((response) => [
+    submissionKey,
+    payload.intervieweeLabel || "",
+    payload.participantId || "",
+    payload.interviewCode || "",
+    payload.clarityUrl || "",
+    response.questionGroup || "",
+    response.questionNumber || "",
+    response.questionLabel || "",
+    response.answer || "",
+    receivedAt,
+  ]);
+
+  sheet.getRange(sheet.getLastRow() + 1, 1, rows.length, INTERVIEW_RESPONSE_HEADERS.length).setValues(rows);
+}
+
 function getSubmissionType_(payload) {
+  if (payload.submissionType === "interview") return "interview";
   if (payload.submissionType === "survey") return "survey";
   if (Array.isArray(payload.surveyResponses) && payload.surveyResponses.length > 0) return "survey";
+  if (Array.isArray(payload.interviewResponses) && payload.interviewResponses.length > 0) return "interview";
   return "task";
 }
 
@@ -206,6 +256,7 @@ function makeSubmissionKey_(payload) {
 
   const submissionType = getSubmissionType_(payload);
   const baseKey = [payload.participantId, payload.variant, payload.taskId].join(":");
+  if (submissionType === "interview") return ["interview", payload.intervieweeLabel, payload.interviewCode].join(":");
   return submissionType === "survey" ? `${baseKey}:survey` : baseKey;
 }
 

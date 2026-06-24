@@ -1,0 +1,13 @@
+taskId,metric,n,A_mean,A_sd,A_median,B_mean,B_sd,B_median,mean_improvement,shapiro_p,normality_result,test_used,statistic,p_value,effect_size,effect_size_type,significant,better_variant
+1,completionTimeSec,40,26.0145,17.318,21.013,12.36,7.50727,9.9105,13.6545,0.000265064,Non-normal,Wilcoxon signed-rank test,46,3.48027e-08,0.887805,Matched-pairs rank-biserial correlation,Yes,Variant B
+1,clickCount,40,14.625,13.4616,10,6.525,6.42506,5,8.1,1.12008e-08,Non-normal,Wilcoxon signed-rank test,55,1.73573e-06,0.865854,Matched-pairs rank-biserial correlation,Yes,Variant B
+1,misclickCount,40,3.525,6.31639,1,1.075,6.1577,0,2.45,3.90049e-09,Non-normal,Wilcoxon signed-rank test,36,0.000223697,0.809524,Matched-pairs rank-biserial correlation,Yes,Variant B
+1,pageTransitionCount,40,9.475,2.27571,9,5.475,0.750641,5,4,2.67627e-08,Non-normal,Wilcoxon signed-rank test,0,2.1141e-08,1,Matched-pairs rank-biserial correlation,Yes,Variant B
+2,completionTimeSec,40,7.14,5.2917,5.0555,5.63025,3.64813,5.405,1.50975,0.00110338,Non-normal,Wilcoxon signed-rank test,251,0.0320787,0.387805,Matched-pairs rank-biserial correlation,Yes,Variant B
+2,clickCount,40,5.225,2.99989,4,4.3,1.52248,4,0.925,0.0395484,Non-normal,Wilcoxon signed-rank test,138.5,0.0860652,0.363218,Matched-pairs rank-biserial correlation,No,Variant B
+2,misclickCount,40,0.3,0.723241,0,0.025,0.158114,0,0.275,8.91512e-10,Non-normal,Wilcoxon signed-rank test,2.5,0.0390625,0.861111,Matched-pairs rank-biserial correlation,Yes,Variant B
+2,pageTransitionCount,40,5.025,2.57689,4,4.425,1.43021,4,0.6,0.00298919,Non-normal,Wilcoxon signed-rank test,73,0.0794742,0.422925,Matched-pairs rank-biserial correlation,No,Variant B
+3,completionTimeSec,40,14.5715,6.96761,12.695,9.13508,4.27064,7.845,5.43642,0.232299,Normal,Paired t-test,5.08886,9.45826e-06,0.804619,Cohen's dz,Yes,Variant B
+3,clickCount,40,10.25,3.05295,10,5.775,1.73187,5,4.475,0.0522228,Normal,Paired t-test,8.50405,2.03892e-10,1.34461,Cohen's dz,Yes,Variant B
+3,misclickCount,40,0.775,1.47609,0,0.25,0.808608,0,0.525,5.03195e-06,Non-normal,Wilcoxon signed-rank test,27,0.00828072,0.684211,Matched-pairs rank-biserial correlation,Yes,Variant B
+3,pageTransitionCount,40,9.45,2.76378,10,5.625,0.952392,5,3.825,0.0311216,Non-normal,Wilcoxon signed-rank test,35.5,4.01307e-07,0.913415,Matched-pairs rank-biserial correlation,Yes,Variant B

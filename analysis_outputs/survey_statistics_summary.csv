@@ -1,0 +1,5 @@
+taskId,construct,n,A_mean,A_sd,A_median,B_mean,B_sd,B_median,mean_improvement,shapiro_p,normality_result,test_used,statistic,p_value,effect_size,effect_size_type,significant,better_variant
+1,Error Prevention,40,3.75625,1.25893,3.75,4.65,1.0931,5,0.89375,0.290935,Normal,Paired t-test,3.71097,0.000642914,0.586756,Cohen's dz,Yes,Variant B
+2,Flexibility / Controllability,40,3.83333,1.18874,4,5.25,0.630425,5.33333,1.41667,0.598732,Normal,Paired t-test,6.50695,1.02543e-07,1.02884,Cohen's dz,Yes,Variant B
+3,Recognition Rather Than Recall,40,3.34167,1.14848,3.33333,5.425,0.720033,5.66667,2.08333,0.688526,Normal,Paired t-test,10.5307,5.79759e-13,1.66505,Cohen's dz,Yes,Variant B
+3,Visibility of System Status,40,3.29167,1.16254,3,5.41667,0.757677,6,2.125,0.0669576,Normal,Paired t-test,9.76134,5.04889e-12,1.5434,Cohen's dz,Yes,Variant B

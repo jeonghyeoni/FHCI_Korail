@@ -408,6 +408,30 @@ export function buildSurveySubmissionPayload({ summary, state, surveyAnswers = {
   };
 }
 
+export function buildInterviewSubmissionPayload({ interview, answers }) {
+  const receivedAt = toKstTimestampText();
+  const interviewResponses = [
+    ...(interview.commonQuestions || []),
+    ...(interview.customQuestions || []),
+  ].map((question, index) => ({
+    questionGroup: question.group || "인터뷰 질문",
+    questionNumber: question.number || String(index + 1),
+    questionLabel: question.label || "",
+    answer: answers[question.id] || "",
+  }));
+
+  return {
+    submissionType: "interview",
+    submissionKey: ["interview", interview.intervieweeLabel, interview.interviewCode].join(":"),
+    intervieweeLabel: interview.intervieweeLabel,
+    participantId: interview.participantId,
+    interviewCode: interview.interviewCode,
+    clarityUrl: interview.clarityUrl || "",
+    receivedAt,
+    interviewResponses,
+  };
+}
+
 export async function submitExperimentData(payload) {
   queueTaskSummaryBackup(payload);
   const currentBackupId = getTaskSubmissionKey(payload);
@@ -450,4 +474,8 @@ export async function submitExperimentData(payload) {
 
 export async function submitSurveyData(payload) {
   return postPayload(payload, { savePendingOnFailure: true, keepalive: true });
+}
+
+export async function submitInterviewData(payload) {
+  return postPayload(payload, { savePendingOnFailure: true });
 }

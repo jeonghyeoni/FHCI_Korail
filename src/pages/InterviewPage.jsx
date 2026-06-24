@@ -370,6 +370,7 @@ export default function InterviewPage() {
         <section className="interview-section-heading">
           <h2>Task별 수행 기록과 기존 설문</h2>
           <p>각 Task 카드를 펼치면 기존 설문 응답을 볼 수 있습니다.</p>
+          <p className="interview-answer-guidance">질문 사항에 국한되지 않고 자유롭게 답변해주셔도 좋습니다. 가능한 구체적으로 답변해주시면 연구에 많은 도움이 됩니다.</p>
         </section>
 
         <div className="interview-task-list">

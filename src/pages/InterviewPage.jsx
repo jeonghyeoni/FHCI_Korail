@@ -21,6 +21,7 @@ function getQuestionKey(question, index, prefix) {
 }
 
 const CONDITION_ORDER = ["1-A", "1-B", "2-A", "2-B", "3-A", "3-B"];
+const OPTIONAL_COMMON_QUESTION_NUMBER = "3";
 
 function getQuestionCondition(question) {
   const haystack = [
@@ -31,6 +32,23 @@ function getQuestionCondition(question) {
   const matches = CONDITION_ORDER.filter((condition) => haystack.includes(`Task ${condition}`));
 
   return matches.length ? matches[matches.length - 1] : null;
+}
+
+function getFinalPreference(interview) {
+  return interview?.surveyResponses?.final?.find((response) => response.questionName === "final_ui_preference")?.answer || "A/B";
+}
+
+function customizeCommonQuestion(question, interview) {
+  if (String(question.number) !== "2") return question;
+
+  return {
+    ...question,
+    label: question.label.replace("“A/B”", `“${getFinalPreference(interview)}”`),
+  };
+}
+
+function isRequiredInterviewQuestion(question) {
+  return !(question.group === "공통 질문" && String(question.number) === OPTIONAL_COMMON_QUESTION_NUMBER);
 }
 
 function useInterviewData(code) {
@@ -77,7 +95,6 @@ function MetricGrid({ task }) {
     ["Click", metricValue(task.clickCount)],
     ["Misclick", metricValue(task.misclickCount)],
     ["Page", metricValue(task.pageTransitionCount)],
-    ["Selected", task.selectedSeatLabel || "-"],
   ];
 
   return (
@@ -121,11 +138,15 @@ function ReadOnlySurveyResponse({ response }) {
 
 function QuestionTextarea({ question, index, prefix, value, onChange }) {
   const key = getQuestionKey(question, index, prefix);
+  const required = isRequiredInterviewQuestion(question);
 
   return (
     <label className="interview-question">
       <span className="interview-question-group">{question.group}</span>
-      <strong>{question.number}. {question.label}</strong>
+      <strong>
+        {question.number}. {question.label}
+        {required ? <em aria-label="필수">*</em> : <small>선택</small>}
+      </strong>
       {question.prompts?.length ? (
         <ul>
           {question.prompts.map((prompt) => <li key={prompt}>{prompt}</li>)}
@@ -212,7 +233,7 @@ export default function InterviewPage() {
     if (!interview) return emptyLayout;
 
     const commonQuestions = (interview.commonQuestions || []).map((question, index) => ({
-      ...question,
+      ...customizeCommonQuestion(question, interview),
       id: getQuestionKey(question, index, "common"),
     }));
     const customQuestions = (interview.customQuestions || []).map((question, index) => ({
@@ -241,7 +262,8 @@ export default function InterviewPage() {
   }, [interview]);
 
   const { allQuestions, questionsByCondition, finalQuestions, commonQuestions, customQuestions } = interviewQuestionLayout;
-  const hasAllAnswers = allQuestions.length > 0 && allQuestions.every((question) => (answers[question.id] || "").trim());
+  const requiredQuestions = allQuestions.filter(isRequiredInterviewQuestion);
+  const hasAllAnswers = requiredQuestions.length > 0 && requiredQuestions.every((question) => (answers[question.id] || "").trim());
   const isSubmitted = submitStatus === "success";
   const isSubmitting = submitStatus === "submitting";
 
@@ -329,7 +351,7 @@ export default function InterviewPage() {
         </div>
 
         {interview.surveyResponses?.final?.length ? (
-          <section className="interview-card">
+          <section className="interview-card interview-final-card">
             <div className="interview-card-heading">
               <div>
                 <p>최종 선호도 및 배경 질문</p>

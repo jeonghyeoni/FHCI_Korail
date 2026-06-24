@@ -663,9 +663,13 @@ button {
   gap: 12px;
 }
 
-.interview-card {
-  padding: 14px;
-}
+  .interview-card {
+    padding: 14px;
+  }
+
+  .interview-final-card {
+    margin-top: 18px;
+  }
 
 .interview-card-heading {
   display: flex;
@@ -833,11 +837,29 @@ button {
   font-size: 12px;
 }
 
-.interview-question strong {
-  color: #152536;
-  font-size: 15px;
-  line-height: 1.5;
-}
+  .interview-question strong {
+    color: #152536;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .interview-question strong em {
+    margin-left: 4px;
+    color: var(--korail-red);
+    font-style: normal;
+  }
+
+  .interview-question strong small {
+    display: inline-flex;
+    margin-left: 6px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    color: #6c7b88;
+    background: #eef3f7;
+    font-size: 11px;
+    font-weight: 400;
+    vertical-align: 1px;
+  }
 
 .interview-question ul {
   margin: 0;

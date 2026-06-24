@@ -23,15 +23,41 @@ function getQuestionKey(question, index, prefix) {
 const CONDITION_ORDER = ["1-A", "1-B", "2-A", "2-B", "3-A", "3-B"];
 const OPTIONAL_COMMON_QUESTION_NUMBER = "3";
 
+function getGroupConditions(group = "") {
+  return CONDITION_ORDER.filter((condition) => group.includes(`Task ${condition}`));
+}
+
+function mentionsVariant(text, variant) {
+  const particles = ["의", "에서", "가", "는", "를", "보다", "중", "방식", "화면"];
+  return particles.some((particle) => text.includes(`${variant}${particle}`) || text.includes(`${variant} ${particle}`)) ||
+    text.includes(`${variant}와`) ||
+    text.includes(`${variant}와 `);
+}
+
 function getQuestionCondition(question) {
-  const haystack = [
-    question.group,
+  const contentText = [
     question.label,
     ...(question.prompts || []),
   ].filter(Boolean).join(" ");
-  const matches = CONDITION_ORDER.filter((condition) => haystack.includes(`Task ${condition}`));
+  const exactContentMatches = CONDITION_ORDER.filter((condition) => contentText.includes(`Task ${condition}`));
 
-  return matches.length ? matches[matches.length - 1] : null;
+  if (exactContentMatches.length === 1) return exactContentMatches[0];
+
+  const groupConditions = getGroupConditions(question.group);
+  if (groupConditions.length) {
+    const taskId = groupConditions[0].split("-")[0];
+    const mentionsA = mentionsVariant(contentText, "A");
+    const mentionsB = mentionsVariant(contentText, "B");
+
+    if (mentionsB) return `${taskId}-B`;
+    if (mentionsA) return `${taskId}-A`;
+    if (contentText.includes("좌석 현황")) return `${taskId}-B`;
+    if (exactContentMatches.length > 1) return exactContentMatches[exactContentMatches.length - 1];
+
+    return groupConditions[groupConditions.length - 1];
+  }
+
+  return exactContentMatches.length ? exactContentMatches[exactContentMatches.length - 1] : null;
 }
 
 function getFinalPreference(interview) {
@@ -136,13 +162,13 @@ function ReadOnlySurveyResponse({ response }) {
   );
 }
 
-function QuestionTextarea({ question, index, prefix, value, onChange }) {
+function QuestionTextarea({ question, index, prefix, value, onChange, showGroup = true }) {
   const key = getQuestionKey(question, index, prefix);
   const required = isRequiredInterviewQuestion(question);
 
   return (
     <label className="interview-question">
-      <span className="interview-question-group">{question.group}</span>
+      {showGroup ? <span className="interview-question-group">{question.group}</span> : null}
       <strong>
         {question.number}. {question.label}
         {required ? <em aria-label="필수">*</em> : <small>선택</small>}
@@ -162,24 +188,27 @@ function QuestionTextarea({ question, index, prefix, value, onChange }) {
   );
 }
 
-function InterviewQuestionList({ questions, prefix, answers, onChange }) {
-  if (!questions.length) return null;
+function InterviewQuestionList({ questions, prefix, answers, onChange, showEmpty = false, hideCommonGroup = false }) {
+  if (!questions.length && !showEmpty) return null;
 
   return (
     <div className="interview-inline-question-section">
-      <h3>추가 인터뷰 질문</h3>
-      <div className="interview-question-list">
-        {questions.map((question, index) => (
-          <QuestionTextarea
-            key={getQuestionKey(question, index, prefix)}
-            question={question}
-            index={index}
-            prefix={prefix}
-            value={answers[getQuestionKey(question, index, prefix)]}
-            onChange={onChange}
-          />
-        ))}
-      </div>
+      <h3>{questions.length ? "추가 인터뷰 질문" : "추가 인터뷰 질문 없음"}</h3>
+      {questions.length ? (
+        <div className="interview-question-list">
+          {questions.map((question, index) => (
+            <QuestionTextarea
+              key={getQuestionKey(question, index, prefix)}
+              question={question}
+              index={index}
+              prefix={prefix}
+              value={answers[getQuestionKey(question, index, prefix)]}
+              onChange={onChange}
+              showGroup={!(hideCommonGroup && question.group === "공통 질문")}
+            />
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -210,6 +239,7 @@ function TaskSection({ task, surveyResponses, interviewQuestions, answers, onAns
         prefix="custom"
         answers={answers}
         onChange={onAnswerChange}
+        showEmpty
       />
     </section>
   );
@@ -236,10 +266,15 @@ export default function InterviewPage() {
       ...customizeCommonQuestion(question, interview),
       id: getQuestionKey(question, index, "common"),
     }));
-    const customQuestions = (interview.customQuestions || []).map((question, index) => ({
-      ...question,
-      id: getQuestionKey(question, index, "custom"),
-    }));
+    const customQuestions = (interview.customQuestions || []).map((question, index) => {
+      const withId = {
+        ...question,
+        id: getQuestionKey(question, index, "custom"),
+      };
+      const condition = getQuestionCondition(withId);
+
+      return condition ? { ...withId, group: `Task ${condition}` } : withId;
+    });
     const questionsByCondition = Object.fromEntries(CONDITION_ORDER.map((condition) => [condition, []]));
     const finalCustomQuestions = [];
 
@@ -368,6 +403,7 @@ export default function InterviewPage() {
               prefix="final"
               answers={answers}
               onChange={updateAnswer}
+              hideCommonGroup
             />
           </section>
         ) : null}

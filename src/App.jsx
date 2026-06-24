@@ -262,6 +262,7 @@ function AppRoutes() {
 function InterviewRoutes() {
   return (
     <Routes>
+      <Route path="/interview/:interviewCode/complete" element={<InterviewPage />} />
       <Route path="/interview/:interviewCode" element={<InterviewPage />} />
       <Route path="/interview" element={<InterviewPage />} />
       <Route path="*" element={<InterviewPage />} />

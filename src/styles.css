@@ -666,6 +666,31 @@ button {
     font-size: 13px;
     line-height: 1.5;
   }
+
+  .interview-complete-screen {
+    gap: 12px;
+    padding-right: clamp(20px, 5cqw, 28px);
+    padding-left: clamp(20px, 5cqw, 28px);
+    text-align: center;
+  }
+
+  .interview-complete-screen p {
+    margin: 0;
+    color: #5f6f7f;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .interview-complete-notice {
+    margin-top: 10px;
+    padding: 14px;
+    border: 1px solid #b9dff5;
+    border-radius: 10px;
+    color: #0b5f95;
+    background: #eaf7ff;
+    font-size: 14px;
+    line-height: 1.55;
+  }
   
   .interview-task-list,
   .interview-question-list,

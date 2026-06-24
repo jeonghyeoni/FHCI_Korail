@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { buildInterviewSubmissionPayload, submitInterviewData } from "../analytics/submission.js";
 
 function formatCompletionTime(value) {
@@ -247,10 +247,13 @@ function TaskSection({ task, surveyResponses, interviewQuestions, answers, onAns
 
 export default function InterviewPage() {
   const { interviewCode = "" } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
   const { status, interview, error } = useInterviewData(interviewCode);
   const [answers, setAnswers] = useState({});
   const [submitStatus, setSubmitStatus] = useState("idle");
   const [submitError, setSubmitError] = useState("");
+  const isCompletePage = location.pathname.endsWith("/complete");
 
   const interviewQuestionLayout = useMemo(() => {
     const emptyLayout = {
@@ -308,6 +311,7 @@ export default function InterviewPage() {
 
   async function handleSubmit() {
     if (!interview || !hasAllAnswers || isSubmitting || isSubmitted) return;
+    if (!window.confirm("제출하시겠습니까?")) return;
 
     setSubmitStatus("submitting");
     setSubmitError("");
@@ -322,6 +326,7 @@ export default function InterviewPage() {
 
     if (result.status === "success") {
       setSubmitStatus("success");
+      navigate(`/interview/${encodeURIComponent(interview.interviewCode)}/complete`, { replace: true });
       return;
     }
 
@@ -352,6 +357,21 @@ export default function InterviewPage() {
     );
   }
 
+  if (isCompletePage) {
+    return (
+      <main className="phone-frame" data-clarity-unmask="true">
+        <section className="screen centered-screen interview-screen interview-complete-screen">
+          <p className="eyebrow">FHCI 후속 인터뷰</p>
+          <h1>인터뷰 응답이 제출되었습니다</h1>
+          <p>참여해주셔서 감사합니다.</p>
+          <div className="interview-complete-notice">
+            연구자에게 인터뷰 완료 사실과 함께 5천원 금액권/기프티콘을 받고싶은 브랜드를 알려주세요.
+          </div>
+        </section>
+      </main>
+    );
+  }
+
   return (
     <main className="phone-frame" data-clarity-unmask="true">
       <section className="screen interview-screen">
@@ -370,7 +390,7 @@ export default function InterviewPage() {
         <section className="interview-section-heading">
           <h2>Task별 수행 기록과 기존 설문</h2>
           <p>각 Task 카드를 펼치면 기존 설문 응답을 볼 수 있습니다.</p>
-          <p className="interview-answer-guidance">질문 사항에 국한되지 않고 자유롭게 답변해주셔도 좋습니다. 가능한 구체적으로 답변해주시면 연구에 많은 도움이 됩니다.</p>
+          <p className="interview-answer-guidance">질문 사항에 국한되지 않고 자유롭게 답변해주셔도 좋습니다.\n가능한 구체적으로 답변해주시면 연구에 많은 도움이 됩니다.</p>
         </section>
 
         <div className="interview-task-list">

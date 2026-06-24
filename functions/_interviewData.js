@@ -1329,11 +1329,6 @@ export const INTERVIEW_DATA_BY_CODE = {
       {
         "group": "Task 1-A",
         "number": "2",
-        "label": "결제 화면이나 장바구니 버튼 등을 여러 번 눌러보셨는데, 그때 어떤 부분을 확인하려고 하셨나요?"
-      },
-      {
-        "group": "Task 1-A",
-        "number": "3",
         "label": "실험 중 작동하지 않는 버튼이나 영역을 여러 번 눌러보신 이유가 있었나요?",
         "prompts": [
           "기능이 있을 것 같아서였나요?",
@@ -1343,7 +1338,7 @@ export const INTERVIEW_DATA_BY_CODE = {
       },
       {
         "group": "Task 1-A",
-        "number": "4",
+        "number": "3",
         "label": "Task 1-A에서 가장 헷갈렸던 지점은 무엇이었나요?"
       },
       {
@@ -1964,7 +1959,15 @@ export const INTERVIEW_DATA_BY_CODE = {
       {
         "group": "공통 질문",
         "number": "2",
-        "label": "저번 설문에서 전체적으로 선호하는 UI는 “A/B”라고 하셨는데, 그 이유는 무엇인가요?"
+        "label": "전체 설문에서는 A와 B 각각에 대해 점수가 비교적 일관되게 나타났는데, 마지막 선호도 조사에서는 A를 선택하셨습니다. 최종적으로 A를 더 선호한 이유는 무엇인가요?",
+        "prompts": [
+          "혹시 기존 코레일 앱이나 비슷한 예매 앱에 익숙해서 A 방식이 더 자연스럽게 느껴졌나요?"
+        ]
+      },
+      {
+        "group": "공통 질문",
+        "number": "2-1",
+        "label": "A와 B 중 더 선호하는 UI는 A라고 답하셨는데, B가 개선되려면 어떤 부분이 바뀌어야 한다고 생각하시나요?"
       },
       {
         "group": "공통 질문",
@@ -1973,16 +1976,6 @@ export const INTERVIEW_DATA_BY_CODE = {
       }
     ],
     "customQuestions": [
-      {
-        "group": "General",
-        "number": "1",
-        "label": "전체 설문에서는 A와 B 각각에 대해 점수가 비교적 일관되게 나타났는데, 마지막 선호도 조사에서는 A를 선택하셨습니다. 최종적으로 A를 더 선호한 이유는 무엇인가요?"
-      },
-      {
-        "group": "General",
-        "number": "2",
-        "label": "혹시 기존 코레일 앱이나 비슷한 예매 앱에 익숙해서 A 방식이 더 자연스럽게 느껴졌나요?"
-      },
       {
         "group": "Task 1-B",
         "number": "1",
@@ -1997,11 +1990,6 @@ export const INTERVIEW_DATA_BY_CODE = {
         "group": "Task 1-B",
         "number": "3",
         "label": "B의 좌석 현황 화면이나 좌석 선택 방식이 처음 봤을 때 직관적이었나요, 아니면 적응이 필요했나요?"
-      },
-      {
-        "group": "Final Preference",
-        "number": "1",
-        "label": "A와 B 중 더 선호하는 UI는 A라고 답하셨는데, B가 개선되려면 어떤 부분이 바뀌어야 한다고 생각하시나요?"
       }
     ],
     "tasks": [
@@ -2631,18 +2619,18 @@ export const INTERVIEW_DATA_BY_CODE = {
         "label": "마지막에 목표 좌석을 성공적으로 선택한 후에 결제 안내 화면에서 다시 뒤돌아가신 이유는 무엇인가요? 결제하기 버튼이 한 번에 잘 눌리지 않은 것처럼 보였는데, 맞나요?"
       },
       {
-        "group": "Survey Score Mismatch",
-        "number": "1",
+        "group": "Task 1-A",
+        "number": "5",
         "label": "Task 1-A에서 실제로는 시행착오가 있었지만, 일부 설문 문항에는 높은 점수를 주셨습니다. 높은 점수를 준 이유는 무엇인가요?"
       },
       {
-        "group": "Survey Score Mismatch",
-        "number": "2",
+        "group": "Task 1-A",
+        "number": "6",
         "label": "반면 “올바른 경로를 명확하게 제시했다” 문항에는 낮은 점수를 주셨습니다. 이 문항에서 특히 어떤 경로가 명확하지 않다고 느끼셨나요?"
       },
       {
-        "group": "Survey Score Mismatch",
-        "number": "3",
+        "group": "Task 1-A",
+        "number": "7",
         "label": "‘원치 않는 좌석을 잘못 선택할 가능성’과 ‘예매 경로가 명확한지’를 서로 다르게 평가하신 이유가 있나요?"
       }
     ],
@@ -3275,7 +3263,7 @@ export const INTERVIEW_DATA_BY_CODE = {
       {
         "group": "Task 3-B",
         "number": "2",
-        "label": "Task 3-B 설문에서 “여러 좌석을 한눈에 비교할 수 있었다”는 높게 평가하셨지만, “직관적으로 찾을 수 있었다”와 “창가 좌석 현황을 쉽게 파악할 수 있었다”는 낮게 평가하셨습니다. 좌석은 많이 보였지만 창가 좌석을 구분하기는 어려웠다고 느끼신 건가요?"
+        "label": "Task 3-B 설문에서 “여러 좌석을 한눈에 비교할 수 있었다”는 높게 평가하셨지만, “직관적으로 찾을 수 있었다”와 “창가 좌석 현황을 쉽게 파악할 수 있었다”는 낮게 평가하셨습니다. 좌석은 한눈에 보였지만 창가 좌석을 구분하기는 어려웠다고 느끼신 건가요?"
       },
       {
         "group": "Task 3-B",
@@ -3906,16 +3894,6 @@ export const INTERVIEW_DATA_BY_CODE = {
       }
     ],
     "customQuestions": [
-      {
-        "group": "General",
-        "number": "1",
-        "label": "기존 코레일 앱이나 기차 예매 앱을 자주 사용하시는 편인가요?"
-      },
-      {
-        "group": "General",
-        "number": "2",
-        "label": "전체적으로 A를 더 선호하셨는데, A 방식이 더 익숙하거나 예측 가능하게 느껴졌나요?"
-      },
       {
         "group": "Task 2-B",
         "number": "1",

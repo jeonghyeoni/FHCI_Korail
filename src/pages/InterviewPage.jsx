@@ -441,7 +441,7 @@ export default function InterviewPage() {
           data-clickable="true"
           onClick={handleSubmit}
         >
-          {isSubmitting ? "저장 중..." : isSubmitted ? "저장 완료" : "인터뷰 응답 제출"}
+          {isSubmitting ? "저장 중..." : isSubmitted ? "저장 완료" : hasAllAnswers ? "인터뷰 응답 제출" : "필수 항목에 전부 응답해주세요"}
         </button>
       </section>
     </main>

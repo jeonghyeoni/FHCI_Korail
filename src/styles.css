@@ -905,19 +905,19 @@ button {
   line-height: 1.5;
 }
 
-.interview-question textarea {
-  width: 100%;
-  min-height: 104px;
-  resize: vertical;
+  .interview-question textarea {
+    width: 100%;
+    min-height: 104px;
+    resize: vertical;
   border: 1px solid #ccd8e2;
   border-radius: 8px;
   padding: 10px;
   color: #152536;
-  background: #ffffff;
-  font: inherit;
-  font-size: 14px;
-  line-height: 1.5;
-}
+    background: #ffffff;
+    font: inherit;
+    font-size: 16px;
+    line-height: 1.5;
+  }
 
 .interview-submit-status {
   margin: 14px 0 0;
@@ -2655,7 +2655,7 @@ button {
   color: #253746;
   background: #f9fbfc;
   font: inherit;
-  font-size: clamp(14px, 3.8cqw, 16px);
+  font-size: 16px;
   line-height: 1.45;
 }
 

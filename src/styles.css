@@ -2115,6 +2115,44 @@ button {
   word-break: keep-all;
 }
 
+.test-link-notice {
+  display: grid;
+  gap: 7px;
+  border: 1px solid #b9dff5;
+  border-left: 6px solid var(--korail-blue);
+  border-radius: 10px;
+  padding: 14px 16px;
+  color: #17364b;
+  background: #eef8fd;
+  box-shadow: 0 5px 16px rgba(10, 60, 92, 0.1);
+}
+
+.test-link-notice strong {
+  color: var(--korail-navy);
+  font-size: clamp(16px, 4.4cqw, 19px);
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.test-link-notice p {
+  margin: 0;
+  color: #344c5c;
+  font-size: clamp(13px, 3.6cqw, 15px);
+  line-height: 1.45;
+  word-break: keep-all;
+}
+
+.test-link-notice a {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  color: var(--korail-blue);
+  font-size: clamp(13px, 3.5cqw, 15px);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .kakao-browser-warning {
   display: grid;
   align-content: center;

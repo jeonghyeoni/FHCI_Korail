@@ -71,6 +71,12 @@ export default function ConsentPage() {
           <p>여전히 테스트를 진행하실 수 있지만, 수집된 데이터는 연구에 이용되지 않습니다.</p>
         </aside>
 
+        <aside className="test-link-notice" aria-label="테스트 링크 안내">
+          <strong>더 간편한 테스트 링크</strong>
+          <p>아래 링크에서는 더욱 간편하고 제약 없이 원하는 Task와 설문으로 바로 이동할 수 있습니다.</p>
+          <a href="/test">https://fhci-korail.pages.dev/test</a>
+        </aside>
+
         {showInAppWarning ? (
           <aside className="kakao-browser-warning" aria-label="인앱 브라우저 안내">
             <strong>Chrome 또는 Safari 등 외부 브라우저에서 진행해 주세요.</strong>

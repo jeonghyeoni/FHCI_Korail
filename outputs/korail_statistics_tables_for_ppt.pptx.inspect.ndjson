@@ -1,0 +1,46 @@
+{"kind":"deck","id":"pr/8rfdxq","name":"Deck"}
+{"kind":"layout","layoutId":"88ce69c0-a81f-4f3d-ae5a-46350ed15ab7","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"b7f57a17-bd94-4a7d-b9af-ba454add6150","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/2ulq3v","slide":1,"title":"FHCI Korail Analysis Results","textShapes":12}
+{"kind":"shape","id":"sh/nuxc3ylc","slide":1,"name":"top-rule","bbox":[0,0,1280,8]}
+{"kind":"shape","id":"sh/gbq1oryt","slide":1,"name":"accent-rule","bbox":[0,8,1280,3]}
+{"kind":"textbox","id":"sh/5wjudg7a","slide":1,"name":"eyebrow","text":"FHCI Korail Analysis Results","textPreview":"FHCI Korail Analysis Results","textChars":28,"textLines":1,"bbox":[72,34,420,24]}
+{"kind":"textbox","id":"sh/yhgn29gr","slide":1,"name":"slide-title","text":"Behavioral Metrics Statistical Summary","textPreview":"Behavioral Metrics Statistical Summary","textChars":38,"textLines":1,"bbox":[72,62,760,56]}
+{"kind":"textbox","id":"sh/n29gr2p8","slide":1,"name":"subtitle","text":"Variant A vs B paired comparison (n=40) · Lower values indicate better performance","textPreview":"Variant A vs B paired comparison (n=40) · Lower values indicate better performance","textChars":82,"textLines":1,"bbox":[72,114,980,30]}
+{"kind":"shape","id":"sh/gn29gr2p","slide":1,"name":"tile-Metrics Favoring B","bbox":[72,154,250,58]}
+{"kind":"textbox","id":"sh/58z25kb6","slide":1,"name":"tile-value-Metrics Favoring B","text":"12 / 12","textPreview":"12 / 12","textChars":7,"textLines":1,"bbox":[90,162,214,24]}
+{"kind":"textbox","id":"sh/ytsvu9kn","slide":1,"name":"tile-label-Metrics Favoring B","text":"Metrics Favoring B","textPreview":"Metrics Favoring B","textChars":18,"textLines":1,"bbox":[90,188,214,18]}
+{"kind":"shape","id":"sh/neloj2t8","slide":1,"name":"tile-Statistically Significant","bbox":[342,154,250,58]}
+{"kind":"textbox","id":"sh/nap4r65w","slide":1,"name":"tile-value-Statistically Significant","text":"10 / 12","textPreview":"10 / 12","textChars":7,"textLines":1,"bbox":[360,162,214,24]}
+{"kind":"textbox","id":"sh/upwb2hwf","slide":1,"name":"tile-label-Statistically Significant","text":"Statistically Significant","textPreview":"Statistically Significant","textChars":25,"textLines":1,"bbox":[360,188,214,18]}
+{"kind":"shape","id":"sh/5gbq1ory","slide":1,"name":"tile-Largest Mean Improvement","bbox":[612,154,250,58]}
+{"kind":"textbox","id":"sh/cvixczed","slide":1,"name":"tile-value-Largest Mean Improvement","text":"T1 · 13.7","textPreview":"T1 · 13.7","textChars":9,"textLines":1,"bbox":[630,162,214,24]}
+{"kind":"textbox","id":"sh/nyd0z610","slide":1,"name":"tile-label-Largest Mean Improvement","text":"Largest Mean Improvement","textPreview":"Largest Mean Improvement","textChars":24,"textLines":1,"bbox":[630,188,214,18]}
+{"kind":"shape","id":"sh/udg7adsj","slide":1,"name":"tile-Display Rule","bbox":[882,154,250,58]}
+{"kind":"textbox","id":"sh/54zidony","slide":1,"name":"tile-value-Display Rule","text":"A - B","textPreview":"A - B","textChars":5,"textLines":1,"bbox":[900,162,214,24]}
+{"kind":"textbox","id":"sh/cj6tovah","slide":1,"name":"tile-label-Display Rule","text":"Display Rule","textPreview":"Display Rule","textChars":12,"textLines":1,"bbox":[900,188,214,18]}
+{"kind":"textbox","id":"sh/u9knih4b","slide":1,"name":"source-note","text":"Source: behavioral_statistics_summary.csv · Effect size: r for Wilcoxon rows; Cohen's dz for paired t-test rows","textPreview":"Source: behavioral_statistics_summary.csv · Effect size: r for Wilcoxon rows; Cohen's dz for paired t-test rows","textChars":111,"textLines":1,"bbox":[72,654,1136,32]}
+{"kind":"table","id":"tb/8v6psfil","slide":1,"name":"","rows":13,"cols":11,"preview":"Task | Metric | A Mean | A SD | B Mean | B SD | Delta | Gain | p-value | Effect | Sig.","bbox":[72,228,1136,404]}
+{"kind":"notes","id":"nt/2ulq3v","slide":1,"text":""}
+{"kind":"slide","id":"sl/kaym7k","slide":2,"title":"FHCI Korail Analysis Results","textShapes":13}
+{"kind":"shape","id":"sh/ed8v6psf","slide":2,"name":"top-rule","bbox":[0,0,1280,8]}
+{"kind":"shape","id":"sh/p4r65wju","slide":2,"name":"accent-rule","bbox":[0,8,1280,3]}
+{"kind":"textbox","id":"sh/wjudg7ad","slide":2,"name":"eyebrow","text":"FHCI Korail Analysis Results","textPreview":"FHCI Korail Analysis Results","textChars":28,"textLines":1,"bbox":[72,34,420,24]}
+{"kind":"textbox","id":"sh/7qpg3ex0","slide":2,"name":"slide-title","text":"Survey Metrics Statistical Summary","textPreview":"Survey Metrics Statistical Summary","textChars":34,"textLines":1,"bbox":[72,62,760,56]}
+{"kind":"textbox","id":"sh/i5sneloj","slide":2,"name":"subtitle","text":"Variant A vs B paired comparison (n=40) · Higher survey scores indicate more positive ratings","textPreview":"Variant A vs B paired comparison (n=40) · Higher survey scores indicate more positive ratings","textChars":93,"textLines":1,"bbox":[72,114,980,30]}
+{"kind":"shape","id":"sh/pwb2hwfy","slide":2,"name":"tile-Constructs Favoring B","bbox":[72,154,270,58]}
+{"kind":"textbox","id":"sh/0bi9s36h","slide":2,"name":"tile-value-Constructs Favoring B","text":"4 / 4","textPreview":"4 / 4","textChars":5,"textLines":1,"bbox":[90,162,234,24]}
+{"kind":"textbox","id":"sh/7ed8bat4","slide":2,"name":"tile-label-Constructs Favoring B","text":"Constructs Favoring B","textPreview":"Constructs Favoring B","textChars":21,"textLines":1,"bbox":[90,188,234,18]}
+{"kind":"shape","id":"sh/itgfmlkj","slide":2,"name":"tile-Mean Improvement Range","bbox":[364,154,270,58]}
+{"kind":"textbox","id":"sh/cvixczed","slide":2,"name":"tile-value-Mean Improvement Range","text":"+0.89 ~ +2.13","textPreview":"+0.89 ~ +2.13","textChars":13,"textLines":1,"bbox":[382,162,234,24]}
+{"kind":"textbox","id":"sh/5gbq1ory","slide":2,"name":"tile-label-Mean Improvement Range","text":"Mean Improvement Range","textPreview":"Mean Improvement Range","textChars":22,"textLines":1,"bbox":[382,188,234,18]}
+{"kind":"shape","id":"sh/upwb2hwf","slide":2,"name":"tile-Largest Mean Gain","bbox":[656,154,270,58]}
+{"kind":"textbox","id":"sh/nap4r65w","slide":2,"name":"tile-value-Largest Mean Gain","text":"T3 · +2.13","textPreview":"T3 · +2.13","textChars":10,"textLines":1,"bbox":[674,162,234,24]}
+{"kind":"textbox","id":"sh/cj6tovah","slide":2,"name":"tile-label-Largest Mean Gain","text":"Largest Mean Gain","textPreview":"Largest Mean Gain","textChars":17,"textLines":1,"bbox":[674,188,234,18]}
+{"kind":"shape","id":"sh/54zidony","slide":2,"name":"tile-Largest Effect Size","bbox":[948,154,260,58]}
+{"kind":"textbox","id":"sh/udg7adsj","slide":2,"name":"tile-value-Largest Effect Size","text":"dz=1.67","textPreview":"dz=1.67","textChars":7,"textLines":1,"bbox":[966,162,224,24]}
+{"kind":"textbox","id":"sh/nyd0z610","slide":2,"name":"tile-label-Largest Effect Size","text":"Largest Effect Size","textPreview":"Largest Effect Size","textChars":19,"textLines":1,"bbox":[966,188,224,18]}
+{"kind":"textbox","id":"sh/1032lszq","slide":2,"name":"survey-insight","text":"The largest mean improvement was in \"Visibility of System Status\" (+2.13), and Variant B was significantly higher across all survey constructs.","textPreview":"The largest mean improvement was in \"Visibility of System Status\" (+2.13), and Variant B was significantly higher across all survey const...","textChars":143,"textLines":1,"bbox":[72,556,1136,76]}
+{"kind":"textbox","id":"sh/5sneloj2","slide":2,"name":"source-note","text":"Source: survey_statistics_summary.csv · Effect size: Cohen's dz","textPreview":"Source: survey_statistics_summary.csv · Effect size: Cohen's dz","textChars":63,"textLines":1,"bbox":[72,654,1136,32]}
+{"kind":"table","id":"tb/rqd4vmtw","slide":2,"name":"","rows":5,"cols":10,"preview":"Task | Construct | A Mean | A SD | B Mean | B SD | Delta | p-value | Effect | Sig.","bbox":[72,246,1136,286]}
+{"kind":"notes","id":"nt/kaym7k","slide":2,"text":""}

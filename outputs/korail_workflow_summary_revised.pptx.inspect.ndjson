@@ -1,0 +1,259 @@
+{"kind":"deck","id":"pr/yxfvke","name":"Deck"}
+{"kind":"layout","layoutId":"ef30180c-b93e-45dd-8447-b405d17b5b81","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"604e5ce3-0a73-4dc8-9213-8e1d6f92edab","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/o6n182","slide":1,"title":"KORAIL WORKFLOW SUMMARY","textShapes":41}
+{"kind":"textbox","id":"sh/4fu18jqh","slide":1,"name":"kicker","text":"KORAIL WORKFLOW SUMMARY","textPreview":"KORAIL WORKFLOW SUMMARY","textChars":23,"textLines":1,"bbox":[50,22,340,24]}
+{"kind":"textbox","id":"sh/fu18jqh0","slide":1,"name":"title","text":"Task 1: Desired Seat Selection","textPreview":"Task 1: Desired Seat Selection","textChars":30,"textLines":1,"bbox":[50,50,850,44]}
+{"kind":"textbox","id":"sh/m94fu18j","slide":1,"name":"subtitle","text":"A uses explicit seat selection; B enters all-car seat status first.","textPreview":"A uses explicit seat selection; B enters all-car seat status first.","textChars":67,"textLines":1,"bbox":[52,93,840,24]}
+{"kind":"textbox","id":"sh/xobm58z2","slide":1,"name":"case-title-1-0","text":"A Best","textPreview":"A Best","textChars":6,"textLines":1,"bbox":[46,137,94,26]}
+{"kind":"shape","id":"sh/83itgfml","slide":1,"name":"screen-band-1-0-search-146","bbox":[146,154,238,120]}
+{"kind":"textbox","id":"sh/fil0rqd4","slide":1,"name":"screen-label-1-0-search-146","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[154,160,222,18]}
+{"kind":"shape","id":"sh/qxs72x4n","slide":1,"name":"screen-band-1-0-seat-382","bbox":[382,154,250,120]}
+{"kind":"textbox","id":"sh/xkf6dcbu","slide":1,"name":"screen-label-1-0-seat-382","text":"좌석 page","textPreview":"좌석 page","textChars":7,"textLines":1,"bbox":[390,160,234,18]}
+{"kind":"shape","id":"sh/4zidonyd","slide":1,"name":"screen-band-1-0-search-630","bbox":[630,154,116,120]}
+{"kind":"textbox","id":"sh/mhk3q5o7","slide":1,"name":"screen-label-1-0-search-630","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[638,160,100,18]}
+{"kind":"shape","id":"sh/b2hwfyxo","slide":1,"name":"screen-band-1-0-payment-744","bbox":[744,154,140,120]}
+{"kind":"textbox","id":"sh/4nap4r65","slide":1,"name":"screen-label-1-0-payment-744","text":"결제 page","textPreview":"결제 page","textChars":7,"textLines":1,"bbox":[752,160,124,18]}
+{"kind":"textbox","id":"sh/t83itgfm","slide":1,"name":"node-s1","text":"열차 선택","textPreview":"열차 선택","textChars":5,"textLines":1,"bbox":[146,186,88,40]}
+{"kind":"textbox","id":"sh/m58z25kb","slide":1,"name":"node-s2","text":"좌석 선택 btn","textPreview":"좌석 선택 btn","textChars":9,"textLines":1,"bbox":[252,186,122,40]}
+{"kind":"textbox","id":"sh/bq1oryts","slide":1,"name":"node-s3","text":"원하는 좌석","textPreview":"원하는 좌석","textChars":6,"textLines":1,"bbox":[392,186,96,40]}
+{"kind":"textbox","id":"sh/4byhgn29","slide":1,"name":"node-s4","text":"선택 완료 btn","textPreview":"선택 완료 btn","textChars":9,"textLines":1,"bbox":[506,186,116,40]}
+{"kind":"textbox","id":"sh/twra5gbq","slide":1,"name":"node-s5","text":"예매 btn","textPreview":"예매 btn","textChars":6,"textLines":1,"bbox":[640,186,96,40]}
+{"kind":"textbox","id":"sh/m1cfa9w3","slide":1,"name":"node-s6","text":"결제하기 btn","textPreview":"결제하기 btn","textChars":8,"textLines":1,"bbox":[754,186,120,40]}
+{"kind":"shape","id":"sh/bm58z25k","slide":1,"bbox":[234,206,18,0]}
+{"kind":"shape","id":"sh/7adsji5s","slide":1,"bbox":[374,206,18,0]}
+{"kind":"shape","id":"sh/epkzupwb","slide":1,"bbox":[488,206,18,0]}
+{"kind":"shape","id":"sh/pg3ex0nu","slide":1,"bbox":[622,206,18,0]}
+{"kind":"shape","id":"sh/wval87ed","slide":1,"bbox":[736,206,18,0]}
+{"kind":"textbox","id":"sh/7mp0bi9s","slide":1,"name":"case-title-1-1","text":"A Worst","textPreview":"A Worst","textChars":7,"textLines":1,"bbox":[46,309,94,26]}
+{"kind":"shape","id":"sh/e1w7mp0b","slide":1,"name":"screen-band-1-1-search-146","bbox":[146,326,212,120]}
+{"kind":"textbox","id":"sh/psfil0rq","slide":1,"name":"screen-label-1-1-search-146","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[154,332,196,18]}
+{"kind":"shape","id":"sh/w7mp0bi9","slide":1,"name":"screen-band-1-1-randomPayment-356","bbox":[356,326,108,120]}
+{"kind":"textbox","id":"sh/7u54zido","slide":1,"name":"screen-label-1-1-randomPayment-356","text":"랜덤 page","textPreview":"랜덤 page","textChars":7,"textLines":1,"bbox":[364,332,92,18]}
+{"kind":"shape","id":"sh/ed8bat47","slide":1,"name":"screen-band-1-1-search-462","bbox":[462,326,288,120]}
+{"kind":"textbox","id":"sh/oj2t83it","slide":1,"name":"screen-label-1-1-search-462","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[470,332,272,18]}
+{"kind":"shape","id":"sh/d4vmtwra","slide":1,"name":"screen-band-1-1-seat-748","bbox":[748,326,250,120]}
+{"kind":"textbox","id":"sh/6dcbulwv","slide":1,"name":"screen-label-1-1-seat-748","text":"좌석 page","textPreview":"좌석 page","textChars":7,"textLines":1,"bbox":[756,332,234,18]}
+{"kind":"shape","id":"sh/vy90je9c","slide":1,"name":"screen-band-1-1-search-996","bbox":[996,326,116,120]}
+{"kind":"textbox","id":"sh/o7qpg3ex","slide":1,"name":"screen-label-1-1-search-996","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[1004,332,100,18]}
+{"kind":"shape","id":"sh/dsji5sne","slide":1,"name":"screen-band-1-1-payment-1110","bbox":[1110,326,138,120]}
+{"kind":"textbox","id":"sh/61032lsz","slide":1,"name":"screen-label-1-1-payment-1110","text":"결제 page","textPreview":"결제 page","textChars":7,"textLines":1,"bbox":[1118,332,122,18]}
+{"kind":"textbox","id":"sh/vmtwra5g","slide":1,"name":"node-s7","text":"열차 선택","textPreview":"열차 선택","textChars":5,"textLines":1,"bbox":[146,358,88,40]}
+{"kind":"textbox","id":"sh/ovahoza1","slide":1,"name":"node-s8","text":"예매 btn","textPreview":"예매 btn","textChars":6,"textLines":1,"bbox":[252,358,96,40]}
+{"kind":"textbox","id":"sh/dg7adsji","slide":1,"name":"node-s9","text":"뒤로가기","textPreview":"뒤로가기","textChars":4,"textLines":1,"bbox":[366,358,88,40]}
+{"kind":"textbox","id":"sh/9cvixcze","slide":1,"name":"node-s10","text":"버튼","textPreview":"버튼","textChars":2,"textLines":1,"bbox":[472,347,128,50]}
+{"kind":"textbox","id":"sh/gr2p8nqx","slide":1,"name":"node-s11","text":"좌석 선택 btn","textPreview":"좌석 선택 btn","textChars":9,"textLines":1,"bbox":[618,358,122,40]}
+{"kind":"textbox","id":"sh/r65wjudg","slide":1,"name":"node-s12","text":"원하는 좌석","textPreview":"원하는 좌석","textChars":6,"textLines":1,"bbox":[758,358,96,40]}
+{"kind":"textbox","id":"sh/ylc7u54z","slide":1,"name":"node-s13","text":"선택 완료 btn","textPreview":"선택 완료 btn","textChars":9,"textLines":1,"bbox":[872,358,116,40]}
+{"kind":"textbox","id":"sh/5o7qpg3e","slide":1,"name":"node-s14","text":"예매 btn","textPreview":"예매 btn","textChars":6,"textLines":1,"bbox":[1006,358,96,40]}
+{"kind":"textbox","id":"sh/g3ex0nux","slide":1,"name":"node-s15","text":"결제하기 btn","textPreview":"결제하기 btn","textChars":8,"textLines":1,"bbox":[1120,358,120,40]}
+{"kind":"shape","id":"sh/nih4byhg","slide":1,"bbox":[234,378,18,0]}
+{"kind":"shape","id":"sh/yxobm58z","slide":1,"bbox":[348,378,18,0]}
+{"kind":"shape","id":"sh/9s36hcrm","slide":1,"bbox":[454,372,18,6]}
+{"kind":"shape","id":"sh/g7adsji5","slide":1,"bbox":[600,372,18,6]}
+{"kind":"shape","id":"sh/ap4r65wj","slide":1,"bbox":[740,378,18,0]}
+{"kind":"shape","id":"sh/za1gvy90","slide":1,"bbox":[854,378,18,0]}
+{"kind":"shape","id":"sh/svu9knih","slide":1,"bbox":[988,378,18,0]}
+{"kind":"shape","id":"sh/hgn29gr2","slide":1,"bbox":[1102,378,18,0]}
+{"kind":"shape","id":"sh/a1gvy90j","slide":1,"bbox":[300,398,110,0]}
+{"kind":"textbox","id":"sh/zidonyd0","slide":1,"name":"case-title-1-2","text":"B","textPreview":"B","textChars":1,"textLines":1,"bbox":[46,481,94,26]}
+{"kind":"shape","id":"sh/s36hcrmh","slide":1,"name":"screen-band-1-2-search-146","bbox":[146,498,98,120]}
+{"kind":"textbox","id":"sh/hoza1gvy","slide":1,"name":"screen-label-1-2-search-146","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[154,504,82,18]}
+{"kind":"shape","id":"sh/a5gbq1or","slide":1,"name":"screen-band-1-2-status-242","bbox":[242,498,116,120]}
+{"kind":"textbox","id":"sh/3m94fu18","slide":1,"name":"screen-label-1-2-status-242","text":"전호차 page","textPreview":"전호차 page","textChars":8,"textLines":1,"bbox":[250,504,100,18]}
+{"kind":"shape","id":"sh/vixczed8","slide":1,"name":"screen-band-1-2-seat-356","bbox":[356,498,254,120]}
+{"kind":"textbox","id":"sh/2x4nap4r","slide":1,"name":"screen-label-1-2-seat-356","text":"좌석 page","textPreview":"좌석 page","textChars":7,"textLines":1,"bbox":[364,504,238,18]}
+{"kind":"shape","id":"sh/donyd0z6","slide":1,"name":"screen-band-1-2-payment-608","bbox":[608,498,140,120]}
+{"kind":"textbox","id":"sh/k3q5o7qp","slide":1,"name":"screen-label-1-2-payment-608","text":"결제 page","textPreview":"결제 page","textChars":7,"textLines":1,"bbox":[616,504,124,18]}
+{"kind":"textbox","id":"sh/val87ed8","slide":1,"name":"node-s16","text":"열차 선택","textPreview":"열차 선택","textChars":5,"textLines":1,"bbox":[146,530,88,40]}
+{"kind":"textbox","id":"sh/6psfil0r","slide":1,"name":"node-s17","text":"원하는 호차","textPreview":"원하는 호차","textChars":6,"textLines":1,"bbox":[252,530,96,40]}
+{"kind":"textbox","id":"sh/dcbulwva","slide":1,"name":"node-s18","text":"원하는 좌석","textPreview":"원하는 좌석","textChars":6,"textLines":1,"bbox":[366,530,96,40]}
+{"kind":"textbox","id":"sh/kre1w7mp","slide":1,"name":"node-s19","text":"결제하기 btn","textPreview":"결제하기 btn","textChars":8,"textLines":1,"bbox":[480,530,120,40]}
+{"kind":"textbox","id":"sh/v6psfil0","slide":1,"name":"node-s20","text":"결제하기 btn","textPreview":"결제하기 btn","textChars":8,"textLines":1,"bbox":[618,530,120,40]}
+{"kind":"shape","id":"sh/2lszqtcj","slide":1,"bbox":[234,550,18,0]}
+{"kind":"shape","id":"sh/gbq1oryt","slide":1,"bbox":[348,550,18,0]}
+{"kind":"shape","id":"sh/5wjudg7a","slide":1,"bbox":[462,550,18,0]}
+{"kind":"shape","id":"sh/y90je9cv","slide":1,"bbox":[600,550,18,0]}
+{"kind":"textbox","id":"sh/nuxc3ylc","slide":1,"name":"page-1","text":"1 page / 3 pages","textPreview":"1 page / 3 pages","textChars":16,"textLines":1,"bbox":[1090,682,140,22]}
+{"kind":"notes","id":"nt/o6n182","slide":1,"text":""}
+{"kind":"slide","id":"sl/n2h5sl","slide":2,"title":"KORAIL WORKFLOW SUMMARY","textShapes":39}
+{"kind":"textbox","id":"sh/ahoza1gv","slide":2,"name":"kicker","text":"KORAIL WORKFLOW SUMMARY","textPreview":"KORAIL WORKFLOW SUMMARY","textChars":23,"textLines":1,"bbox":[50,22,340,24]}
+{"kind":"textbox","id":"sh/l87ed8ba","slide":2,"name":"title","text":"Task 2: Last Seat Selection","textPreview":"Task 2: Last Seat Selection","textChars":27,"textLines":1,"bbox":[50,50,850,44]}
+{"kind":"textbox","id":"sh/sneloj2t","slide":2,"name":"subtitle","text":"Loops appear where users manually search before falling back to booking.","textPreview":"Loops appear where users manually search before falling back to booking.","textChars":72,"textLines":1,"bbox":[52,93,840,24]}
+{"kind":"textbox","id":"sh/3ex0nuxc","slide":2,"name":"case-title-2-0","text":"A Best","textPreview":"A Best","textChars":6,"textLines":1,"bbox":[46,137,94,26]}
+{"kind":"shape","id":"sh/at47y1kr","slide":2,"name":"screen-band-2-0-search-146","bbox":[146,154,212,84]}
+{"kind":"textbox","id":"sh/lkjm1cfa","slide":2,"name":"screen-label-2-0-search-146","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[154,160,196,18]}
+{"kind":"shape","id":"sh/szqtcj6t","slide":2,"name":"screen-band-2-0-lastPayment-356","bbox":[356,154,140,84]}
+{"kind":"textbox","id":"sh/3itgfmlk","slide":2,"name":"screen-label-2-0-lastPayment-356","text":"마지막 page","textPreview":"마지막 page","textChars":8,"textLines":1,"bbox":[364,160,124,18]}
+{"kind":"textbox","id":"sh/ex0nuxc3","slide":2,"name":"node-s21","text":"열차 선택","textPreview":"열차 선택","textChars":5,"textLines":1,"bbox":[146,186,88,40]}
+{"kind":"textbox","id":"sh/wfyxobm5","slide":2,"name":"node-s22","text":"예매 btn","textPreview":"예매 btn","textChars":6,"textLines":1,"bbox":[252,186,96,40]}
+{"kind":"textbox","id":"sh/l0rqd4vm","slide":2,"name":"node-s23","text":"결제하기 btn","textPreview":"결제하기 btn","textChars":8,"textLines":1,"bbox":[366,186,120,40]}
+{"kind":"shape","id":"sh/ed8bat47","slide":2,"bbox":[234,206,18,0]}
+{"kind":"shape","id":"sh/7u54zido","slide":2,"bbox":[348,206,18,0]}
+{"kind":"textbox","id":"sh/wra5gbq1","slide":2,"name":"case-title-2-1","text":"A Worst","textPreview":"A Worst","textChars":7,"textLines":1,"bbox":[46,271,94,26]}
+{"kind":"shape","id":"sh/lc7u54zi","slide":2,"name":"screen-band-2-1-search-146","bbox":[146,288,238,84]}
+{"kind":"textbox","id":"sh/eloj2t83","slide":2,"name":"screen-label-2-1-search-146","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[154,294,222,18]}
+{"kind":"shape","id":"sh/36hcrmhk","slide":2,"name":"screen-band-2-1-seat-382","bbox":[382,288,376,84]}
+{"kind":"textbox","id":"sh/wval87ed","slide":2,"name":"screen-label-2-1-seat-382","text":"좌석 page","textPreview":"좌석 page","textChars":7,"textLines":1,"bbox":[390,294,360,18]}
+{"kind":"shape","id":"sh/pg3ex0nu","slide":2,"name":"screen-band-2-1-search-756","bbox":[756,288,116,84]}
+{"kind":"textbox","id":"sh/9knih4by","slide":2,"name":"screen-label-2-1-search-756","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[764,294,100,18]}
+{"kind":"shape","id":"sh/kzupwb2h","slide":2,"name":"screen-band-2-1-lastPayment-870","bbox":[870,288,140,84]}
+{"kind":"textbox","id":"sh/re1w7mp0","slide":2,"name":"screen-label-2-1-lastPayment-870","text":"마지막 page","textPreview":"마지막 page","textChars":8,"textLines":1,"bbox":[878,294,124,18]}
+{"kind":"textbox","id":"sh/2t83itgf","slide":2,"name":"node-s24","text":"열차 선택","textPreview":"열차 선택","textChars":5,"textLines":1,"bbox":[146,320,88,40]}
+{"kind":"textbox","id":"sh/9w3m94fu","slide":2,"name":"node-s25","text":"좌석 선택 btn","textPreview":"좌석 선택 btn","textChars":9,"textLines":1,"bbox":[252,320,122,40]}
+{"kind":"textbox","id":"sh/kb6xkf6d","slide":2,"name":"node-s26","text":"비효율","textPreview":"비효율","textChars":3,"textLines":1,"bbox":[392,309,128,50]}
+{"kind":"textbox","id":"sh/rqd4vmtw","slide":2,"name":"node-s27","text":"호차 변경","textPreview":"호차 변경","textChars":5,"textLines":1,"bbox":[538,320,104,40]}
+{"kind":"textbox","id":"sh/25kb6xkf","slide":2,"name":"node-s28","text":"뒤로가기","textPreview":"뒤로가기","textChars":4,"textLines":1,"bbox":[660,320,88,40]}
+{"kind":"textbox","id":"sh/94fu18jq","slide":2,"name":"node-s29","text":"예매 btn","textPreview":"예매 btn","textChars":6,"textLines":1,"bbox":[766,320,96,40]}
+{"kind":"textbox","id":"sh/kjm1cfa9","slide":2,"name":"node-s30","text":"결제하기 btn","textPreview":"결제하기 btn","textChars":8,"textLines":1,"bbox":[880,320,120,40]}
+{"kind":"shape","id":"sh/udg7adsj","slide":2,"bbox":[234,340,18,0]}
+{"kind":"shape","id":"sh/nyd0z610","slide":2,"bbox":[374,334,18,6]}
+{"kind":"shape","id":"sh/cj6tovah","slide":2,"bbox":[520,334,18,6]}
+{"kind":"shape","id":"sh/54zidony","slide":2,"bbox":[642,340,18,0]}
+{"kind":"shape","id":"sh/upwb2hwf","slide":2,"bbox":[748,340,18,0]}
+{"kind":"shape","id":"sh/nap4r65w","slide":2,"bbox":[862,340,18,0]}
+{"kind":"shape","id":"sh/cvixczed","slide":2,"bbox":[456,359,134,1]}
+{"kind":"textbox","id":"sh/5gbq1ory","slide":2,"name":"case-title-2-2","text":"B Best","textPreview":"B Best","textChars":6,"textLines":1,"bbox":[46,405,94,26]}
+{"kind":"shape","id":"sh/u18jqh0f","slide":2,"name":"screen-band-2-2-search-146","bbox":[146,422,98,84]}
+{"kind":"textbox","id":"sh/jm1cfa9w","slide":2,"name":"screen-label-2-2-search-146","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[154,428,82,18]}
+{"kind":"shape","id":"sh/neloj2t8","slide":2,"name":"screen-band-2-2-status-242","bbox":[242,422,138,84]}
+{"kind":"textbox","id":"sh/ytsvu9kn","slide":2,"name":"screen-label-2-2-status-242","text":"전호차 page","textPreview":"전호차 page","textChars":8,"textLines":1,"bbox":[250,428,122,18]}
+{"kind":"shape","id":"sh/5kb6xkf6","slide":2,"name":"screen-band-2-2-lastPayment-378","bbox":[378,422,140,84]}
+{"kind":"textbox","id":"sh/czed8v6p","slide":2,"name":"screen-label-2-2-lastPayment-378","text":"마지막 page","textPreview":"마지막 page","textChars":8,"textLines":1,"bbox":[386,428,124,18]}
+{"kind":"textbox","id":"sh/nqxs72x4","slide":2,"name":"node-s31","text":"열차 선택","textPreview":"열차 선택","textChars":5,"textLines":1,"bbox":[146,454,88,40]}
+{"kind":"textbox","id":"sh/u54zidon","slide":2,"name":"node-s32","text":"자동선택 btn","textPreview":"자동선택 btn","textChars":8,"textLines":1,"bbox":[252,454,118,40]}
+{"kind":"textbox","id":"sh/5sneloj2","slide":2,"name":"node-s33","text":"결제하기 btn","textPreview":"결제하기 btn","textChars":8,"textLines":1,"bbox":[388,454,120,40]}
+{"kind":"shape","id":"sh/cbulwval","slide":2,"bbox":[234,474,18,0]}
+{"kind":"shape","id":"sh/nuxc3ylc","slide":2,"bbox":[370,474,18,0]}
+{"kind":"textbox","id":"sh/y90je9cv","slide":2,"name":"case-title-2-3","text":"B Worst","textPreview":"B Worst","textChars":7,"textLines":1,"bbox":[46,539,94,26]}
+{"kind":"shape","id":"sh/87ed8bat","slide":2,"name":"screen-band-2-3-search-146","bbox":[146,556,98,84]}
+{"kind":"textbox","id":"sh/xs72x4na","slide":2,"name":"screen-label-2-3-search-146","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[154,562,82,18]}
+{"kind":"shape","id":"sh/q1orytsv","slide":2,"name":"screen-band-2-3-status-242","bbox":[242,556,116,84]}
+{"kind":"textbox","id":"sh/fmlkjm1c","slide":2,"name":"screen-label-2-3-status-242","text":"전호차 page","textPreview":"전호차 page","textChars":8,"textLines":1,"bbox":[250,562,100,18]}
+{"kind":"shape","id":"sh/8z25kb6x","slide":2,"name":"screen-band-2-3-seat-356","bbox":[356,556,254,84]}
+{"kind":"textbox","id":"sh/1gvy90je","slide":2,"name":"screen-label-2-3-seat-356","text":"좌석 page","textPreview":"좌석 page","textChars":7,"textLines":1,"bbox":[364,562,238,18]}
+{"kind":"shape","id":"sh/qtcj6tov","slide":2,"name":"screen-band-2-3-payment-608","bbox":[608,556,140,84]}
+{"kind":"textbox","id":"sh/je9cvixc","slide":2,"name":"screen-label-2-3-payment-608","text":"결제 page","textPreview":"결제 page","textChars":7,"textLines":1,"bbox":[616,562,124,18]}
+{"kind":"textbox","id":"sh/8v6psfil","slide":2,"name":"node-s34","text":"열차 선택","textPreview":"열차 선택","textChars":5,"textLines":1,"bbox":[146,588,88,40]}
+{"kind":"textbox","id":"sh/xczed8v6","slide":2,"name":"node-s35","text":"마지막 호차","textPreview":"마지막 호차","textChars":6,"textLines":1,"bbox":[252,588,96,40]}
+{"kind":"textbox","id":"sh/hoza1gvy","slide":2,"name":"node-s36","text":"마지막 좌석","textPreview":"마지막 좌석","textChars":6,"textLines":1,"bbox":[366,588,96,40]}
+{"kind":"textbox","id":"sh/s36hcrmh","slide":2,"name":"node-s37","text":"결제하기 btn","textPreview":"결제하기 btn","textChars":8,"textLines":1,"bbox":[480,588,120,40]}
+{"kind":"textbox","id":"sh/zidonyd0","slide":2,"name":"node-s38","text":"결제하기 btn","textPreview":"결제하기 btn","textChars":8,"textLines":1,"bbox":[618,588,120,40]}
+{"kind":"shape","id":"sh/a1gvy90j","slide":2,"bbox":[234,608,18,0]}
+{"kind":"shape","id":"sh/hgn29gr2","slide":2,"bbox":[348,608,18,0]}
+{"kind":"shape","id":"sh/svu9knih","slide":2,"bbox":[462,608,18,0]}
+{"kind":"shape","id":"sh/za1gvy90","slide":2,"bbox":[600,608,18,0]}
+{"kind":"textbox","id":"sh/ap4r65wj","slide":2,"name":"page-2","text":"2 page / 3 pages","textPreview":"2 page / 3 pages","textChars":16,"textLines":1,"bbox":[1090,682,140,22]}
+{"kind":"notes","id":"nt/n2h5sl","slide":2,"text":""}
+{"kind":"slide","id":"sl/5ol2sh","slide":3,"title":"KORAIL WORKFLOW SUMMARY","textShapes":61}
+{"kind":"textbox","id":"sh/xkf6dcbu","slide":3,"name":"kicker","text":"KORAIL WORKFLOW SUMMARY","textPreview":"KORAIL WORKFLOW SUMMARY","textChars":23,"textLines":1,"bbox":[50,22,340,24]}
+{"kind":"textbox","id":"sh/mtwra5gb","slide":3,"name":"title","text":"Task 3: Window Seat Selection","textPreview":"Task 3: Window Seat Selection","textChars":29,"textLines":1,"bbox":[50,50,850,44]}
+{"kind":"textbox","id":"sh/fepkzupw","slide":3,"name":"subtitle","text":"Decision diamonds mark repeated car changes while searching for a window seat.","textPreview":"Decision diamonds mark repeated car changes while searching for a window seat.","textChars":78,"textLines":1,"bbox":[52,93,840,24]}
+{"kind":"textbox","id":"sh/4r65wjud","slide":3,"name":"case-title-3-0","text":"A Best","textPreview":"A Best","textChars":6,"textLines":1,"bbox":[46,137,94,26]}
+{"kind":"shape","id":"sh/xc3ylc7u","slide":3,"name":"screen-band-3-0-search-146","bbox":[146,154,238,58]}
+{"kind":"textbox","id":"sh/mlkjm1cf","slide":3,"name":"screen-label-3-0-search-146","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[154,160,222,18]}
+{"kind":"shape","id":"sh/f6dcbulw","slide":3,"name":"screen-band-3-0-seat-382","bbox":[382,154,530,58]}
+{"kind":"textbox","id":"sh/4fu18jqh","slide":3,"name":"screen-label-3-0-seat-382","text":"좌석 page","textPreview":"좌석 page","textChars":7,"textLines":1,"bbox":[390,160,514,18]}
+{"kind":"shape","id":"sh/x0nuxc3y","slide":3,"name":"screen-band-3-0-search-910","bbox":[910,154,116,58]}
+{"kind":"textbox","id":"sh/lkjm1cfa","slide":3,"name":"screen-label-3-0-search-910","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[918,160,100,18]}
+{"kind":"shape","id":"sh/szqtcj6t","slide":3,"name":"screen-band-3-0-lastPayment-1024","bbox":[1024,154,140,58]}
+{"kind":"textbox","id":"sh/3ex0nuxc","slide":3,"name":"screen-label-3-0-lastPayment-1024","text":"마지막 page","textPreview":"마지막 page","textChars":8,"textLines":1,"bbox":[1032,160,124,18]}
+{"kind":"textbox","id":"sh/at47y1kr","slide":3,"name":"node-s39","text":"열차 선택","textPreview":"열차 선택","textChars":5,"textLines":1,"bbox":[146,186,88,40]}
+{"kind":"textbox","id":"sh/l87ed8ba","slide":3,"name":"node-s40","text":"좌석 선택 btn","textPreview":"좌석 선택 btn","textChars":9,"textLines":1,"bbox":[252,186,122,40]}
+{"kind":"textbox","id":"sh/sneloj2t","slide":3,"name":"node-s41","text":"창가","textPreview":"창가","textChars":2,"textLines":1,"bbox":[392,175,128,50]}
+{"kind":"textbox","id":"sh/32lszqtc","slide":3,"name":"node-s42","text":"호차 변경","textPreview":"호차 변경","textChars":5,"textLines":1,"bbox":[538,186,104,40]}
+{"kind":"textbox","id":"sh/ahoza1gv","slide":3,"name":"node-s43","text":"창가 좌석","textPreview":"창가 좌석","textChars":5,"textLines":1,"bbox":[660,186,108,40]}
+{"kind":"textbox","id":"sh/lwval87e","slide":3,"name":"node-s44","text":"선택 완료 btn","textPreview":"선택 완료 btn","textChars":9,"textLines":1,"bbox":[786,186,116,40]}
+{"kind":"textbox","id":"sh/wb2hwfyx","slide":3,"name":"node-s45","text":"예매 btn","textPreview":"예매 btn","textChars":6,"textLines":1,"bbox":[920,186,96,40]}
+{"kind":"textbox","id":"sh/sji5snel","slide":3,"name":"node-s46","text":"결제하기 btn","textPreview":"결제하기 btn","textChars":8,"textLines":1,"bbox":[1034,186,120,40]}
+{"kind":"shape","id":"sh/h4byhgn2","slide":3,"bbox":[234,206,18,0]}
+{"kind":"shape","id":"sh/adsji5sn","slide":3,"bbox":[374,200,18,6]}
+{"kind":"shape","id":"sh/3ylc7u54","slide":3,"bbox":[520,200,18,6]}
+{"kind":"shape","id":"sh/s72x4nap","slide":3,"bbox":[642,206,18,0]}
+{"kind":"shape","id":"sh/lszqtcj6","slide":3,"bbox":[768,206,18,0]}
+{"kind":"shape","id":"sh/a5gbq1or","slide":3,"bbox":[902,206,18,0]}
+{"kind":"shape","id":"sh/3m94fu18","slide":3,"bbox":[1016,206,18,0]}
+{"kind":"shape","id":"sh/s36hcrmh","slide":3,"bbox":[456,225,134,1]}
+{"kind":"textbox","id":"sh/hoza1gvy","slide":3,"name":"case-title-3-1","text":"A Lucky Best","textPreview":"A Lucky Best","textChars":12,"textLines":1,"bbox":[46,243,94,26]}
+{"kind":"shape","id":"sh/r65wjudg","slide":3,"name":"screen-band-3-1-search-146","bbox":[146,260,212,58]}
+{"kind":"textbox","id":"sh/ylc7u54z","slide":3,"name":"screen-label-3-1-search-146","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[154,266,196,18]}
+{"kind":"shape","id":"sh/9cvixcze","slide":3,"name":"screen-band-3-1-windowPayment-356","bbox":[356,260,140,58]}
+{"kind":"textbox","id":"sh/gr2p8nqx","slide":3,"name":"screen-label-3-1-windowPayment-356","text":"창가 page","textPreview":"창가 page","textChars":7,"textLines":1,"bbox":[364,266,124,18]}
+{"kind":"textbox","id":"sh/nih4byhg","slide":3,"name":"node-s47","text":"열차 선택","textPreview":"열차 선택","textChars":5,"textLines":1,"bbox":[146,292,88,40]}
+{"kind":"textbox","id":"sh/yxobm58z","slide":3,"name":"node-s48","text":"예매 btn","textPreview":"예매 btn","textChars":6,"textLines":1,"bbox":[252,292,96,40]}
+{"kind":"textbox","id":"sh/5o7qpg3e","slide":3,"name":"node-s49","text":"결제하기 btn","textPreview":"결제하기 btn","textChars":8,"textLines":1,"bbox":[366,292,120,40]}
+{"kind":"shape","id":"sh/g3ex0nux","slide":3,"bbox":[234,312,18,0]}
+{"kind":"shape","id":"sh/rmhk3q5o","slide":3,"bbox":[348,312,18,0]}
+{"kind":"textbox","id":"sh/y1kre1w7","slide":3,"name":"case-title-3-2","text":"A Worst","textPreview":"A Worst","textChars":7,"textLines":1,"bbox":[46,349,94,26]}
+{"kind":"shape","id":"sh/y90je9cv","slide":3,"name":"screen-band-3-2-search-146","bbox":[146,366,198,58]}
+{"kind":"textbox","id":"sh/nuxc3ylc","slide":3,"name":"screen-label-3-2-search-146","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[154,372,182,18]}
+{"kind":"shape","id":"sh/gbq1oryt","slide":3,"name":"screen-band-3-2-randomPayment-328","bbox":[328,366,108,58]}
+{"kind":"textbox","id":"sh/5wjudg7a","slide":3,"name":"screen-label-3-2-randomPayment-328","text":"랜덤 page","textPreview":"랜덤 page","textChars":7,"textLines":1,"bbox":[336,372,92,18]}
+{"kind":"shape","id":"sh/yhgn29gr","slide":3,"name":"screen-band-3-2-search-420","bbox":[420,366,142,58]}
+{"kind":"textbox","id":"sh/n29gr2p8","slide":3,"name":"screen-label-3-2-search-420","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[428,372,126,18]}
+{"kind":"shape","id":"sh/gn29gr2p","slide":3,"name":"screen-band-3-2-seat-546","bbox":[546,366,488,58]}
+{"kind":"textbox","id":"sh/58z25kb6","slide":3,"name":"screen-label-3-2-seat-546","text":"좌석 page","textPreview":"좌석 page","textChars":7,"textLines":1,"bbox":[554,372,472,18]}
+{"kind":"shape","id":"sh/ytsvu9kn","slide":3,"name":"screen-band-3-2-search-1018","bbox":[1018,366,116,58]}
+{"kind":"textbox","id":"sh/neloj2t8","slide":3,"name":"screen-label-3-2-search-1018","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[1026,372,100,18]}
+{"kind":"shape","id":"sh/dcbulwva","slide":3,"name":"screen-band-3-2-lastPayment-1118","bbox":[1118,366,130,58]}
+{"kind":"textbox","id":"sh/kre1w7mp","slide":3,"name":"screen-label-3-2-lastPayment-1118","text":"마지막 page","textPreview":"마지막 page","textChars":8,"textLines":1,"bbox":[1126,372,114,18]}
+{"kind":"textbox","id":"sh/val87ed8","slide":3,"name":"node-s50","text":"열차 선택","textPreview":"열차 선택","textChars":5,"textLines":1,"bbox":[146,398,88,40]}
+{"kind":"textbox","id":"sh/6psfil0r","slide":3,"name":"node-s51","text":"예매 btn","textPreview":"예매 btn","textChars":6,"textLines":1,"bbox":[238,398,96,40]}
+{"kind":"textbox","id":"sh/donyd0z6","slide":3,"name":"node-s52","text":"뒤로가기","textPreview":"뒤로가기","textChars":4,"textLines":1,"bbox":[338,398,88,40]}
+{"kind":"textbox","id":"sh/k3q5o7qp","slide":3,"name":"node-s53","text":"좌석 선택 btn","textPreview":"좌석 선택 btn","textChars":9,"textLines":1,"bbox":[430,398,122,40]}
+{"kind":"textbox","id":"sh/vixczed8","slide":3,"name":"node-s54","text":"창가","textPreview":"창가","textChars":2,"textLines":1,"bbox":[556,387,128,50]}
+{"kind":"textbox","id":"sh/2x4nap4r","slide":3,"name":"node-s55","text":"호차 변경","textPreview":"호차 변경","textChars":5,"textLines":1,"bbox":[688,398,104,40]}
+{"kind":"textbox","id":"sh/d0z61032","slide":3,"name":"node-s56","text":"창가 좌석","textPreview":"창가 좌석","textChars":5,"textLines":1,"bbox":[796,398,108,40]}
+{"kind":"textbox","id":"sh/kf6dcbul","slide":3,"name":"node-s57","text":"선택 완료 btn","textPreview":"선택 완료 btn","textChars":9,"textLines":1,"bbox":[908,398,116,40]}
+{"kind":"textbox","id":"sh/0bi9s36h","slide":3,"name":"node-s58","text":"예매 btn","textPreview":"예매 btn","textChars":6,"textLines":1,"bbox":[1028,398,96,40]}
+{"kind":"textbox","id":"sh/pwb2hwfy","slide":3,"name":"node-s59","text":"결제하기 btn","textPreview":"결제하기 btn","textChars":8,"textLines":1,"bbox":[1128,398,120,40]}
+{"kind":"shape","id":"sh/i5sneloj","slide":3,"bbox":[234,418,4,0]}
+{"kind":"shape","id":"sh/7qpg3ex0","slide":3,"bbox":[334,418,4,0]}
+{"kind":"shape","id":"sh/wjudg7ad","slide":3,"bbox":[426,418,4,0]}
+{"kind":"shape","id":"sh/p4r65wju","slide":3,"bbox":[552,412,4,6]}
+{"kind":"shape","id":"sh/ed8v6psf","slide":3,"bbox":[684,412,4,6]}
+{"kind":"shape","id":"sh/7y1kre1w","slide":3,"bbox":[792,418,4,0]}
+{"kind":"shape","id":"sh/0nuxc3yl","slide":3,"bbox":[904,418,4,0]}
+{"kind":"shape","id":"sh/p8nqxs72","slide":3,"bbox":[1024,418,4,0]}
+{"kind":"shape","id":"sh/fepkzupw","slide":3,"bbox":[1124,418,4,0]}
+{"kind":"shape","id":"sh/mtwra5gb","slide":3,"bbox":[620,437,120,1]}
+{"kind":"textbox","id":"sh/xkf6dcbu","slide":3,"name":"case-title-3-3","text":"B Best","textPreview":"B Best","textChars":6,"textLines":1,"bbox":[46,455,94,26]}
+{"kind":"shape","id":"sh/4zidonyd","slide":3,"name":"screen-band-3-3-search-146","bbox":[146,472,98,58]}
+{"kind":"textbox","id":"sh/f6dcbulw","slide":3,"name":"screen-label-3-3-search-146","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[154,478,82,18]}
+{"kind":"shape","id":"sh/mlkjm1cf","slide":3,"name":"screen-band-3-3-status-242","bbox":[242,472,108,58]}
+{"kind":"textbox","id":"sh/xc3ylc7u","slide":3,"name":"screen-label-3-3-status-242","text":"전호차 page","textPreview":"전호차 page","textChars":8,"textLines":1,"bbox":[250,478,92,18]}
+{"kind":"shape","id":"sh/4r65wjud","slide":3,"name":"screen-band-3-3-seat-348","bbox":[348,472,266,58]}
+{"kind":"textbox","id":"sh/fu18jqh0","slide":3,"name":"screen-label-3-3-seat-348","text":"좌석 page","textPreview":"좌석 page","textChars":7,"textLines":1,"bbox":[356,478,250,18]}
+{"kind":"shape","id":"sh/m94fu18j","slide":3,"name":"screen-band-3-3-payment-612","bbox":[612,472,140,58]}
+{"kind":"textbox","id":"sh/mhk3q5o7","slide":3,"name":"screen-label-3-3-payment-612","text":"결제 page","textPreview":"결제 page","textChars":7,"textLines":1,"bbox":[620,478,124,18]}
+{"kind":"textbox","id":"sh/b2hwfyxo","slide":3,"name":"node-s60","text":"열차 선택","textPreview":"열차 선택","textChars":5,"textLines":1,"bbox":[146,504,88,40]}
+{"kind":"textbox","id":"sh/4nap4r65","slide":3,"name":"node-s61","text":"창가 호차","textPreview":"창가 호차","textChars":5,"textLines":1,"bbox":[252,504,88,40]}
+{"kind":"textbox","id":"sh/t83itgfm","slide":3,"name":"node-s62","text":"창가 좌석","textPreview":"창가 좌석","textChars":5,"textLines":1,"bbox":[358,504,108,40]}
+{"kind":"textbox","id":"sh/m58z25kb","slide":3,"name":"node-s63","text":"결제하기 btn","textPreview":"결제하기 btn","textChars":8,"textLines":1,"bbox":[484,504,120,40]}
+{"kind":"textbox","id":"sh/bq1oryts","slide":3,"name":"node-s64","text":"결제하기 btn","textPreview":"결제하기 btn","textChars":8,"textLines":1,"bbox":[622,504,120,40]}
+{"kind":"shape","id":"sh/4byhgn29","slide":3,"bbox":[234,524,18,0]}
+{"kind":"shape","id":"sh/twra5gbq","slide":3,"bbox":[340,524,18,0]}
+{"kind":"shape","id":"sh/m1cfa9w3","slide":3,"bbox":[466,524,18,0]}
+{"kind":"shape","id":"sh/bm58z25k","slide":3,"bbox":[604,524,18,0]}
+{"kind":"textbox","id":"sh/1kre1w7m","slide":3,"name":"case-title-3-4","text":"B Worst","textPreview":"B Worst","textChars":7,"textLines":1,"bbox":[46,561,94,26]}
+{"kind":"shape","id":"sh/c3ylc7u5","slide":3,"name":"screen-band-3-4-search-146","bbox":[146,578,98,58]}
+{"kind":"textbox","id":"sh/ji5snelo","slide":3,"name":"screen-label-3-4-search-146","text":"조회 page","textPreview":"조회 page","textChars":7,"textLines":1,"bbox":[154,584,82,18]}
+{"kind":"shape","id":"sh/uxc3ylc7","slide":3,"name":"screen-band-3-4-status-242","bbox":[242,578,116,58]}
+{"kind":"textbox","id":"sh/1cfa9w3m","slide":3,"name":"screen-label-3-4-status-242","text":"전호차 page","textPreview":"전호차 page","textChars":8,"textLines":1,"bbox":[250,584,100,18]}
+{"kind":"shape","id":"sh/crmhk3q5","slide":3,"name":"screen-band-3-4-seat-356","bbox":[356,578,388,58]}
+{"kind":"textbox","id":"sh/j6tovaho","slide":3,"name":"screen-label-3-4-seat-356","text":"좌석 page","textPreview":"좌석 page","textChars":7,"textLines":1,"bbox":[364,584,372,18]}
+{"kind":"shape","id":"sh/ulwval87","slide":3,"name":"screen-band-3-4-payment-742","bbox":[742,578,140,58]}
+{"kind":"textbox","id":"sh/18jqh0fe","slide":3,"name":"screen-label-3-4-payment-742","text":"결제 page","textPreview":"결제 page","textChars":7,"textLines":1,"bbox":[750,584,124,18]}
+{"kind":"textbox","id":"sh/8nqxs72x","slide":3,"name":"node-s65","text":"열차 선택","textPreview":"열차 선택","textChars":5,"textLines":1,"bbox":[146,610,88,40]}
+{"kind":"textbox","id":"sh/hoza1gvy","slide":3,"name":"node-s66","text":"창가X 호차","textPreview":"창가X 호차","textChars":6,"textLines":1,"bbox":[252,610,96,40]}
+{"kind":"textbox","id":"sh/s36hcrmh","slide":3,"name":"node-s67","text":"호차 변경","textPreview":"호차 변경","textChars":5,"textLines":1,"bbox":[366,610,104,40]}
+{"kind":"textbox","id":"sh/zidonyd0","slide":3,"name":"node-s68","text":"창가 좌석","textPreview":"창가 좌석","textChars":5,"textLines":1,"bbox":[488,610,108,40]}
+{"kind":"textbox","id":"sh/a1gvy90j","slide":3,"name":"node-s69","text":"결제하기 btn","textPreview":"결제하기 btn","textChars":8,"textLines":1,"bbox":[614,610,120,40]}
+{"kind":"textbox","id":"sh/hgn29gr2","slide":3,"name":"node-s70","text":"결제하기 btn","textPreview":"결제하기 btn","textChars":8,"textLines":1,"bbox":[752,610,120,40]}
+{"kind":"shape","id":"sh/svu9knih","slide":3,"bbox":[234,630,18,0]}
+{"kind":"shape","id":"sh/za1gvy90","slide":3,"bbox":[348,630,18,0]}
+{"kind":"shape","id":"sh/ap4r65wj","slide":3,"bbox":[470,630,18,0]}
+{"kind":"shape","id":"sh/h4byhgn2","slide":3,"bbox":[596,630,18,0]}
+{"kind":"shape","id":"sh/sji5snel","slide":3,"bbox":[734,630,18,0]}
+{"kind":"textbox","id":"sh/2lszqtcj","slide":3,"name":"page-3","text":"3 page / 3 pages","textPreview":"3 page / 3 pages","textChars":16,"textLines":1,"bbox":[1090,682,140,22]}
+{"kind":"notes","id":"nt/5ol2sh","slide":3,"text":""}

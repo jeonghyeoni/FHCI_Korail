@@ -4,6 +4,8 @@ import { useExperiment } from "../context/ExperimentContext.jsx";
 import { TASKS } from "../data/experiment.js";
 import { EXPERIMENT_SEQUENCE, TEST_MODE, acceptConsent, buildConditionUrl } from "../utils/experimentSequence.js";
 
+const ENABLE_IN_APP_BROWSER_WARNING = false;
+
 function buildTestSurveyUrl(condition, participantId, surveyStep = "task") {
   const params = new URLSearchParams({
     mode: TEST_MODE,
@@ -41,8 +43,8 @@ export default function ConsentPage() {
   const { state } = useExperiment();
   const [isChecked, setIsChecked] = useState(false);
   const inAppBrowser = getInAppBrowserInfo();
-  const showInAppWarning = inAppBrowser.isInApp;
-  const showMobileBrowserNotice = isMobileBrowser() && !showInAppWarning;
+  const showInAppWarning = ENABLE_IN_APP_BROWSER_WARNING && inAppBrowser.isInApp;
+  const showMobileBrowserNotice = ENABLE_IN_APP_BROWSER_WARNING && isMobileBrowser() && !showInAppWarning;
 
   function openTestUrl(url) {
     window.location.assign(url);
@@ -64,6 +66,11 @@ export default function ConsentPage() {
   return (
     <main className="phone-frame intro-frame" data-clarity-unmask="true">
       <section className="screen consent-screen">
+        <aside className="survey-closed-notice" aria-label="설문 종료 안내">
+          <strong>설문이 종료되었습니다.</strong>
+          <p>여전히 테스트를 진행하실 수 있지만, 수집된 데이터는 연구에 이용되지 않습니다.</p>
+        </aside>
+
         {showInAppWarning ? (
           <aside className="kakao-browser-warning" aria-label="인앱 브라우저 안내">
             <strong>Chrome 또는 Safari 등 외부 브라우저에서 진행해 주세요.</strong>

@@ -1,0 +1,255 @@
+Korail A/B Usability Study Presentation Script
+Sections 1-6
+
+============================================================
+English Script
+============================================================
+
+#### **1. What - 1 Target Application**
+
+- Application selected for redesign
+
+One of our team members, Seoyeon, frequently travels between Seoul and her hometown in Daejeon by KTX. Since she prefers window seats, she always selects her seat manually and has experienced inconvenience with the KorailTalk’s seat booking process over many years of use. Based on this real user experience, we redesigned the KorailTalk interface for frequent KTX users who prefer selecting their seats manually.
+
+#### 1.2 Current Problems
+
+We identified **three major usability issues** in the original KorailTalk seat booking process.
+
+**First**, the **"Book"** button behaved differently from users' expectations. Instead of taking users to the seat selection page, it automatically assigned a seat and immediately moved to the payment page.
+
+**Second**, changing train cars required using a **select box**, which resulted in unnecessary clicks. Users also had to enter each train car individually to check the remaining seats.
+
+**Third**, users could not view the **overall seat availability of the train at a glance**. As a result, they had to navigate through multiple train car pages to compare seats.
+
+#### 1.3 Redesign Focus
+
+Based on these issues, our redesign focused on **making seat information more intuitive and reducing unnecessary steps.**
+
+**First**, we **removed the intermediate panel** so that users are taken directly to the seat reservation page after selecting a train.
+
+**Second**, we **displayed the seat availability of multiple train cars on a single screen**, allowing users to compare the remaining seats across the entire train more easily.
+
+**Third**, we **replaced the train car selection method from a select box to a card-based interface**, enabling users to check seat availability and navigate to their desired train car without additional clicks.
+
+#### 2. Why
+
+We chose to redesign the Korail seat reservation interface because **booking a train ticket involves more than simply making a reservation.** Users often need to compare multiple train cars and seats before making a decision. In addition, we frequently observed user complaints about the existing application. Therefore, our goal was to design **a more intuitive seat reservation interface.**
+
+Our research aimed to determine whether the redesigned interface makes the reservation process **clearer, faster, and easier to control.** Rather than focusing on visual preference, we focused on **usability.**
+
+We proposed three research questions.
+
+**First**, does the redesigned interface improve task performance?
+
+**Second**, does it reduce task completion time, click count, misclick count, and page transitions?
+
+**Third**, does it improve **Error Prevention, Controllability, Recognition Rather Than Recall,** and **Visibility of System Status?**
+
+Accordingly, **H0** stated that there would be **no difference in usability** between the two interfaces. **H1** stated that **Variant B** would result in **shorter task completion times, fewer clicks, fewer misclicks, fewer page transitions, and higher questionnaire scores** than Variant A.
+
+#### 3. How
+
+To conduct a more accurate usability evaluation, we developed a mobile web prototype that could collect behavioral log data and conducted an A/B test.
+
+Participants completed **three seat reservation tasks**.
+
+Task 1 evaluated Error Prevention by asking participants to reserve a specific seat.
+
+Task 2 evaluated Flexibility and Controllability by asking participants to reserve the last remaining seat.
+
+Task 3 evaluated Recognition Rather Than Recall and Visibility of System Status by asking participants to reserve a window seat.
+
+After experiencing **both Variant A and Variant B**, participants completed a **6-point Likert scale questionnaire**. We also collected **behavioral log data**, including task completion time, click count, misclick count, and page transitions. In addition, we analyzed **screen recordings and user behavior using Microsoft Clarity.**
+
+The quantitative analysis included **40 participants**. We also conducted **follow-up interviews with three participants** to better understand their behavioral intentions and gather more detailed feedback on the redesigned interface. Interview participants were selected based on interesting or contradictory patterns found in the behavioral logs and questionnaire responses.
+
+Finally, since **all participants experienced Variant A before Variant B, counterbalancing was not applied. Therefore, some of the observed improvements may have been influenced by an order effect.**
+
+#### **4. Analysis**
+
+First, let's look at the descriptive statistics. **Variant B achieved higher mean scores than Variant A across all usability measures.** In particular, **when we examined the mean differences**, **task 3 showed the largest improvement**, with **Recognition Rather Than Recall increasing by 2.09 points** and **Visibility of System Status increasing by 2.13 points**. This suggests that users could understand seat availability without relying on memory.
+
+The behavioral logs showed the same trend. **The average task completion time decreased by approximately 43%, from 15.91 to 9.04 seconds, while the average click count decreased by approximately 45%, from 10.03 to 5.53 clicks.** In addition, **the misclick count decreased by approximately 71%**, indicating a more efficient reservation experience.
+
+**However, the improvements observed in Variant B's behavioral log data should be interpreted with the potential influence of the previously mentioned order effect in mind.** Nevertheless, the same pattern of reduced task completion time and click count continued in **Tasks 2 and 3**, even after participants had become familiar with the tasks. **Therefore, these findings are unlikely to be explained solely by learning effects and instead suggest that the redesigned Variant B itself improved usability.**
+
+**Next, we examined the inferential statistics.** After assessing normality using the Shapiro–Wilk test, we analyzed the questionnaire data using paired-samples t-tests and the behavioral log data using either the Wilcoxon signed-rank test or paired-samples t-test, depending on normality.
+
+The results showed that **all questionnaire measures and behavioral log metrics had p-values below 0.001**, indicating **statistically significant differences** between **Variant A** and **Variant B**.
+
+In addition, the effect size analysis showed very large effect sizes, all greater than 1.0, for Controllability, Recognition Rather Than Recall, and Visibility of System Status. Large effect sizes were also observed in the behavioral log metrics.
+
+**Therefore, we rejected the null hypothesis (H0) and accepted the alternative hypothesis (H1), concluding that Variant B provides higher usability and a more efficient seat reservation experience than Variant A.**
+
+After the quantitative analysis, we also conducted qualitative analysis to understand why these results appeared.
+Using log data and survey responses, we classified participants through card sorting. As shown in the slide, we grouped participants by cases where unexpected results appeared, cases with high click counts or misclick counts, cases with extremely fast or slow completion times, and cases where behavioral logs and survey satisfaction did not match.
+
+We also analyzed the screen recordings and compared the actual paths participants took in each task.
+In Task 1-A, most participants did not understand the function of the "Book" button and clicked it, which led them to an unwanted payment flow before returning. This was the worst-case pattern.
+In Task 1-B, most participants showed a similar and more consistent flow.
+In Task 2-A, whether intentionally or unintentionally, most participants immediately clicked the "Book" button, which became the best-case pattern.
+In Task 2-B, best cases and worst cases were mixed at a similar level.
+In Task 3-A, participants had to move between cars while remembering where window seats were available, which created a memory burden.
+In contrast, in the B UI, the all-car seat-status page reduced the exploration steps for most participants. However, we also observed some worst cases where participants entered a random car without carefully checking the seat-status page and then had to change cars again.
+
+Based on the card sort and workflow analysis, we narrowed the interview candidates down to 7 participants, mainly focusing on those whose behavioral data and survey responses did not match or who experienced worst-case flows. Among them, 3 participants responded to the follow-up interview. We provided their screen recordings to help them recall the experiment, and then asked about their specific behavioral intentions and suggestions for improving the B UI.
+
+#### 5. Findings & Insights
+
+### Findings 1
+
+Overall, the quantitative results were very positive for Variant B. Out of 12 behavioral metric comparisons, 10 showed statistically significant improvement for Variant B. For Task 2, click count and page transition count decreased on average, but their p-values were greater than .05, so they could not be interpreted as statistically significant differences.
+
+### Findings 2
+
+The largest improvement in this experiment appeared in Task 3. Task 3 required users to compare window seats across multiple train cars. In the original UI, users had to move across multiple pages and remember seat positions. In contrast, the redesigned B UI showed the seat status of all cars on one screen, reducing this memory burden. As a result, Recognition Rather Than Recall improved by an average of 2.09 points, and Visibility of System Status improved by an average of 2.13 points, which were the largest improvements.
+
+### Findings 3
+
+The redesigned B UI improved not only survey satisfaction but also actual behavior. On average, task completion time decreased by about 43%, click count decreased by about 45%, and misclicks decreased by about 71%. This means that users could complete the same goals with fewer actions and fewer mistakes, showing that the redesigned interface improved efficiency and usability in the actual task process.
+
+### Findings 4
+
+In the qualitative interviews, we confirmed that the B UI was generally improved in a faster and more intuitive direction. In particular, P10 explained the reason for preferring B by saying that it was "relatively intuitive." This suggests that the B UI was more directly connected to the user's goal than the original flow, where users had to move across several screens to find a seat. Since the B UI shows the all-car seat-status page immediately after selecting a train, users no longer need to repeatedly move between pages to compare seat availability across cars.
+
+At the same time, however, it would be difficult to say that the B UI was simply easier in every way. Some participants felt that B was unfamiliar at first because it was different from the existing Korail flow. P14 said that they were used to the existing Korail app and that seeing all seats at once felt awkward. They also explained that in Task 1-B, it took time because they were not used to the first screen and had to tap through several seats. This means that B improved access to information, but first-time users still needed time to understand the new screen structure.
+
+Another important issue was the seat auto-selection button. P14 mentioned the "auto seat-selection button" as the most confusing element during the experiment, and P27 said that in Task 3-B, they misunderstood the button as automatically selecting a window seat. In other words, the auto-selection feature can improve efficiency in Task 2, where the goal is to reserve the last remaining seat quickly, but in situations where users have a specific condition such as a window seat, the meaning of the feature can feel ambiguous.
+
+The all-seat overview also had both strengths and limitations. The B UI helped users compare multiple cars, but for some users, it created visual burden. P27 said that showing the status of every car from the beginning made the screen visually tiring, and suggested that it would be better to select a seat type or zone first and then choose a detailed seat. This shows that B succeeded in presenting more information, but still needs improvement in deciding the order and hierarchy of that information.
+
+The visual cues for seat meaning were also not clear enough. P27 said that in Type B, forward-facing and backward-facing seats used the same color and lacked guidance at the top, which made them confusing. They also said that window seats were difficult to distinguish at a glance and suggested that even a sky-blue boundary line would make them easier to recognize. In other words, the B UI was effective at showing seat availability, but users still needed clearer visual representations to understand which seats were window seats and which direction each seat faced.
+
+Therefore, the core improvement direction for the B UI is not simply to show more information. It should make important information easier to distinguish, clarify the meaning of the auto-selection button, and make window-seat and seat-direction indicators more intuitive.
+
+#### 6. Conclusion
+
+In conclusion, this study suggests that the redesigned Korail seat-booking interface improved usability in the prototype experiment context. Variant B reduced task completion time, click count, misclick count, and page transition count in most comparisons, and it received higher scores across all survey usability constructs.
+
+The main contribution of this project is that we evaluated the redesign by connecting behavioral log data, survey scores, Clarity recordings, and interview feedback. The results show that the redesigned interface has clear potential, especially for tasks that require users to compare seats or understand seat availability.
+
+However, there are also limitations. The most important limitation is that all participants used Variant A before Variant B. Therefore, order effect may have influenced the results. Also, the interview sample was small, with only three participants. Through the interviews, we also confirmed that for some users, the meaning of the B UI's auto-selection button may be ambiguous, the large amount of seat information shown at once may create visual burden, and the window-seat and seat-direction indicators may not be clear enough.
+
+In future work, we need to apply counterbalancing, recruit a larger and more diverse interview sample, and improve Variant B by making auto-selection, window-seat indicators, seat-direction indicators, and tappable areas clearer. With these improvements, the redesigned interface could become not only faster, but also easier to understand from the first use.
+
+============================================================
+Korean Translation
+============================================================
+
+#### **1. What - 1 Target Application**
+
+- Application selected for redesign
+
+저희 팀원인 채서연은 서울에서 대학을 다니지만 자주 대전 본가를 오가며 KTX를 이용합니다. 창가 좌석을 선호해 항상 직접 좌석을 선택하며, 오랫동안 코레일톡을 사용하면서 좌석 예매 과정의 불편함을 경험해왔습니다. 이러한 실제 사용 경험을 바탕으로 저희는 코레일톡을 리디자인했으며, KTX를 자주 이용하고 원하는 좌석을 직접 선택하는 사용자를 대상으로 설계를 진행했습니다.
+
+#### 1.2 Current Problems
+
+기존 코레일톡의 좌석 예매 과정에서는 크게 **세 가지 사용성 문제**를 발견했습니다.
+첫째, **'예매' 버튼이 사용자의 기대와 다르게 좌석을 자동 배정한 뒤 바로 결제 화면으로 이동하여 직관적이지 않다는 점입니다.** 
+
+둘째, **호차 변경에 셀렉트 박스를 사용해 불필요한 클릭이 발생했고**, 다른 호차의 잔여 좌석을 확인하려면 직접 이동해야 했습니다.
+
+셋째, **전체 열차의 좌석 예매 현황을 한눈에 확인할 수 없어**, 사용자가 여러 호차 페이지를 이동하며 좌석을 비교해야 했습니다.
+
+#### 1.3 Redesign Focus
+
+이러한 문제를 바탕으로, 저희는 **좌석 정보를 더 직관적으로 보여주고 불필요한 단계를 줄이는 것**에 초점을 맞춰 리디자인했습니다.
+
+첫째, **중간 패널을 제거하고** 열차를 선택하면 바로 좌석 예약 화면으로 이동하도록 했습니다.
+
+둘째, **여러 호차의 좌석 현황을 한 화면에서 제공**하여 사용자가 열차 전체의 잔여 좌석을 쉽게 비교할 수 있도록 했습니다.
+
+셋째, **호차 선택 방식을 셀렉트 박스에서 카드 형식으로 변경**하여, 추가 클릭 없이 좌석 현황을 확인하고 원하는 호차로 이동할 수 있도록 했습니다.
+
+#### 2. Why
+
+저희가 이 리디자인을 기획한 이유는 **코레일 좌석 예매가 단순한 예약이 아니라, 여러 호차와 좌석을 빠르게 비교하며 의사결정을 해야 하는 과정**이기 때문입니다. 또한 평소에 기존 앱에 대한 사용자들의 불만도 자주 확인할 수 있었습니다. 따라서 저희는 **더 직관적인 좌석 예매 인터페이스**를 목표로 하였습니다.
+
+연구 동기는 리디자인된 인터페이스가 **예약 과정을 더 명확하고 빠르며 사용자가 더 잘 통제할 수 있게 만드는지** 확인하는 것이었습니다. 저희는 시각적인 선호보다 **사용성**에 초점을 맞추었습니다.
+
+연구 질문은 세 가지였습니다. 첫째, 리디자인된 인터페이스가 과제 수행 성능을 향상시키는가? 둘째, 완료 시간, 클릭 수, 오클릭 수, 페이지 이동 수를 줄이는가? 셋째, 오류 예방, 통제감, 기억보다 인식, 시스템 상태 가시성을 향상시키는가?
+
+이에 따라 **H0**는 두 UI 간 사용성 차이가 없다는 것이었고, **H1**은 Variant B가 더 짧은 완료 시간, 더 적은 클릭과 오클릭, 더 적은 페이지 이동, 그리고 더 높은 설문 점수를 보일 것이라는 것이었습니다.
+
+#### 3. How
+
+**더 정확한 사용성 평가를 위해 행동 로그를 함께 수집할 수 있는 모바일 웹 프로토타입을 직접 개발하여 A/B 테스트를 진행했습니다.**
+
+참가자들은 세 가지 좌석 예매 **Task**를 수행했습니다.
+
+**Task 1**은 특정 좌석을 예매하는 과제로, **중간 패널 개선을 통해 Error Prevention**을 평가했습니다.
+
+**Task 2**는 마지막 남은 좌석을 최대한 빠르게 예매하는 과제로, **호차 선택 방식과 좌석 자동선택 기능을 통해 Flexibility and Controllability**를 평가했습니다.
+
+**Task 3**은 창가 좌석을 예매하는 과제로, **전체 좌석 현황 화면을 통해 Recognition Rather Than Recall과 Visibility of System Status**를 평가했습니다.
+
+참가자들은 **Variant A와 B를 모두 체험한 뒤 6-point Likert Scale 설문**에 응답했습니다. 또한 **완료 시간, 클릭 수, 오클릭 수, 페이지 이동 수**를 행동 로그로 수집했으며, **Microsoft Clarity**를 통해 화면 녹화와 행동 패턴도 분석했습니다.
+
+정량 분석에는 **40명의 참가자**가 포함되었으며, 추가로 **3명의 참가자**를 인터뷰하여 행동 의도와 리디자인에 대한 의견을 심층적으로 조사했습니다. 인터뷰 대상자는 **로그와 설문에서 특징적인 패턴이나 상반된 결과를 보인 참가자**를 중심으로 선정했습니다. 
+
+마지막으로, **모든 참가자가 Variant A를 먼저 경험한 뒤 Variant B를 사용했기 때문에 counterbalancing은 적용되지 않았으며, 일부 결과에는 order effect가 영향을 미쳤을 가능성이 있습니다.**
+
+#### **4. Analysis**
+
+먼저 기술통계 결과입니다. **설문에서는 모든 사용성 항목에서 Variant B가 Variant A보다 높은 평균 점수**를 보였습니다. 특히 **Mean Difference를 확인한 결과, Task3에 해당하는 Recognition Rather Than Recall은 평균 2.09점, Visibility of System Status는 평균 2.13점 향상되어 가장 큰 개선 효과를 보였으며**, 이는 사용자가 좌석을 기억에 의존하지 않고 현재 좌석 현황을 파악하는 데 도움이 되었음을 시사합니다.
+
+행동 로그에서도 같은 경향이 나타났습니다. 평균 **과업 수행 시간은 15.91초에서 9.04초로 약 43% 감소했고, 클릭 수는 10.03회에서 5.53회로 약 45% 감소**했습니다. 또한 **오클릭은 약 71% 감소**하여, B UI가 사용자의 실수를 줄이고 더 효율적인 예매 경험을 제공한다는 것을 확인할 수 있었습니다. 다만 B에서의 로그 기록 향상은 앞서 말했던 order effect에 따른 영향을 고려하여야 합니다. 그러나 참가자들이 이미 **Task**에 적응한 **Task 2와 Task 3에서도 수행 시간과 클릭 수가 지속적으로 감소하는 동일한 경향**이 나타났습니다. 따라서 이러한 결과는 단순한 학습 효과만으로 설명하기 어렵고, 리디자인된 B UI 자체가 사용성을 향상시켰을 가능성을 뒷받침합니다.
+
+다음으로 **추론 통계 결과**를 살펴보겠습니다. 먼저 **Shapiro-Wilk 검정**을 통해 데이터의 정규성을 확인했습니다. **설문 데이터는 모든 항목에서 정규성을 만족**하여 Paired Samples t-test를 사용했습니다. 반면 **행동 로그에서는 수행 시간, 클릭 수, 오클릭 수가 정규성을 만족하지 않아 Wilcoxon Signed-Rank Test를 사용했고, 페이지 이동 수는 정규성을 만족하여 Paired Samples t-test를 사용했습니다.**
+
+분석 결과, **설문과 행동 로그의 모든 항목에서 p-value가 0.001 미만**으로 나타나, Variant A와 Variant B 사이에 통계적으로 유의미한 차이가 있음을 확인했습니다.
+
+또한 **Effect Size** 분석에서도 **Controllability, Recognition Rather Than Recall, Visibility of System Status는 모두 1 이상의 매우 큰 효과크기**를 보였으며, 행동 로그에서도 수행 시간, 클릭 수, 오클릭 수 모두 큰 Effect Size가 나타났습니다.
+
+따라서 **귀무가설 H0는 기각하고, Variant B가 Variant A보다 더 높은 사용성과 더 효율적인 예매 경험을 제공한다는 대립가설 H1을 채택**하였습니다.
+
+정량 분석 이후에는 왜 이런 결과가 나타났는지 이해하기 위해 정성 분석을 함께 진행했습니다.
+저희는 로그 데이터와 설문 응답을 기준으로 하여 참가자들을 card sorting 방식으로 분류했습니다. 보시다시피 예상과 다른 결과가 나타난 경우, 클릭 수나 오클릭이 높았던 경우, 수행 시간이 극단적으로 빠르거나 느렸던 경우, 그리고 행동 로그와 설문 만족도가 서로 맞지 않았던 경우로 나누어 보았습니다.
+
+또한 녹화본을 분석하여 각 Task에서 참가자들이 실제로 어떤 경로를 거쳤는지 비교했습니다.
+Task 1-A에서 대부분의 참가자들이 '예매' 버튼의 기능을 파악하지 못하고 눌러, 원하지 않는 결제 흐름으로 이동한 뒤 다시 돌아오는 Worst Case였습니다.
+Task 1-B에서는 대부분의 참가자들이 비슷한 플로우를 보였습니다.
+Task 2-A에서는 의도적이든 의도적이지 않든 대부분의 참가자가 바로 "예매"버튼을 누르는 Best Case였습니다.
+Task 2-B에서는 Best 케이스와 Worst 케이스가 비슷하게 섞여 있었습니다.
+Task 3-A에서는 창가 좌석을 찾기 위해 여러 호차를 기억하면서 이동해야 하는 부담이 있었습니다.
+반면 B UI에서는 전호차 좌석 현황 페이지가 대부분 참여자의 탐색 단계를 줄여주었지만, 좌석 현황 페이지를 자세히 확인하지 않고 아무 호차에나 들어가 추가적인 호차 변경을 필요로 하는 worst 케이스도 일부 관찰됐습니다.
+
+저희는 card sort와 workflow를 참고하여 데이터와 설문이 서로 불일치하거나 worst 케이스를 겪은 참가자들을 위주로 7명의 인터뷰 후보를 추려냈고, 이후 인터뷰에 응한 3명의 참가자에게 영상 녹화본을 제공하여 실험 리마인드 후 구체적인 행동 의도와 B UI의 개선 의견을 들어보았습니다.
+
+#### 5. Findings & Insights
+
+### Findings 1
+
+전반적으로 정량 결과는 Variant B에 매우 긍정적이었습니다. 12개의 행동 지표 비교 중 10개에서 Variant B가 통계적으로 유의미하게 개선되었습니다. Task 2의 Click Count, Page Transition는 평균은 감소했지만 p-value가 .05보다 커 통계적으로 유의미한 차이로 보기는 어려웠습니다.
+
+### Findings 2
+
+이번 실험에서 가장 큰 개선 효과는 **Task 3**에서 나타났습니다. Task 3은 사용자가 여러 호차의 창가 좌석을 비교해야 하는 과업으로, 기존 UI에서는 여러 페이지를 이동하며 좌석 위치를 기억해야 했습니다. 반면 리디자인된 B UI는 모든 호차의 좌석 현황을 한 화면에서 제공하여 이러한 기억 부담을 줄였습니다. 그 결과 **Recognition Rather Than Recall은 평균 2.09점, Visibility of System Status는 평균 2.13점 향상**되어 가장 큰 개선 효과를 확인할 수 있었습니다.
+
+### Findings 3
+
+리디자인된 B UI는 설문에서의 만족도 뿐만 아니라 실제 행동도 개선하였습니다. 평균 **과업 수행 시간을 약 43%, 클릭 수를 약 45%, 오클릭을 약 71% 감소**시켰습니다. 이는 사용자가 같은 목표를 더 적은 조작과 더 적은 실수로 수행할 수 있었음을 의미하며, 리디자인된 인터페이스가 실제 사용 과정의 효율성과 사용성을 향상시켰음을 보여줍니다.
+
+### Findings 4
+
+정성적 인터뷰에서는 B UI가 전반적으로 더 빠르고 직관적인 방향으로 개선되었다는 점을 확인할 수 있었습니다. 특히 P10은 B를 선호한 이유로 "그나마 직관적입니다"라고 답했는데, 이는 B UI가 기존처럼 여러 화면을 오가며 좌석을 찾는 방식보다 사용자의 목표에 더 바로 연결된다는 점을 보여줍니다. 실제로 B UI는 열차를 선택한 뒤 전호차 좌석 현황을 보여주기 때문에, 사용자는 호차별 좌석 상태를 비교하기 위해 반복적으로 페이지를 이동할 필요가 줄어듭니다.
+
+하지만 동시에, B UI가 무조건 더 쉽다고만 말하기는 어려웠습니다. 일부 참가자는 B가 기존 코레일 방식과 달라서 처음에는 어색하다고 느꼈습니다. P14는 "기존 코레일 앱에 익숙하기도 하고 아무래도 전체 좌석을 보는게 어색했다"고 답했고, Task 1-B에서도 "처음 화면에 적응이 되지 않아 여러 좌석을 누르는 과정에서 시간이 걸렸다"고 설명했습니다. 이는 B UI가 정보 접근성은 높였지만, 처음 사용하는 사람에게는 새로운 화면 구조를 읽는 시간이 필요했다는 것을 의미합니다.
+
+또 하나의 중요한 문제는 좌석 자동선택 버튼이었습니다. P14는 실험 중 가장 헷갈렸던 요소로 "자동 좌석선택 버튼"을 언급했고, P27은 Task 3-B에서 자동선택 버튼을 누르면 창가 좌석이 자동으로 잡히는 것으로 잘못 이해했다고 답했습니다. 즉 자동선택 기능 자체는 마지막 남은 좌석을 빠르게 예매하는 Task 2에서는 효율성을 높일 수 있지만, 창가 좌석처럼 사용자가 특정 조건을 가지고 좌석을 찾는 상황에서는 오히려 기능의 의미가 모호하게 받아들여질 수 있었습니다.
+
+좌석 현황을 한눈에 보여주는 방식도 장점과 한계를 동시에 가지고 있었습니다. B UI는 여러 호차를 비교하는 데 도움이 되었지만, 일부 사용자에게는 시각적 부담으로 작용했습니다. P27은 "처음부터 모든 호차의 상황을 보여주기에 눈이 피로합니다"라고 답했고, 먼저 좌석 유형이나 구역을 선택한 뒤 세부 좌석을 고르는 방식이 있으면 좋겠다고 제안했습니다. 이는 B UI가 더 많은 정보를 보여주는 데 성공했지만, 그 정보를 어떤 순서와 위계로 보여줄지에 대한 개선이 필요하다는 점을 보여줍니다.
+
+또한 좌석의 의미를 구분하는 시각적 단서도 충분하지 않았습니다. P27은 B 타입에서 순방향과 역방향 좌석의 색이 같고 상단 안내가 부족해서 헷갈렸다고 답했습니다. 창가 좌석 역시 한눈에 구분하기 어렵다고 했고, "하늘 색 구분선 정도만 있어도 조금 더 구별하기 쉬울 것 같다"고 제안했습니다. 즉 B UI는 좌석 현황을 보여주는 데는 효과적이었지만, 사용자가 어떤 좌석이 창가인지, 어떤 좌석이 순방향인지 판단하는 데는 더 명확한 시각적 표현이 필요했습니다.
+
+따라서 B UI의 핵심 개선 방향은 단순히 정보를 더 많이 보여주는 것이 아니라, 어떤 정보가 중요한지 더 명확히 구분하고, 자동선택 버튼의 의미를 분명히 하며, 창가 좌석과 좌석 방향 표시를 더 직관적으로 다듬는 것입니다.
+
+#### 6. Conclusion
+
+결론적으로, 본 연구는 프로토타입 실험 맥락에서 리디자인된 코레일 좌석 예매 인터페이스가 사용성을 향상시켰음을 보여줍니다. Variant B는 대부분의 비교에서 과제 완료 시간, 클릭 수, 오클릭 수, 페이지 이동 수를 줄였고, 모든 사용성 설문 구성요인에서 더 높은 점수를 받았습니다.
+
+이 프로젝트의 주요 기여는 행동 로그 데이터, 설문 점수, Clarity 녹화본, 인터뷰 피드백을 함께 연결하여 리디자인을 평가했다는 점입니다. 결과는 특히 좌석을 비교하거나 좌석 현황을 이해해야 하는 과제에서 리디자인 인터페이스가 분명한 가능성을 가진다는 것을 보여줍니다.
+
+하지만 한계도 있습니다. 가장 중요한 한계는 모든 참가자가 Variant A를 먼저 사용한 뒤 Variant B를 사용했다는 점입니다. 따라서 order effect가 결과에 영향을 미쳤을 수 있습니다. 또한 인터뷰 표본은 3명으로 작았습니다. 그리고 인터뷰를 통해 일부 사용자에게는 B UI의 자동선택 버튼 의미가 모호하고, 좌석 정보가 한 번에 많이 제시되어 시각적 부담이 생기며, 창가 좌석과 좌석 방향 표시가 충분히 명확하지 않을 수 있다는 한계도 확인되었습니다.
+
+향후 연구에서는 counterbalancing을 적용하고, 더 크고 다양한 인터뷰 표본을 모집하며, Variant B의 자동선택 기능, 창가 좌석 표시, 좌석 방향 표시, 터치 가능한 영역을 더 명확하게 개선할 필요가 있습니다. 이러한 개선이 이루어진다면, 리디자인 인터페이스는 단순히 더 빠른 인터페이스를 넘어서 처음 사용하는 사람도 쉽게 이해할 수 있는 인터페이스가 될 수 있을 것입니다.
